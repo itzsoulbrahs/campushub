@@ -1,0 +1,159 @@
+import { Link, useLocation } from "wouter";
+import { Search, Menu, X, PlusCircle, LogIn, Hexagon } from "lucide-react";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+
+export function Layout({ children }: { children: React.ReactNode }) {
+  const [location] = useLocation();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const isActive = (path: string) => location === path;
+
+  return (
+    <div className="min-h-screen flex flex-col bg-gradient-to-b from-[#FFB700] to-[#FF8C00] font-sans text-foreground selection:bg-black/30 selection:text-white">
+      {/* Navigation */}
+      <header className="sticky top-0 z-50 w-full border-b border-black/20 bg-white/10 backdrop-blur-xl">
+        {/* Desktop Layout: 3-column grid */}
+        <div className="container hidden md:grid md:grid-cols-[1fr_auto_1fr] h-16 items-center px-4 md:px-6">
+          {/* Left: Logo */}
+          <div className="flex items-center gap-2 justify-self-start">
+            <Link href="/" className="flex items-center gap-2 transition-opacity hover:opacity-90 group">
+              <div className="relative flex h-9 w-9 items-center justify-center">
+                <Hexagon className="absolute h-9 w-9 text-black fill-black/10 group-hover:fill-black/20 transition-colors" strokeWidth={1.5} />
+                <span className="relative z-10 text-lg font-bold text-black group-hover:text-gray-700 transition-colors">C</span>
+              </div>
+              <span className="font-heading text-xl font-bold tracking-tight uppercase text-black">
+                Campus<span className="text-black font-bold">Hub</span>
+              </span>
+            </Link>
+          </div>
+
+          {/* Center: Nav Links */}
+          <nav className="flex items-center justify-center gap-8">
+            <Link href="/" className={`text-sm font-bold uppercase tracking-wide transition-colors hover:text-black ${isActive('/') ? 'text-black' : 'text-black/60'}`}>Browse</Link>
+            <Link href="/about" className={`text-sm font-bold uppercase tracking-wide transition-colors hover:text-black ${isActive('/about') ? 'text-black' : 'text-black/60'}`}>About</Link>
+            <Link href="/faq" className={`text-sm font-bold uppercase tracking-wide transition-colors hover:text-black ${isActive('/faq') ? 'text-black' : 'text-black/60'}`}>FAQ</Link>
+          </nav>
+
+          {/* Right: CTA Buttons */}
+          <div className="flex items-center gap-4 justify-self-end">
+            <Link href="/list-community">
+              <Button variant="default" className="bg-black hover:bg-gray-800 text-white font-bold uppercase tracking-wider rounded-full shadow-[0_0_20px_rgba(0,0,0,0.3)] hover:shadow-[0_0_30px_rgba(0,0,0,0.5)] transition-all duration-300">
+                <PlusCircle className="mr-2 h-4 w-4" />
+                List Community
+              </Button>
+            </Link>
+            <Link href="/login">
+              <Button variant="outline" className="border-black/30 text-black hover:bg-black/10 hover:text-black hover:border-black font-bold uppercase tracking-wider rounded-full">
+                <LogIn className="mr-2 h-4 w-4" />
+                Log In
+              </Button>
+            </Link>
+          </div>
+        </div>
+
+        {/* Mobile Layout */}
+        <div className="container flex md:hidden h-16 items-center justify-between px-4">
+          {/* Mobile Logo */}
+          <div className="flex items-center gap-2">
+            <Link href="/" className="flex items-center gap-2 transition-opacity hover:opacity-90 group">
+              <div className="relative flex h-9 w-9 items-center justify-center">
+                <Hexagon className="absolute h-9 w-9 text-black fill-black/10 group-hover:fill-black/20 transition-colors" strokeWidth={1.5} />
+                <span className="relative z-10 text-lg font-bold text-black group-hover:text-gray-700 transition-colors">C</span>
+              </div>
+              <span className="font-heading text-xl font-bold tracking-tight uppercase text-black">
+                Campus<span className="text-black font-bold">Hub</span>
+              </span>
+            </Link>
+          </div>
+
+          {/* Mobile Menu Toggle */}
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon" className="md:hidden text-black hover:text-gray-700">
+                <Menu className="h-6 w-6" />
+                <span className="sr-only">Toggle menu</span>
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="right" className="w-[300px] border-l border-black/10 bg-yellow-50 p-0">
+              <div className="flex flex-col h-full p-6">
+                <div className="flex items-center justify-between mb-8">
+                  <span className="font-heading text-xl font-bold uppercase text-black">Menu</span>
+                  {/* Close button is handled by Sheet */}
+                </div>
+                <nav className="flex flex-col gap-6">
+                  <Link href="/" className="text-lg font-bold uppercase hover:text-black/70 tracking-wide text-black">Browse Communities</Link>
+                  <Link href="/about" className="text-lg font-bold uppercase hover:text-black/70 tracking-wide text-black">About</Link>
+                  <Link href="/faq" className="text-lg font-bold uppercase hover:text-black/70 tracking-wide text-black">FAQ</Link>
+                </nav>
+                <div className="mt-auto flex flex-col gap-4">
+                  <Link href="/list-community">
+                    <Button className="w-full bg-black hover:bg-gray-800 text-white font-bold uppercase rounded-full">List Community</Button>
+                  </Link>
+                  <Link href="/login">
+                    <Button variant="outline" className="w-full border-black/30 text-black font-bold uppercase hover:border-black hover:text-black rounded-full">Log In</Button>
+                  </Link>
+                </div>
+              </div>
+            </SheetContent>
+          </Sheet>
+        </div>
+      </header>
+
+      <main className="flex-1 bg-background">
+        {children}
+      </main>
+
+      <footer className="border-t border-white/10 bg-black py-12">
+        <div className="container px-4 md:px-6">
+          <div className="grid gap-8 md:grid-cols-4">
+            <div className="space-y-4">
+              <h4 className="text-lg font-bold font-heading uppercase tracking-wider text-white flex items-center gap-2">
+                 <Hexagon className="h-5 w-5 text-[#FFC400] fill-[#FFC400]/20" />
+                 CampusHub
+              </h4>
+              <p className="text-sm text-gray-400 leading-relaxed">
+                The central hub for all college communities. Find WhatsApp, Telegram, and Discord groups for your campus.
+              </p>
+            </div>
+            <div>
+              <h4 className="mb-4 text-sm font-bold uppercase tracking-widest text-[#FFC400]">Platform</h4>
+              <ul className="space-y-2 text-sm text-gray-400">
+                <li><Link href="/" className="hover:text-white transition-colors">Browse</Link></li>
+                <li><Link href="/list-community" className="hover:text-white transition-colors">List Community</Link></li>
+                <li><Link href="/about" className="hover:text-white transition-colors">About</Link></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="mb-4 text-sm font-bold uppercase tracking-widest text-[#FFC400]">Legal</h4>
+              <ul className="space-y-2 text-sm text-gray-400">
+                <li><a href="#" className="hover:text-white transition-colors">Terms of Service</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Privacy Policy</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Guidelines</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="mb-4 text-sm font-bold uppercase tracking-widest text-[#FFC400]">Connect</h4>
+              <div className="flex gap-4">
+                {/* Social icons */}
+                <div className="h-10 w-10 flex items-center justify-center rounded-none border border-white/20 hover:border-[#FFC400] hover:bg-[#FFC400]/10 hover:text-[#FFC400] transition-all cursor-pointer text-gray-400">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                </div>
+                <div className="h-10 w-10 flex items-center justify-center rounded-none border border-white/20 hover:border-[#FFC400] hover:bg-[#FFC400]/10 hover:text-[#FFC400] transition-all cursor-pointer text-gray-400">
+                   <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+                </div>
+                <div className="h-10 w-10 flex items-center justify-center rounded-none border border-white/20 hover:border-[#FFC400] hover:bg-[#FFC400]/10 hover:text-[#FFC400] transition-all cursor-pointer text-gray-400">
+                   <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="mt-12 border-t border-white/20 pt-8 text-center text-xs text-gray-500 uppercase tracking-wider">
+            <p>&copy; 2025 Campus Communities Hub. Not affiliated with WhatsApp, Telegram, or Discord.</p>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}

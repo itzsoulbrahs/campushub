@@ -1,0 +1,185 @@
+Create a modern, responsive web app for college communities called “Campus Communities Hub”.
+The goal: work like Disboard.org, but for college WhatsApp / Telegram / Discord / Instagram / any-platform groups.
+
+Core idea
+
+Anyone can browse and search communities without logging in.
+
+If a user wants to list/add their own community, they must sign up / log in first.
+
+The experience + layout should feel like a mix of:
+
+The Studique dashboard style (dark, clean, card-based, campus vibe).
+
+The Disboard server list page (search bar on top, filter tags, community cards in a grid).
+
+Design & Layout
+
+Theme
+
+Dark theme, high contrast, neon/accent colors (orange or purple) for buttons and highlights.
+
+Minimal, clean typography and subtle glassmorphism / card shadows.
+
+Fully responsive for desktop, tablet, and mobile.
+
+Top Navigation Bar
+
+Left: Logo + text: “Campus Communities Hub”.
+
+Center/Right: Links – Browse Communities, Categories, About, FAQ.
+
+Right side CTA buttons:
+
+“List Your Community” (primary, filled).
+
+“Log in / Sign up” (secondary, outlined).
+
+On mobile, collapse nav items into a hamburger menu.
+
+Hero / Search Section (like Disboard)
+
+Large centered search bar at the top of the page:
+
+Placeholder: “Search communities… e.g. trading, dance, hostel memes, foodies, coding…”
+
+Search icon on the right.
+
+Under the search bar, show popular tags as pill buttons:
+#entertainment, #trading, #dance, #food, #coding, #memes, #hostel, #events, #sports, #study-groups, #chat-and-chill.
+
+Small subtext: “Find any college community or group. WhatsApp, Telegram, Discord, anything.”
+
+Community Listing Grid (Like Disboard Cards)
+
+Show communities in cards arranged in a responsive grid (3–4 columns on desktop, 2 on tablet, 1 on mobile).
+
+Each community card should include:
+
+Community icon/avatar on the left/top.
+
+Community name (bold, 1 line) and small badge for platform: e.g. WhatsApp, Telegram, Discord, Instagram.
+
+Tiny meta line:
+
+Member count (e.g. “📍 250 members”)
+
+Activity status (e.g. “Active today” or “New”).
+
+Short one-paragraph description, truncated to 2–3 lines.
+
+A row of tags (pill style) like #trading, #crypto, #beginner-friendly, #SRM-KTR, etc.
+
+Rating stars or a simple “★ 4.8 / 5 (32 reviews)” area.
+
+Buttons at the bottom:
+
+Primary: “Join Group” (opens invite link in a new tab).
+
+Secondary text/button: “Details”.
+
+Clicking Details opens a modal or dedicated page with:
+
+Full description, rules, and requirements.
+
+All tags, platform, invite link, created date, last active info.
+
+“Share community” button and “Report” button.
+
+Filters & Sorting (Sidebar or Top Bar)
+
+Add a filter section similar to Disboard:
+
+Filter by Platform (checkboxes/pills): WhatsApp, Telegram, Discord, Instagram, Others.
+
+Filter by Category / Niche:
+
+Study Groups, Coding & Tech, Trading & Finance, Entertainment & Memes, Dance & Music, Foodies, Sports & Fitness, Events & Fests, Hostel Life, General Chat & Chill, Clubs & Societies.
+
+Filter by College / Campus / Hostel (dropdown or multi-select).
+
+Filter by Language (English, Hindi, etc.).
+
+Sort dropdown: Most Popular, Newest, Most Active, Top Rated.
+
+Filters should live on the left sidebar on desktop and become a slide-over panel on mobile.
+
+Authentication & “List Your Community” Flow
+
+No login is needed for browsing/search.
+Login is only required when someone clicks “List Your Community”.
+
+Log in / Sign up:
+
+Simple modal or page with:
+
+Sign up via email + password.
+
+Option to continue with Google.
+
+Optional field for college email verification.
+
+List Your Community form:
+
+Fields:
+
+Community Name.
+
+Platform (dropdown: WhatsApp, Telegram, Discord, etc.).
+
+Invite Link / Join Link.
+
+Short tagline (max 80 chars).
+
+Detailed description.
+
+Category (multi-select from the predefined niches).
+
+Tags (user can type and press enter to add).
+
+College / Campus name.
+
+Approximate member count.
+
+Rules / guidelines text area.
+
+Checkbox: “I am an admin/mod of this group.”
+
+After submission, show a success state:
+“Your community is now pending review / instantly listed” (you choose the logic but support both states in the UI design).
+
+Extra Pages / Sections
+
+About Page
+
+Explain what the site does: “Central hub for all college communities – find any WhatsApp, Telegram, Discord, or social group by niche.”
+
+Brief sections: “For students”, “For community admins”, “Safety & reporting”.
+
+FAQ Section
+
+“Do I need to log in to search?” → No.
+
+“What platforms are supported?” → WhatsApp, Telegram, Discord, Instagram, etc.
+
+“How do I list my community?” → Click ‘List Your Community’ and fill the form.
+
+“How is safety handled?” → Reporting, link removal, etc.
+
+Footer
+
+Links: About, Contact, Report a Community, Terms, Privacy.
+
+Small text: “Not affiliated with WhatsApp, Telegram, Discord, or your college.”
+
+Technical / Style Notes
+
+Use a clean, modern, dark UI similar to the reference screenshots (Studique + Disboard).
+
+All components should be reusable (search bar, community card, filter panel, modals).
+
+Add smooth hover states, subtle animations, and consistent spacing.
+
+Make sure search + filters feel fast and snappy in the UX, even if you mock the backend.
+
+Build the full front-end for this experience based on the above description.
