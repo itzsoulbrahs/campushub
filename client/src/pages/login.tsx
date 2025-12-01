@@ -60,7 +60,7 @@ function TwoCharacters({ mousePosition, centerX, centerY }: BlobCharacterProps) 
     >
       <svg width="360" height="320" viewBox="0 0 360 320" fill="none">
         {/* Purple Rectangle - Tall, positioned to the left (rendered first, so it's behind) */}
-        <g transform="translate(80, 0)">
+        <g transform="translate(40, 0)">
           <path
             d="M 15 0 
                L 115 0 
@@ -194,15 +194,73 @@ export default function Login() {
           centerY={containerSize.height / 2}
         />
 
-        <div className="absolute bottom-8 left-8 right-8">
-          <p className="text-black/50 text-sm text-center font-medium tracking-wide">
-            Join thousands of students discovering campus communities
-          </p>
-        </div>
       </div>
 
-      {/* Right Panel - Black background with white login form card */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-black">
+      {/* Right Panel - Black background with decorative elements and white login form card */}
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-black relative overflow-hidden">
+        {/* Decorative grid lines */}
+        <div className="absolute inset-0 opacity-[0.07]">
+          {/* Vertical lines */}
+          {[...Array(8)].map((_, i) => (
+            <div
+              key={`v-${i}`}
+              className="absolute w-px bg-gradient-to-b from-transparent via-[#FFC400] to-transparent"
+              style={{
+                left: `${(i + 1) * 12}%`,
+                height: '100%',
+              }}
+            />
+          ))}
+          {/* Horizontal lines */}
+          {[...Array(6)].map((_, i) => (
+            <div
+              key={`h-${i}`}
+              className="absolute h-px bg-gradient-to-r from-transparent via-[#FFC400] to-transparent"
+              style={{
+                top: `${(i + 1) * 14}%`,
+                width: '100%',
+              }}
+            />
+          ))}
+        </div>
+        
+        {/* Decorative dots - fixed positions */}
+        <div className="absolute inset-0">
+          {[
+            { x: 15, y: 12, size: 3, opacity: 0.12 },
+            { x: 78, y: 8, size: 4, opacity: 0.08 },
+            { x: 45, y: 25, size: 2, opacity: 0.15 },
+            { x: 88, y: 35, size: 3, opacity: 0.1 },
+            { x: 22, y: 42, size: 5, opacity: 0.06 },
+            { x: 65, y: 55, size: 2, opacity: 0.14 },
+            { x: 35, y: 68, size: 4, opacity: 0.09 },
+            { x: 82, y: 72, size: 3, opacity: 0.11 },
+            { x: 12, y: 85, size: 2, opacity: 0.13 },
+            { x: 55, y: 88, size: 4, opacity: 0.07 },
+            { x: 92, y: 18, size: 3, opacity: 0.1 },
+            { x: 8, y: 58, size: 2, opacity: 0.12 },
+            { x: 72, y: 45, size: 5, opacity: 0.05 },
+            { x: 28, y: 92, size: 3, opacity: 0.09 },
+            { x: 58, y: 15, size: 2, opacity: 0.14 },
+          ].map((dot, i) => (
+            <div
+              key={`dot-${i}`}
+              className="absolute rounded-full bg-[#FFC400]"
+              style={{
+                width: `${dot.size}px`,
+                height: `${dot.size}px`,
+                left: `${dot.x}%`,
+                top: `${dot.y}%`,
+                opacity: dot.opacity,
+              }}
+            />
+          ))}
+        </div>
+
+        {/* Subtle glow effects */}
+        <div className="absolute top-0 right-0 w-96 h-96 bg-[#FFC400]/5 rounded-full filter blur-[100px]"></div>
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#FFC400]/3 rounded-full filter blur-[80px]"></div>
+        
         <motion.div 
           initial={{ opacity: 0, scale: 0.85 }}
           animate={{ opacity: 1, scale: 1 }}
