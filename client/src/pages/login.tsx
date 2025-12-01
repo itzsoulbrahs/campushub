@@ -59,28 +59,8 @@ function TwoCharacters({ mousePosition, centerX, centerY }: BlobCharacterProps) 
       }}
     >
       <svg width="360" height="320" viewBox="0 0 360 320" fill="none">
-        {/* Orange Blob - Semi-circle, larger and positioned left */}
-        <g transform="translate(0, 60)">
-          <path
-            d="M 20 240 
-               A 120 120 0 0 1 260 240 
-               L 20 240 Z"
-            fill="#FF6B35"
-          />
-          {/* Left eye */}
-          <motion.g style={{ x: orangePupilX, y: orangePupilY }}>
-            <circle cx="95" cy="190" r="10" fill="#1a1a1a" />
-            <circle cx="92" cy="186" r="3" fill="white" />
-          </motion.g>
-          {/* Right eye */}
-          <motion.g style={{ x: orangePupilX, y: orangePupilY }}>
-            <circle cx="185" cy="190" r="10" fill="#1a1a1a" />
-            <circle cx="182" cy="186" r="3" fill="white" />
-          </motion.g>
-        </g>
-
-        {/* Purple Rectangle - Tall, larger and positioned to the right */}
-        <g transform="translate(140, 0)">
+        {/* Purple Rectangle - Tall, positioned to the left (rendered first, so it's behind) */}
+        <g transform="translate(80, 0)">
           <path
             d="M 15 0 
                L 115 0 
@@ -102,6 +82,26 @@ function TwoCharacters({ mousePosition, centerX, centerY }: BlobCharacterProps) 
           <motion.g style={{ x: purplePupilX, y: purplePupilY }}>
             <circle cx="85" cy="90" r="8" fill="#1a1a1a" />
             <circle cx="82" cy="86" r="2.5" fill="white" />
+          </motion.g>
+        </g>
+
+        {/* Orange Blob - Semi-circle (rendered second, so it overlaps purple) */}
+        <g transform="translate(0, 60)">
+          <path
+            d="M 20 240 
+               A 120 120 0 0 1 260 240 
+               L 20 240 Z"
+            fill="#FF6B35"
+          />
+          {/* Left eye */}
+          <motion.g style={{ x: orangePupilX, y: orangePupilY }}>
+            <circle cx="95" cy="190" r="10" fill="#1a1a1a" />
+            <circle cx="92" cy="186" r="3" fill="white" />
+          </motion.g>
+          {/* Right eye */}
+          <motion.g style={{ x: orangePupilX, y: orangePupilY }}>
+            <circle cx="185" cy="190" r="10" fill="#1a1a1a" />
+            <circle cx="182" cy="186" r="3" fill="white" />
           </motion.g>
         </g>
       </svg>
@@ -201,8 +201,8 @@ export default function Login() {
         </div>
       </div>
 
-      {/* Right Panel - White login form card */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-[#FFC400]">
+      {/* Right Panel - Black background with white login form card */}
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-black">
         <motion.div 
           initial={{ opacity: 0, scale: 0.85 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -215,11 +215,11 @@ export default function Login() {
           <div className="flex items-center gap-2 mb-8">
             <Link href="/" className="flex items-center gap-2 transition-opacity hover:opacity-80">
               <div className="relative flex h-10 w-10 items-center justify-center">
-                <Hexagon className="absolute h-10 w-10 text-black fill-black/10" strokeWidth={1.5} />
-                <span className="relative z-10 text-lg font-bold text-black">C</span>
+                <Hexagon className="absolute h-10 w-10 text-[#FFC400] fill-[#FFC400]/10" strokeWidth={1.5} />
+                <span className="relative z-10 text-lg font-bold text-[#FFC400]">C</span>
               </div>
-              <span className="font-heading text-xl font-bold tracking-tight uppercase text-black">
-                Campus<span className="text-black/70">Hub</span>
+              <span className="font-heading text-xl font-bold tracking-tight uppercase text-white">
+                Campus<span className="text-white/70">Hub</span>
               </span>
             </Link>
           </div>
