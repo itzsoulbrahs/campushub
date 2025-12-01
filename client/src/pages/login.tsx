@@ -204,9 +204,12 @@ export default function Login() {
       {/* Right Panel - White login form card */}
       <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-[#FFC400]">
         <motion.div 
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5 }}
+          initial={{ opacity: 0, scale: 0.85 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ 
+            duration: 0.4, 
+            ease: [0.34, 1.56, 0.64, 1]
+          }}
           className="w-full max-w-md"
         >
           <div className="flex items-center gap-2 mb-8">
