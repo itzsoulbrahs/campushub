@@ -11,6 +11,7 @@ import ListCommunity from "@/pages/list-community";
 import FAQ from "@/pages/faq";
 import Login from "@/pages/login";
 import AdminApprovals from "@/pages/admin-approvals";
+import Dashboard from "@/pages/dashboard";
 
 function Router() {
   return (
@@ -20,6 +21,7 @@ function Router() {
       <Route path="/list-community" component={ListCommunity} />
       <Route path="/faq" component={FAQ} />
       <Route path="/login" component={Login} />
+      <Route path="/dashboard" component={Dashboard} />
       <Route path="/admin/approvals" component={AdminApprovals} />
       <Route component={NotFound} />
     </Switch>
