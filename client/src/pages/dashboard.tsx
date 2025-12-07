@@ -1,15 +1,40 @@
 import { useEffect } from "react";
 import { useLocation } from "wouter";
 import { motion } from "framer-motion";
-import { User, Mail, Calendar, Users, Plus, LogOut, Settings, ChevronRight, Hexagon } from "lucide-react";
+import { User, Mail, Calendar, Users, Plus, LogOut, Settings, ChevronRight, Hexagon, Clock, CheckCircle, XCircle, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { Layout } from "@/components/layout";
 import { useAuth } from "@/context/auth";
+import { useQuery } from "@tanstack/react-query";
+import { Badge } from "@/components/ui/badge";
+
+interface Submission {
+  id: string;
+  name: string;
+  platform: string;
+  category: string;
+  status: "pending" | "approved" | "rejected";
+  rejectionReason?: string;
+  submittedAt?: string;
+  approvedAt?: string;
+  rejectedAt?: string;
+}
 
 export default function Dashboard() {
   const [, setLocation] = useLocation();
   const { user, logout, isLoading } = useAuth();
+
+  const { data: submissionsData, isLoading: submissionsLoading } = useQuery({
+    queryKey: ["user-submissions", user?.id],
+    queryFn: async () => {
+      const response = await fetch(`/api/user/submissions/${user?.id}`);
+      if (!response.ok) throw new Error("Failed to fetch submissions");
+      const data = await response.json();
+      return data.submissions as Submission[];
+    },
+    enabled: !!user?.id,
+  });
 
   useEffect(() => {
     if (!isLoading && !user) {
@@ -35,6 +60,46 @@ export default function Dashboard() {
       </div>
     );
   }
+
+  const getStatusBadge = (status: string) => {
+    switch (status) {
+      case "pending":
+        return (
+          <Badge className="bg-yellow-500/20 text-yellow-400 border-yellow-500/30">
+            <Clock className="w-3 h-3 mr-1" />
+            Pending
+          </Badge>
+        );
+      case "approved":
+        return (
+          <Badge className="bg-green-500/20 text-green-400 border-green-500/30">
+            <CheckCircle className="w-3 h-3 mr-1" />
+            Approved
+          </Badge>
+        );
+      case "rejected":
+        return (
+          <Badge className="bg-red-500/20 text-red-400 border-red-500/30">
+            <XCircle className="w-3 h-3 mr-1" />
+            Rejected
+          </Badge>
+        );
+      default:
+        return null;
+    }
+  };
+
+  const getPlatformColor = (platform: string) => {
+    const colors: Record<string, string> = {
+      WhatsApp: "text-green-400",
+      Telegram: "text-blue-400",
+      Discord: "text-indigo-400",
+      Instagram: "text-pink-400",
+    };
+    return colors[platform] || "text-gray-400";
+  };
+
+  const approvedCount = submissionsData?.filter(s => s.status === "approved").length || 0;
 
   const getInitials = (name: string) => {
     return name
@@ -125,7 +190,7 @@ export default function Dashboard() {
                   </div>
                   <div>
                     <p className="text-gray-400 text-sm">Communities Listed</p>
-                    <p className="text-2xl font-bold text-white">0</p>
+                    <p className="text-2xl font-bold text-white">{approvedCount}</p>
                   </div>
                 </div>
               </motion.div>
@@ -226,6 +291,68 @@ export default function Dashboard() {
                 </div>
               </motion.div>
             </div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.8, duration: 0.4 }}
+              className="bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] rounded-2xl border border-[#333] p-6 mt-8"
+            >
+              <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                <FileText className="w-5 h-5 text-[#FFC400]" />
+                My Approvals
+              </h2>
+              
+              {submissionsLoading ? (
+                <div className="flex items-center justify-center py-8">
+                  <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-[#FFC400]"></div>
+                </div>
+              ) : !submissionsData || submissionsData.length === 0 ? (
+                <div className="text-center py-8">
+                  <div className="w-16 h-16 rounded-full bg-[#333] flex items-center justify-center mx-auto mb-4">
+                    <FileText className="w-8 h-8 text-gray-500" />
+                  </div>
+                  <p className="text-gray-400">No submissions yet</p>
+                  <p className="text-gray-500 text-sm mt-1">List a community to see its approval status here</p>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {submissionsData.map((submission) => (
+                    <div
+                      key={submission.id}
+                      className={`p-4 rounded-xl border ${
+                        submission.status === "rejected"
+                          ? "bg-red-500/5 border-red-500/20"
+                          : submission.status === "approved"
+                          ? "bg-green-500/5 border-green-500/20"
+                          : "bg-yellow-500/5 border-yellow-500/20"
+                      }`}
+                    >
+                      <div className="flex items-start justify-between gap-4">
+                        <div className="flex-1">
+                          <div className="flex items-center gap-3 mb-1">
+                            <h3 className="font-semibold text-white">{submission.name}</h3>
+                            {getStatusBadge(submission.status)}
+                          </div>
+                          <div className="flex items-center gap-3 text-sm text-gray-400">
+                            <span className={getPlatformColor(submission.platform)}>{submission.platform}</span>
+                            <span>•</span>
+                            <span>{submission.category}</span>
+                          </div>
+                          {submission.status === "rejected" && submission.rejectionReason && (
+                            <div className="mt-3 p-3 bg-red-500/10 border border-red-500/20 rounded-lg">
+                              <p className="text-sm text-red-400">
+                                <span className="font-medium">Rejection Reason:</span> {submission.rejectionReason}
+                              </p>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </motion.div>
           </motion.div>
         </div>
       </div>

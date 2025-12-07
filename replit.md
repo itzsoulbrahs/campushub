@@ -30,19 +30,34 @@ Preferred communication style: Simple, everyday language.
 3. **User Dashboard Page**
    - Created /dashboard route for authenticated users
    - Displays user profile with initials avatar
-   - Shows statistics cards (Communities Joined, Communities Listed, Member Since)
+   - Shows statistics cards (Communities Listed, Member Since)
    - Quick actions: List a Community, Browse Communities
    - Account settings section showing user details
    - Logout functionality
 
-4. **Authentication API Endpoints**
+4. **My Approvals Section in Dashboard**
+   - Displays all communities submitted by the user
+   - Shows approval status: Pending (yellow), Approved (green), Rejected (red)
+   - For rejected submissions, displays the rejection reason from admin
+   - Real-time count of approved communities in stats card
+   - Loading and empty states for better UX
+
+5. **Authentication API Endpoints**
    - POST /api/auth/signup - User registration with validation
    - POST /api/auth/login - User login with password verification
+   - GET /api/user/submissions/:userId - Fetch user's pending, approved, rejected submissions
    - Returns sanitized user data (password excluded)
-   - Client-side session management via localStorage
+   - React Context (AuthProvider) for persistent login state across pages
 
-5. **Database Schema Updates**
-   - Users table now includes: id, fullName, email, password, createdAt
+6. **Admin Rejection with Reason**
+   - Admin panel has rejection dialog with reason input
+   - Rejection reason saved to rejected_communities table
+   - Reason displayed to user in their dashboard
+
+7. **Database Schema Updates**
+   - Users table: id, fullName, email, password, createdAt
+   - Pending/Approved communities: Added userId column to track submitter
+   - Rejected communities table: Stores rejected submissions with rejectionReason
    - Email column has unique constraint
    - Zod validation schema for signup input
 
