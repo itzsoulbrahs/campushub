@@ -148,7 +148,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
             </div>
           </div>
           <div className="mt-12 border-t border-white/20 pt-8 text-center text-xs text-gray-500 uppercase tracking-wider">
-            <p>&copy; 2025 Campus Communities Hub. Not affiliated with WhatsApp, Telegram, or Discord.</p>
+            <p>&copy; 2025 Campus Communities Hub</p>
           </div>
         </div>
       </footer>
