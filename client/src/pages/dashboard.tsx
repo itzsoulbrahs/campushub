@@ -1,19 +1,25 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "wouter";
-import { motion } from "framer-motion";
-import { User, Mail, Calendar, Users, Plus, LogOut, Settings, ChevronRight, Hexagon, Clock, CheckCircle, XCircle, FileText } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { User, Mail, Calendar, Users, Plus, LogOut, Settings, ChevronRight, Hexagon, Clock, CheckCircle, XCircle, FileText, ExternalLink, Tag, Eye, Globe, Link2, MessageSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { Layout } from "@/components/layout";
 import { useAuth } from "@/context/auth";
 import { useQuery } from "@tanstack/react-query";
 import { Badge } from "@/components/ui/badge";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 
 interface Submission {
   id: string;
   name: string;
   platform: string;
   category: string;
+  description: string;
+  inviteLink: string;
+  tags: string[];
+  visibility: string;
+  memberCount: number;
   status: "pending" | "approved" | "rejected";
   rejectionReason?: string;
   submittedAt?: string;
@@ -24,6 +30,7 @@ interface Submission {
 export default function Dashboard() {
   const [, setLocation] = useLocation();
   const { user, logout, isLoading } = useAuth();
+  const [selectedSubmission, setSelectedSubmission] = useState<Submission | null>(null);
 
   const { data: submissionsData, isLoading: submissionsLoading } = useQuery({
     queryKey: ["user-submissions", user?.id],
@@ -298,7 +305,7 @@ export default function Dashboard() {
               transition={{ delay: 0.8, duration: 0.4 }}
               className="bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] rounded-2xl border border-[#333] p-6 mt-8"
             >
-              <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+              <h2 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
                 <FileText className="w-5 h-5 text-[#FFC400]" />
                 My Approvals
               </h2>
@@ -316,43 +323,200 @@ export default function Dashboard() {
                   <p className="text-gray-500 text-sm mt-1">List a community to see its approval status here</p>
                 </div>
               ) : (
-                <div className="space-y-3">
-                  {submissionsData.map((submission) => (
-                    <div
+                <div className="grid gap-4 md:grid-cols-2">
+                  {submissionsData.map((submission, index) => (
+                    <motion.div
                       key={submission.id}
-                      className={`p-4 rounded-xl border ${
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.1, duration: 0.3 }}
+                      onClick={() => setSelectedSubmission(submission)}
+                      className={`p-5 rounded-2xl border cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:shadow-xl group ${
                         submission.status === "rejected"
-                          ? "bg-red-500/5 border-red-500/20"
+                          ? "bg-gradient-to-br from-red-500/10 to-red-900/5 border-red-500/30 hover:border-red-400/50"
                           : submission.status === "approved"
-                          ? "bg-green-500/5 border-green-500/20"
-                          : "bg-yellow-500/5 border-yellow-500/20"
+                          ? "bg-gradient-to-br from-green-500/10 to-green-900/5 border-green-500/30 hover:border-green-400/50"
+                          : "bg-gradient-to-br from-yellow-500/10 to-yellow-900/5 border-yellow-500/30 hover:border-yellow-400/50"
                       }`}
                     >
-                      <div className="flex items-start justify-between gap-4">
-                        <div className="flex-1">
-                          <div className="flex items-center gap-3 mb-1">
-                            <h3 className="font-semibold text-white">{submission.name}</h3>
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 mb-2">
+                            <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
+                              submission.platform === "WhatsApp" ? "bg-green-500/20" :
+                              submission.platform === "Telegram" ? "bg-blue-500/20" :
+                              submission.platform === "Discord" ? "bg-indigo-500/20" :
+                              "bg-pink-500/20"
+                            }`}>
+                              <MessageSquare className={`w-5 h-5 ${getPlatformColor(submission.platform)}`} />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <h3 className="font-bold text-white truncate">{submission.name}</h3>
+                              <p className="text-xs text-gray-500">{submission.category}</p>
+                            </div>
+                          </div>
+                          
+                          <div className="flex items-center gap-2 mt-3">
                             {getStatusBadge(submission.status)}
+                            <span className={`text-xs font-medium ${getPlatformColor(submission.platform)}`}>
+                              {submission.platform}
+                            </span>
                           </div>
-                          <div className="flex items-center gap-3 text-sm text-gray-400">
-                            <span className={getPlatformColor(submission.platform)}>{submission.platform}</span>
-                            <span>•</span>
-                            <span>{submission.category}</span>
-                          </div>
+
                           {submission.status === "rejected" && submission.rejectionReason && (
-                            <div className="mt-3 p-3 bg-red-500/10 border border-red-500/20 rounded-lg">
-                              <p className="text-sm text-red-400">
-                                <span className="font-medium">Rejection Reason:</span> {submission.rejectionReason}
+                            <div className="mt-3 p-2 bg-red-500/10 border border-red-500/20 rounded-lg">
+                              <p className="text-xs text-red-400 line-clamp-2">
+                                {submission.rejectionReason}
                               </p>
                             </div>
                           )}
                         </div>
+                        <ChevronRight className="w-5 h-5 text-gray-500 group-hover:text-white transition-colors flex-shrink-0" />
                       </div>
-                    </div>
+                    </motion.div>
                   ))}
                 </div>
               )}
             </motion.div>
+
+            {/* Submission Detail Modal */}
+            <Dialog open={!!selectedSubmission} onOpenChange={() => setSelectedSubmission(null)}>
+              <DialogContent className="bg-[#1a1a1a] border-[#333] rounded-3xl max-w-lg p-0 overflow-hidden">
+                {selectedSubmission && (
+                  <>
+                    <div className={`p-6 ${
+                      selectedSubmission.status === "rejected"
+                        ? "bg-gradient-to-r from-red-500/20 to-red-900/10"
+                        : selectedSubmission.status === "approved"
+                        ? "bg-gradient-to-r from-green-500/20 to-green-900/10"
+                        : "bg-gradient-to-r from-yellow-500/20 to-yellow-900/10"
+                    }`}>
+                      <div className="flex items-start gap-4">
+                        <div className={`w-14 h-14 rounded-2xl flex items-center justify-center ${
+                          selectedSubmission.platform === "WhatsApp" ? "bg-green-500/30" :
+                          selectedSubmission.platform === "Telegram" ? "bg-blue-500/30" :
+                          selectedSubmission.platform === "Discord" ? "bg-indigo-500/30" :
+                          "bg-pink-500/30"
+                        }`}>
+                          <MessageSquare className={`w-7 h-7 ${getPlatformColor(selectedSubmission.platform)}`} />
+                        </div>
+                        <div className="flex-1">
+                          <DialogHeader>
+                            <DialogTitle className="text-xl font-bold text-white text-left">
+                              {selectedSubmission.name}
+                            </DialogTitle>
+                            <DialogDescription className="text-gray-400 text-left">
+                              {selectedSubmission.category} • {selectedSubmission.platform}
+                            </DialogDescription>
+                          </DialogHeader>
+                          <div className="mt-2">
+                            {getStatusBadge(selectedSubmission.status)}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="p-6 space-y-5">
+                      {/* Description */}
+                      <div>
+                        <h4 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-2 flex items-center gap-2">
+                          <FileText className="w-4 h-4" />
+                          Description
+                        </h4>
+                        <p className="text-white text-sm leading-relaxed whitespace-pre-wrap">
+                          {selectedSubmission.description}
+                        </p>
+                      </div>
+
+                      {/* Details Grid */}
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="p-3 rounded-xl bg-black/30 border border-[#333]">
+                          <div className="flex items-center gap-2 text-gray-400 mb-1">
+                            <Globe className="w-4 h-4" />
+                            <span className="text-xs uppercase tracking-wider">Visibility</span>
+                          </div>
+                          <p className="text-white font-medium capitalize">{selectedSubmission.visibility}</p>
+                        </div>
+                        <div className="p-3 rounded-xl bg-black/30 border border-[#333]">
+                          <div className="flex items-center gap-2 text-gray-400 mb-1">
+                            <Users className="w-4 h-4" />
+                            <span className="text-xs uppercase tracking-wider">Members</span>
+                          </div>
+                          <p className="text-white font-medium">{selectedSubmission.memberCount || "Not specified"}</p>
+                        </div>
+                      </div>
+
+                      {/* Tags */}
+                      {selectedSubmission.tags && selectedSubmission.tags.length > 0 && (
+                        <div>
+                          <h4 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-2 flex items-center gap-2">
+                            <Tag className="w-4 h-4" />
+                            Tags
+                          </h4>
+                          <div className="flex flex-wrap gap-2">
+                            {selectedSubmission.tags.map((tag, i) => (
+                              <span key={i} className="px-3 py-1 bg-[#FFC400]/10 text-[#FFC400] text-xs rounded-full border border-[#FFC400]/20">
+                                {tag}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Invite Link */}
+                      <div>
+                        <h4 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-2 flex items-center gap-2">
+                          <Link2 className="w-4 h-4" />
+                          Invite Link
+                        </h4>
+                        <div className="p-3 rounded-xl bg-black/30 border border-[#333] flex items-center gap-2">
+                          <p className="text-white text-sm truncate flex-1">{selectedSubmission.inviteLink}</p>
+                          <a 
+                            href={selectedSubmission.inviteLink} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="p-2 hover:bg-[#FFC400]/20 rounded-lg transition-colors"
+                          >
+                            <ExternalLink className="w-4 h-4 text-[#FFC400]" />
+                          </a>
+                        </div>
+                      </div>
+
+                      {/* Status Info */}
+                      {selectedSubmission.status === "rejected" && selectedSubmission.rejectionReason && (
+                        <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/30">
+                          <h4 className="text-sm font-semibold text-red-400 uppercase tracking-wider mb-2 flex items-center gap-2">
+                            <XCircle className="w-4 h-4" />
+                            Rejection Reason
+                          </h4>
+                          <p className="text-red-300 text-sm">{selectedSubmission.rejectionReason}</p>
+                        </div>
+                      )}
+
+                      {selectedSubmission.status === "approved" && (
+                        <div className="p-4 rounded-xl bg-green-500/10 border border-green-500/30">
+                          <h4 className="text-sm font-semibold text-green-400 uppercase tracking-wider mb-2 flex items-center gap-2">
+                            <CheckCircle className="w-4 h-4" />
+                            Approved
+                          </h4>
+                          <p className="text-green-300 text-sm">Your community is now live and visible to all users!</p>
+                        </div>
+                      )}
+
+                      {selectedSubmission.status === "pending" && (
+                        <div className="p-4 rounded-xl bg-yellow-500/10 border border-yellow-500/30">
+                          <h4 className="text-sm font-semibold text-yellow-400 uppercase tracking-wider mb-2 flex items-center gap-2">
+                            <Clock className="w-4 h-4" />
+                            Pending Review
+                          </h4>
+                          <p className="text-yellow-300 text-sm">Your submission is being reviewed. You'll be notified once it's approved.</p>
+                        </div>
+                      )}
+                    </div>
+                  </>
+                )}
+              </DialogContent>
+            </Dialog>
           </motion.div>
         </div>
       </div>
