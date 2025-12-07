@@ -251,8 +251,8 @@ export default function Home() {
           
           {/* Sidebar - Desktop */}
           <aside className="hidden md:block w-72 flex-shrink-0">
-            <div className="sticky top-28">
-              <div className="flex items-center justify-between mb-6 border-b border-black/20 pb-4">
+            <div className="sticky top-28 max-h-[calc(100vh-8rem)] flex flex-col">
+              <div className="flex items-center justify-between mb-6 border-b border-black/20 pb-4 flex-shrink-0">
                 <h2 className="font-heading text-lg font-bold uppercase tracking-wider text-black flex items-center gap-2">
                   <Hexagon className="h-4 w-4 text-black" /> Filters
                 </h2>
@@ -265,7 +265,7 @@ export default function Home() {
                   Reset All
                 </Button>
               </div>
-              <div className="p-6 rounded-3xl border border-[#333] bg-[#0A0A0A] shadow-lg">
+              <div className="p-6 rounded-3xl border border-[#333] bg-[#0A0A0A] shadow-lg overflow-y-auto flex-1 scrollbar-thin scrollbar-thumb-[#333] scrollbar-track-transparent">
                 <Filters 
                   filters={filters}
                   onFilterChange={handleFilterChange}
