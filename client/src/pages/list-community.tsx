@@ -16,6 +16,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Hexagon, Globe, User, CheckCircle } from "lucide-react";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useState } from "react";
+import { useAuth } from "@/context/auth";
 
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters."),
@@ -30,6 +31,7 @@ const formSchema = z.object({
 
 export default function ListCommunity() {
   const { toast } = useToast();
+  const { user } = useAuth();
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -76,6 +78,7 @@ export default function ListCommunity() {
           visibility: pendingValues.visibility,
           tags: tagsArray,
           memberCount: 0,
+          userId: user?.id || null,
         }),
       });
 
