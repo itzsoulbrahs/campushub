@@ -80,6 +80,7 @@ export async function registerRoutes(
         category: pendingCommunity.category,
         inviteLink: pendingCommunity.inviteLink,
         visibility: pendingCommunity.visibility,
+        userId: pendingCommunity.userId,
         rating: 0,
         reviewCount: 0,
         isActive: true,
@@ -97,18 +98,55 @@ export async function registerRoutes(
   app.post("/api/admin/reject/:id", adminAuth, async (req, res) => {
     try {
       const { id } = req.params;
+      const { reason } = req.body;
       const pendingCommunity = await storage.getPendingCommunity(id);
       
       if (!pendingCommunity) {
         return res.status(404).json({ success: false, error: "Community not found" });
       }
 
+      await storage.createRejectedCommunity({
+        name: pendingCommunity.name,
+        platform: pendingCommunity.platform,
+        memberCount: pendingCommunity.memberCount,
+        description: pendingCommunity.description,
+        tags: pendingCommunity.tags,
+        category: pendingCommunity.category,
+        inviteLink: pendingCommunity.inviteLink,
+        visibility: pendingCommunity.visibility,
+        userId: pendingCommunity.userId,
+        rejectionReason: reason || "No reason provided",
+      });
+
       await storage.deletePendingCommunity(id);
 
-      res.json({ success: true, message: "Community rejected and deleted" });
+      res.json({ success: true, message: "Community rejected" });
     } catch (error) {
       console.error("Error rejecting community:", error);
       res.status(500).json({ success: false, error: "Failed to reject community" });
+    }
+  });
+
+  app.get("/api/user/submissions/:userId", async (req, res) => {
+    try {
+      const { userId } = req.params;
+      
+      const [pending, approved, rejected] = await Promise.all([
+        storage.getPendingCommunitiesByUserId(userId),
+        storage.getApprovedCommunitiesByUserId(userId),
+        storage.getRejectedCommunitiesByUserId(userId),
+      ]);
+
+      const submissions = [
+        ...pending.map(c => ({ ...c, status: "pending" as const })),
+        ...approved.map(c => ({ ...c, status: "approved" as const })),
+        ...rejected.map(c => ({ ...c, status: "rejected" as const })),
+      ];
+
+      res.json({ success: true, submissions });
+    } catch (error) {
+      console.error("Error fetching user submissions:", error);
+      res.status(500).json({ success: false, error: "Failed to fetch submissions" });
     }
   });
 
