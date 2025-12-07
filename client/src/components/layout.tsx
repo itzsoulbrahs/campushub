@@ -5,7 +5,12 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useAuth } from "@/context/auth";
 
-export function Layout({ children }: { children: React.ReactNode }) {
+interface LayoutProps {
+  children: React.ReactNode;
+  hideFooter?: boolean;
+}
+
+export function Layout({ children, hideFooter = false }: LayoutProps) {
   const [location] = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { user } = useAuth();
@@ -121,6 +126,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         {children}
       </main>
 
+      {!hideFooter && (
       <footer className="border-t border-white/10 bg-black py-12">
         <div className="container px-4 md:px-6">
           <div className="grid gap-8 md:grid-cols-4">
@@ -168,6 +174,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
           </div>
         </div>
       </footer>
+      )}
     </div>
   );
 }

@@ -111,7 +111,7 @@ export default function Dashboard() {
   };
 
   return (
-    <Layout>
+    <Layout hideFooter>
       <div className="min-h-screen bg-black">
         <div className="container mx-auto px-4 py-8 max-w-6xl">
           <motion.div
