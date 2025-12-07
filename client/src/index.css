@@ -155,30 +155,16 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.4), 0 0 50px rgba(0, 0, 0, 0.2);
 }
 
-/* Community cards grid - allows cards to expand when fewer in last row */
+/* Community cards grid - maintains 2-column layout even with 1 card */
 .community-grid {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: 1.5rem;
 }
 
-.community-grid > * {
-  flex: 1 1 320px;
-  min-width: 280px;
-  max-width: 100%;
-}
-
-@media (min-width: 640px) {
-  .community-grid > * {
-    flex: 1 1 calc(50% - 0.75rem);
-    max-width: calc(50% - 0.75rem);
-  }
-}
-
-@media (min-width: 1024px) {
-  .community-grid > * {
-    flex: 1 1 calc(33.333% - 1rem);
-    max-width: none;
+@media (max-width: 768px) {
+  .community-grid {
+    grid-template-columns: 1fr;
   }
 }
 
