@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { motion, useSpring } from "framer-motion";
 import { toast } from "sonner";
+import { useAuth } from "@/context/auth";
 
 interface BlobCharacterProps {
   mousePosition: { x: number; y: number };
@@ -106,6 +107,7 @@ function TwoCharacters({ mousePosition, centerX, centerY }: BlobCharacterProps) 
 
 export default function Login() {
   const [isFlipped, setIsFlipped] = useState(false);
+  const { login } = useAuth();
   
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -144,7 +146,7 @@ export default function Login() {
       const data = await response.json();
       
       if (data.success) {
-        localStorage.setItem("user", JSON.stringify(data.user));
+        login(data.user);
         toast.success("Welcome back!");
         setLocation("/dashboard");
       } else {
@@ -186,7 +188,7 @@ export default function Login() {
       const data = await response.json();
       
       if (data.success) {
-        localStorage.setItem("user", JSON.stringify(data.user));
+        login(data.user);
         toast.success("Account created successfully!");
         setLocation("/dashboard");
       } else {

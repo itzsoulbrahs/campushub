@@ -1,39 +1,25 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useLocation } from "wouter";
 import { motion } from "framer-motion";
 import { User, Mail, Calendar, Users, Plus, LogOut, Settings, ChevronRight, Hexagon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { Layout } from "@/components/layout";
-
-interface UserData {
-  id: string;
-  fullName: string;
-  email: string;
-  createdAt?: string;
-}
+import { useAuth } from "@/context/auth";
 
 export default function Dashboard() {
   const [, setLocation] = useLocation();
-  const [user, setUser] = useState<UserData | null>(null);
+  const { user, logout, isLoading } = useAuth();
 
   useEffect(() => {
-    const userData = localStorage.getItem("user");
-    if (!userData) {
+    if (!isLoading && !user) {
       toast.error("Please log in to access your dashboard");
       setLocation("/login");
-      return;
     }
-    try {
-      setUser(JSON.parse(userData));
-    } catch {
-      localStorage.removeItem("user");
-      setLocation("/login");
-    }
-  }, [setLocation]);
+  }, [user, isLoading, setLocation]);
 
   const handleLogout = () => {
-    localStorage.removeItem("user");
+    logout();
     toast.success("Logged out successfully");
     setLocation("/");
   };
@@ -42,7 +28,7 @@ export default function Dashboard() {
     setLocation("/list-community");
   };
 
-  if (!user) {
+  if (isLoading || !user) {
     return (
       <div className="min-h-screen bg-black flex items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#FFC400]"></div>

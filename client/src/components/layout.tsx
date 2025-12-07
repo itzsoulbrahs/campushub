@@ -1,12 +1,14 @@
 import { Link, useLocation } from "wouter";
-import { Search, Menu, X, PlusCircle, LogIn, Hexagon } from "lucide-react";
+import { Search, Menu, X, PlusCircle, LogIn, Hexagon, LayoutDashboard } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { useAuth } from "@/context/auth";
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const [location] = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { user } = useAuth();
 
   const isActive = (path: string) => location === path;
 
@@ -42,12 +44,21 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 List Community
               </Button>
             </Link>
-            <Link href="/login">
-              <Button variant="outline" className="border-black/30 text-black hover:bg-black/10 hover:text-black hover:border-black font-bold uppercase tracking-wider rounded-full text-xs px-4">
-                <LogIn className="mr-2 h-4 w-4" />
-                Log In
-              </Button>
-            </Link>
+            {user ? (
+              <Link href="/dashboard">
+                <Button variant="outline" className="border-black/30 text-black hover:bg-black/10 hover:text-black hover:border-black font-bold uppercase tracking-wider rounded-full text-xs px-4">
+                  <LayoutDashboard className="mr-2 h-4 w-4" />
+                  Dashboard
+                </Button>
+              </Link>
+            ) : (
+              <Link href="/login">
+                <Button variant="outline" className="border-black/30 text-black hover:bg-black/10 hover:text-black hover:border-black font-bold uppercase tracking-wider rounded-full text-xs px-4">
+                  <LogIn className="mr-2 h-4 w-4" />
+                  Log In
+                </Button>
+              </Link>
+            )}
           </div>
         </div>
 
@@ -87,9 +98,18 @@ export function Layout({ children }: { children: React.ReactNode }) {
                   <Link href="/list-community">
                     <Button className="w-full bg-black hover:bg-gray-800 text-white font-bold uppercase rounded-full">List Community</Button>
                   </Link>
-                  <Link href="/login">
-                    <Button variant="outline" className="w-full border-black/30 text-black font-bold uppercase hover:border-black hover:text-black rounded-full">Log In</Button>
-                  </Link>
+                  {user ? (
+                    <Link href="/dashboard">
+                      <Button variant="outline" className="w-full border-black/30 text-black font-bold uppercase hover:border-black hover:text-black rounded-full">
+                        <LayoutDashboard className="mr-2 h-4 w-4" />
+                        Dashboard
+                      </Button>
+                    </Link>
+                  ) : (
+                    <Link href="/login">
+                      <Button variant="outline" className="w-full border-black/30 text-black font-bold uppercase hover:border-black hover:text-black rounded-full">Log In</Button>
+                    </Link>
+                  )}
                 </div>
               </div>
             </SheetContent>
