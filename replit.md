@@ -54,7 +54,14 @@ Preferred communication style: Simple, everyday language.
    - Rejection reason saved to rejected_communities table
    - Reason displayed to user in their dashboard
 
-7. **Database Schema Updates**
+7. **List Community Login Requirement**
+   - Users must be logged in to list a community
+   - Login Required popup appears if user visits page without authentication
+   - Popup has "Log In to Continue" button redirecting to login page
+   - "Back to Home" button for users who don't want to login
+   - Form is only accessible to authenticated users
+
+8. **Database Schema Updates**
    - Users table: id, fullName, email, password, createdAt
    - Pending/Approved communities: Added userId column to track submitter
    - Rejected communities table: Stores rejected submissions with rejectionReason
