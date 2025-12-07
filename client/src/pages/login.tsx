@@ -323,7 +323,7 @@ export default function Login() {
               <span className="relative z-10 text-lg font-bold text-[#FFC400]">C</span>
             </div>
             <span className="font-heading text-xl font-bold tracking-tight uppercase text-white">
-              Campus<span className="text-white/70">Hub</span>
+              CampusHub
             </span>
           </Link>
 
