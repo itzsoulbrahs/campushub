@@ -14,8 +14,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-[#FFB700] to-[#FF8C00] font-sans text-foreground selection:bg-black/30 selection:text-white">
       {/* Navigation */}
       <header className="sticky top-0 z-50 w-full border-b border-black/20 bg-white/10 backdrop-blur-xl">
-        {/* Desktop Layout: 3-column grid */}
-        <div className="container hidden md:grid md:grid-cols-[1fr_auto_1fr] h-16 items-center px-4 md:px-6">
+        {/* Desktop Layout: 3-column grid - only on large screens */}
+        <div className="container hidden lg:grid lg:grid-cols-[1fr_auto_1fr] h-16 items-center px-4 lg:px-6">
           {/* Left: Logo */}
           <div className="flex items-center gap-2 justify-self-start">
             <Link href="/" className="flex items-center gap-2 transition-opacity hover:opacity-90 group">
@@ -30,22 +30,22 @@ export function Layout({ children }: { children: React.ReactNode }) {
           </div>
 
           {/* Center: Nav Links */}
-          <nav className="flex items-center justify-center gap-8">
-            <Link href="/" className={`text-sm font-bold uppercase tracking-wide transition-colors hover:text-black ${isActive('/') ? 'text-black' : 'text-black/60'}`}>Browse</Link>
-            <Link href="/about" className={`text-sm font-bold uppercase tracking-wide transition-colors hover:text-black ${isActive('/about') ? 'text-black' : 'text-black/60'}`}>About</Link>
-            <Link href="/faq" className={`text-sm font-bold uppercase tracking-wide transition-colors hover:text-black ${isActive('/faq') ? 'text-black' : 'text-black/60'}`}>FAQ</Link>
+          <nav className="flex items-center justify-center gap-6">
+            <Link href="/" className={`text-sm font-bold uppercase tracking-wide transition-colors hover:text-black whitespace-nowrap ${isActive('/') ? 'text-black' : 'text-black/60'}`}>Browse</Link>
+            <Link href="/about" className={`text-sm font-bold uppercase tracking-wide transition-colors hover:text-black whitespace-nowrap ${isActive('/about') ? 'text-black' : 'text-black/60'}`}>About</Link>
+            <Link href="/faq" className={`text-sm font-bold uppercase tracking-wide transition-colors hover:text-black whitespace-nowrap ${isActive('/faq') ? 'text-black' : 'text-black/60'}`}>FAQ</Link>
           </nav>
 
           {/* Right: CTA Buttons */}
-          <div className="flex items-center gap-4 justify-self-end">
+          <div className="flex items-center gap-3 justify-self-end">
             <Link href="/list-community">
-              <Button variant="default" className="bg-black hover:bg-gray-800 text-white font-bold uppercase tracking-wider rounded-full shadow-[0_0_20px_rgba(0,0,0,0.3)] hover:shadow-[0_0_30px_rgba(0,0,0,0.5)] transition-all duration-300">
+              <Button variant="default" className="bg-black hover:bg-gray-800 text-white font-bold uppercase tracking-wider rounded-full shadow-[0_0_20px_rgba(0,0,0,0.3)] hover:shadow-[0_0_30px_rgba(0,0,0,0.5)] transition-all duration-300 text-xs px-4">
                 <PlusCircle className="mr-2 h-4 w-4" />
                 List Community
               </Button>
             </Link>
             <Link href="/login">
-              <Button variant="outline" className="border-black/30 text-black hover:bg-black/10 hover:text-black hover:border-black font-bold uppercase tracking-wider rounded-full">
+              <Button variant="outline" className="border-black/30 text-black hover:bg-black/10 hover:text-black hover:border-black font-bold uppercase tracking-wider rounded-full text-xs px-4">
                 <LogIn className="mr-2 h-4 w-4" />
                 Log In
               </Button>
@@ -53,8 +53,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
           </div>
         </div>
 
-        {/* Mobile Layout */}
-        <div className="container flex md:hidden h-16 items-center justify-between px-4">
+        {/* Mobile/Tablet Layout - shows on small and medium screens */}
+        <div className="container flex lg:hidden h-16 items-center justify-between px-4">
           {/* Mobile Logo */}
           <div className="flex items-center gap-2">
             <Link href="/" className="flex items-center gap-2 transition-opacity hover:opacity-90 group">
@@ -71,7 +71,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
           {/* Mobile Menu Toggle */}
           <Sheet>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="md:hidden text-black hover:text-gray-700">
+              <Button variant="ghost" size="icon" className="text-black hover:text-gray-700">
                 <Menu className="h-6 w-6" />
                 <span className="sr-only">Toggle menu</span>
               </Button>
