@@ -13,31 +13,44 @@ Preferred communication style: Simple, everyday language.
 ## Recent Changes (Latest Session)
 
 ### Completed Features
-1. **Login Page Updates**
-   - Removed "Join thousands of students..." text from left panel
-   - Repositioned purple rectangle character closer to orange blob for better overlap
-   - Added decorative grid lines and dots to right side (black background)
-   - Updated logo colors to yellow/gold and white for visibility on black background
+1. **Login/Signup Flip Card Animation**
+   - Implemented 3D flip card animation using CSS transforms and Framer Motion
+   - Login form on front face, signup form on back face
+   - Clicking "Sign up" flips the card to show registration form
+   - Clicking "Log in" flips back to login form
+   - Smooth 0.6s transition with ease-in-out timing
 
-2. **Home Page - Filter Functionality**
-   - Implemented fully functional filter system with state management
-   - Filters for: Visibility (Public/Boys Only/Girls Only), Platform (WhatsApp/Telegram/Discord/Instagram), Categories
-   - Removed Campus section filters (SRM KTR, SRM RMP, SRM VDP)
-   - Reset Filters button appears when any filter is active
-   - Community grid updates instantly when filters are applied
-   - Multiple filters can be combined for refined results
+2. **User Registration System**
+   - Signup form collects: Full Name, Email, Password
+   - Password validation (minimum 6 characters)
+   - Email uniqueness check on server
+   - Password hashing with bcrypt (salt rounds: 10)
+   - User data stored in PostgreSQL database
 
-3. **List Community Page - Submission Flow**
-   - Added centered confirmation dialog before submission
-   - Dialog asks for yes/no confirmation
-   - After confirmation, shows success page with "Community Submitted!" message
-   - Success page displays "Your request has been submitted for approval" with "pending review" status
-   - Button to return to home after successful submission
+3. **User Dashboard Page**
+   - Created /dashboard route for authenticated users
+   - Displays user profile with initials avatar
+   - Shows statistics cards (Communities Joined, Communities Listed, Member Since)
+   - Quick actions: List a Community, Browse Communities
+   - Account settings section showing user details
+   - Logout functionality
 
-4. **Dialog/Modal Animations**
-   - Community detail cards pop from center (scale-based animation)
-   - No slide animations - pure center pop-in/pop-out effect
-   - Used for all modals and popups
+4. **Authentication API Endpoints**
+   - POST /api/auth/signup - User registration with validation
+   - POST /api/auth/login - User login with password verification
+   - Returns sanitized user data (password excluded)
+   - Client-side session management via localStorage
+
+5. **Database Schema Updates**
+   - Users table now includes: id, fullName, email, password, createdAt
+   - Email column has unique constraint
+   - Zod validation schema for signup input
+
+### Previous Features
+- Login Page with decorative characters (orange blob + purple rectangle)
+- Home Page filter functionality
+- List Community submission flow with confirmation dialog
+- Dialog/Modal center pop-in animations
 
 ## System Architecture
 
@@ -101,8 +114,9 @@ Preferred communication style: Simple, everyday language.
 - Uses Neon serverless PostgreSQL driver
 
 **Current Schema**
-- **Users table**: Basic authentication structure with id, username, password
+- **Users table**: Full authentication structure with id, fullName, email (unique), password (hashed), createdAt
 - Uses PostgreSQL's `gen_random_uuid()` for primary keys
+- Email uniqueness constraint for preventing duplicate registrations
 - Zod schemas derived from Drizzle tables for runtime validation
 
 **Design Considerations**
