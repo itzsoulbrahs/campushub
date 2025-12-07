@@ -456,7 +456,7 @@ export default function Login() {
                   <Button 
                     type="submit"
                     disabled={isLoading}
-                    className="w-full h-12 bg-black hover:bg-gray-800 text-white font-bold uppercase tracking-wider rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50"
+                    className="w-full h-12 bg-[#FFC400] hover:bg-[#E6B000] text-black font-bold uppercase tracking-wider rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50"
                   >
                     {isLoading ? "Logging in..." : "Log in"}
                   </Button>
