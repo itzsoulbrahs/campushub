@@ -42,7 +42,10 @@ export default function ListCommunity() {
 
   useEffect(() => {
     if (!isLoading && !user) {
-      setLoginModalOpen(true);
+      const timer = setTimeout(() => {
+        setLoginModalOpen(true);
+      }, 1000);
+      return () => clearTimeout(timer);
     } else if (user) {
       setLoginModalOpen(false);
     }
@@ -397,7 +400,7 @@ export default function ListCommunity() {
               <DialogTitle className="text-2xl font-black uppercase tracking-tight text-black text-center">Login Required</DialogTitle>
               <DialogDescription className="text-black/70 mt-4 text-center text-base">
                 <span className="block">You need to be logged in to list your community.</span>
-                <span className="block mt-2 text-sm">This helps us track your submissions and keep you updated on their approval status.</span>
+                <span className="block mt-2 text-sm">This helps you track your reach, boost visibility, and attract more members.</span>
               </DialogDescription>
             </DialogHeader>
             <div className="flex flex-col gap-3 w-full mt-8">
