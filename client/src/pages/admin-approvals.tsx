@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { CheckCircle, XCircle, Clock, Users, ExternalLink, RefreshCw, Shield, Lock, LogIn } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
@@ -28,6 +30,9 @@ export default function AdminApprovals() {
   const [adminPassword, setAdminPassword] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [passwordInput, setPasswordInput] = useState("");
+  const [rejectDialogOpen, setRejectDialogOpen] = useState(false);
+  const [rejectingCommunityId, setRejectingCommunityId] = useState<string | null>(null);
+  const [rejectionReason, setRejectionReason] = useState("");
 
   const handleLogin = async () => {
     if (!passwordInput.trim()) {
@@ -113,21 +118,26 @@ export default function AdminApprovals() {
   });
 
   const rejectMutation = useMutation({
-    mutationFn: async (id: string) => {
+    mutationFn: async ({ id, reason }: { id: string; reason: string }) => {
       const response = await fetch(`/api/admin/reject/${id}`, {
         method: "POST",
         headers: {
           "Authorization": `Bearer ${adminPassword}`,
+          "Content-Type": "application/json",
         },
+        body: JSON.stringify({ reason }),
       });
       if (!response.ok) throw new Error("Failed to reject community");
       return response.json();
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["pending-communities"] });
+      setRejectDialogOpen(false);
+      setRejectingCommunityId(null);
+      setRejectionReason("");
       toast({
         title: "Rejected",
-        description: "Community has been rejected and removed.",
+        description: "Community has been rejected.",
       });
     },
     onError: () => {
@@ -138,6 +148,18 @@ export default function AdminApprovals() {
       });
     },
   });
+
+  const handleOpenRejectDialog = (id: string) => {
+    setRejectingCommunityId(id);
+    setRejectionReason("");
+    setRejectDialogOpen(true);
+  };
+
+  const handleConfirmReject = () => {
+    if (rejectingCommunityId) {
+      rejectMutation.mutate({ id: rejectingCommunityId, reason: rejectionReason });
+    }
+  };
 
   const getVisibilityBadge = (visibility: string) => {
     switch (visibility) {
@@ -342,7 +364,7 @@ export default function AdminApprovals() {
                       Approve
                     </Button>
                     <Button
-                      onClick={() => rejectMutation.mutate(community.id)}
+                      onClick={() => handleOpenRejectDialog(community.id)}
                       disabled={approveMutation.isPending || rejectMutation.isPending}
                       variant="outline"
                       className="flex-1 border-red-300 text-red-600 hover:bg-red-50 font-bold uppercase tracking-wider rounded-xl h-12"
@@ -356,6 +378,44 @@ export default function AdminApprovals() {
             ))}
           </div>
         )}
+
+        <Dialog open={rejectDialogOpen} onOpenChange={setRejectDialogOpen}>
+          <DialogContent className="bg-white rounded-3xl max-w-md shadow-2xl border-0 p-8">
+            <DialogHeader>
+              <DialogTitle className="text-2xl font-black uppercase tracking-tight text-black text-center">Reject Community</DialogTitle>
+              <DialogDescription className="text-black/70 mt-3 text-center">
+                Please provide a reason for rejection. This will be shown to the user.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="mt-6">
+              <Textarea
+                placeholder="Enter rejection reason (e.g., Invalid invite link, Inappropriate content, Duplicate community...)"
+                value={rejectionReason}
+                onChange={(e) => setRejectionReason(e.target.value)}
+                className="bg-gray-50 border-black/20 min-h-[100px] text-black placeholder:text-black/40 focus:border-red-400 rounded-2xl"
+              />
+            </div>
+            <div className="flex gap-3 justify-center items-center mx-auto w-full mt-6">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setRejectDialogOpen(false)}
+                disabled={rejectMutation.isPending}
+                className="border-black/30 text-black hover:bg-gray-100 font-bold uppercase tracking-wider px-8 rounded-2xl h-12"
+              >
+                Cancel
+              </Button>
+              <Button
+                type="button"
+                onClick={handleConfirmReject}
+                disabled={rejectMutation.isPending}
+                className="bg-red-600 hover:bg-red-700 text-white font-bold uppercase tracking-wider px-8 rounded-2xl h-12"
+              >
+                {rejectMutation.isPending ? "Rejecting..." : "Confirm Reject"}
+              </Button>
+            </div>
+          </DialogContent>
+        </Dialog>
       </div>
     </Layout>
   );
