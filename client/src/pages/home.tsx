@@ -379,16 +379,6 @@ export default function Home() {
           {selectedCommunity && (
             <>
               <div className="relative h-32 bg-gradient-to-r from-[#FFC400] to-[#FF8C00] flex items-end p-6">
-                <div className="absolute top-4 right-4">
-                  <Button 
-                    variant="ghost" 
-                    size="icon" 
-                    onClick={handleCloseModal}
-                    className="text-black hover:bg-black/10 rounded-full"
-                  >
-                    <X className="h-6 w-6" />
-                  </Button>
-                </div>
                 <div className="absolute -bottom-10 left-6 flex items-end gap-4">
                   <div className="h-24 w-24 rounded-2xl bg-[#151515] border-4 border-[#0A0A0A] flex items-center justify-center shadow-xl overflow-hidden">
                     {selectedCommunity.imageUrl ? (
