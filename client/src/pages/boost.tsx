@@ -163,8 +163,8 @@ export default function Boost() {
               >
                 <Rocket className="w-12 h-12 text-[#FFC400]" />
               </motion.div>
-              <h1 className="text-4xl lg:text-5xl font-bold text-white mb-3">
-                <span className="bg-gradient-to-r from-[#FFC400] to-[#FF8C00] bg-clip-text text-transparent">
+              <h1 className="text-4xl lg:text-5xl font-bold mb-3">
+                <span className="text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]">
                   Bump Center
                 </span>
               </h1>
@@ -295,10 +295,10 @@ export default function Boost() {
                         </div>
                         
                         <div className="flex-1 min-w-0">
-                          <h3 className="font-bold text-white truncate text-lg">
+                          <h3 className="font-bold text-[#FFC400] truncate text-lg">
                             {community.name}
                           </h3>
-                          <p className="text-base text-[#FFC400]/80 font-mono">
+                          <p className="text-base text-gray-400 font-mono">
                             #{community.adminTagId || "---"}
                           </p>
                         </div>
