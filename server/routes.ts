@@ -370,15 +370,46 @@ export async function registerRoutes(
     try {
       const { userId } = req.params;
       
-      const [active, deleted] = await Promise.all([
+      const [active, deleted, bumpStatus] = await Promise.all([
         storage.getActiveApprovedCommunitiesByUserId(userId),
         storage.getDeletedCommunitiesByUserId(userId),
+        storage.getUserBumpStatus(userId),
       ]);
 
-      res.json({ success: true, active, deleted });
+      res.json({ success: true, active, deleted, bumpStatus });
     } catch (error) {
       console.error("Error fetching user communities:", error);
       res.status(500).json({ success: false, error: "Failed to fetch communities" });
+    }
+  });
+
+  app.post("/api/user/communities/:id/bump", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { userId } = req.body;
+      
+      if (!userId) {
+        return res.status(400).json({ success: false, error: "User ID is required" });
+      }
+      
+      const result = await storage.bumpCommunity(userId, id);
+      
+      if (!result.success) {
+        return res.status(400).json({ 
+          success: false, 
+          error: result.error,
+          nextAvailableAt: result.nextAvailableAt
+        });
+      }
+      
+      res.json({ 
+        success: true, 
+        community: result.community,
+        nextAvailableAt: result.nextAvailableAt
+      });
+    } catch (error) {
+      console.error("Error bumping community:", error);
+      res.status(500).json({ success: false, error: "Failed to bump community" });
     }
   });
 
