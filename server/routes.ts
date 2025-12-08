@@ -154,6 +154,7 @@ export async function registerRoutes(
       }
 
       const approvedCommunity = await storage.createApprovedCommunity({
+        adminTagId: pendingCommunity.adminTagId,
         name: pendingCommunity.name,
         platform: pendingCommunity.platform,
         memberCount: pendingCommunity.memberCount,
@@ -189,6 +190,7 @@ export async function registerRoutes(
       }
 
       await storage.createRejectedCommunity({
+        adminTagId: pendingCommunity.adminTagId,
         name: pendingCommunity.name,
         platform: pendingCommunity.platform,
         memberCount: pendingCommunity.memberCount,

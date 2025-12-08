@@ -9,12 +9,13 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { CheckCircle, XCircle, Clock, Users, ExternalLink, RefreshCw, Shield, Lock, LogIn, Pencil, Save, Trash2, ListChecks } from "lucide-react";
+import { CheckCircle, XCircle, Clock, Users, ExternalLink, RefreshCw, Shield, Lock, LogIn, Pencil, Save, Trash2, ListChecks, Search } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 
 interface PendingCommunity {
   id: string;
+  adminTagId: string | null;
   name: string;
   platform: string;
   memberCount: number;
@@ -30,6 +31,7 @@ interface PendingCommunity {
 
 interface ApprovedCommunity {
   id: string;
+  adminTagId: string | null;
   name: string;
   platform: string;
   memberCount: number;
@@ -68,6 +70,9 @@ export default function AdminApprovals() {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [deletingCommunityId, setDeletingCommunityId] = useState<string | null>(null);
   const [deletingCommunityName, setDeletingCommunityName] = useState("");
+  
+  const [pendingSearch, setPendingSearch] = useState("");
+  const [approvedSearch, setApprovedSearch] = useState("");
 
   const handleLogin = async () => {
     if (!passwordInput.trim()) {
@@ -138,6 +143,35 @@ export default function AdminApprovals() {
     },
     enabled: isAuthenticated,
   });
+
+  const filterCommunities = <T extends { name: string; tags: string[]; description: string; adminTagId: string | null }>(
+    communities: T[] | undefined,
+    searchTerm: string
+  ): T[] => {
+    if (!communities) return [];
+    if (!searchTerm.trim()) return communities;
+    
+    const lowerSearch = searchTerm.toLowerCase().trim();
+    
+    return communities.filter(community => {
+      const nameMatch = community.name.toLowerCase().includes(lowerSearch);
+      const descMatch = community.description.toLowerCase().includes(lowerSearch);
+      const tagMatch = community.tags.some(tag => tag.toLowerCase().includes(lowerSearch));
+      const tagIdMatch = community.adminTagId?.toLowerCase().includes(lowerSearch) || false;
+      
+      return nameMatch || descMatch || tagMatch || tagIdMatch;
+    });
+  };
+  
+  const filteredPending = useMemo(
+    () => filterCommunities(pendingData, pendingSearch),
+    [pendingData, pendingSearch]
+  );
+  
+  const filteredApproved = useMemo(
+    () => filterCommunities(approvedData, approvedSearch),
+    [approvedData, approvedSearch]
+  );
 
   const approveMutation = useMutation({
     mutationFn: async (id: string) => {
@@ -461,6 +495,19 @@ export default function AdminApprovals() {
           </TabsList>
 
           <TabsContent value="pending">
+            {/* Search Bar for Pending */}
+            <div className="mb-6">
+              <div className="relative">
+                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-black/40" />
+                <Input
+                  placeholder="Search by name, tags, description, or Tag ID (e.g., TFCM0001)..."
+                  value={pendingSearch}
+                  onChange={(e) => setPendingSearch(e.target.value)}
+                  className="pl-12 py-3 text-base bg-white border-black/20 rounded-2xl focus:border-[#FFC400] focus:ring-[#FFC400]"
+                />
+              </div>
+            </div>
+            
             {pendingLoading ? (
               <div className="flex items-center justify-center py-20">
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-black"></div>
@@ -479,16 +526,24 @@ export default function AdminApprovals() {
                   <p className="text-black/60">All communities have been reviewed. Check back later!</p>
                 </CardContent>
               </Card>
+            ) : filteredPending.length === 0 ? (
+              <Card className="bg-white border-black/10 rounded-3xl">
+                <CardContent className="py-20 text-center">
+                  <Search className="w-16 h-16 text-black/20 mx-auto mb-6" />
+                  <h3 className="text-2xl font-bold text-black uppercase mb-2">No Matching Results</h3>
+                  <p className="text-black/60">No communities match your search. Try a different query.</p>
+                </CardContent>
+              </Card>
             ) : (
               <div className="space-y-6">
                 <div className="flex items-center gap-3 bg-[#FFC400]/10 p-4 rounded-2xl border border-[#FFC400]/30">
                   <Clock className="h-5 w-5 text-[#FFC400]" />
                   <span className="font-bold text-black">
-                    {pendingData?.length} pending submission{pendingData?.length !== 1 ? "s" : ""} awaiting review
+                    {filteredPending.length} of {pendingData?.length} pending submission{pendingData?.length !== 1 ? "s" : ""} {pendingSearch && "(filtered)"}
                   </span>
                 </div>
 
-                {pendingData?.map((community: PendingCommunity) => (
+                {filteredPending.map((community: PendingCommunity) => (
               <Card key={community.id} className="bg-white border-black/10 rounded-3xl overflow-hidden shadow-lg">
                 <CardHeader className="bg-gradient-to-r from-[#0A0A0A] to-[#1A1A1A] text-white p-6">
                   <div className="flex items-start justify-between">
@@ -503,10 +558,17 @@ export default function AdminApprovals() {
                         </div>
                       )}
                       <div>
-                        <CardTitle className="text-2xl font-bold uppercase tracking-wide flex items-center gap-3">
-                          {community.name}
-                          {getPlatformBadge(community.platform)}
-                        </CardTitle>
+                        <div className="flex items-center gap-3 flex-wrap">
+                          <CardTitle className="text-2xl font-bold uppercase tracking-wide flex items-center gap-3">
+                            {community.name}
+                            {getPlatformBadge(community.platform)}
+                          </CardTitle>
+                          {community.adminTagId && (
+                            <Badge className="bg-[#FFC400] text-black font-mono text-xs tracking-wider hover:bg-[#FFD700]">
+                              {community.adminTagId}
+                            </Badge>
+                          )}
+                        </div>
                         <CardDescription className="text-gray-400 mt-2">
                           Submitted on {new Date(community.submittedAt).toLocaleDateString("en-US", {
                             year: "numeric",
@@ -604,6 +666,19 @@ export default function AdminApprovals() {
           </TabsContent>
 
           <TabsContent value="approved">
+            {/* Search Bar for Approved */}
+            <div className="mb-6">
+              <div className="relative">
+                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-black/40" />
+                <Input
+                  placeholder="Search by name, tags, description, or Tag ID (e.g., TFCM0001)..."
+                  value={approvedSearch}
+                  onChange={(e) => setApprovedSearch(e.target.value)}
+                  className="pl-12 py-3 text-base bg-white border-black/20 rounded-2xl focus:border-green-500 focus:ring-green-500"
+                />
+              </div>
+            </div>
+            
             {approvedLoading ? (
               <div className="flex items-center justify-center py-20">
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-black"></div>
@@ -622,16 +697,24 @@ export default function AdminApprovals() {
                   <p className="text-black/60">No communities have been approved yet.</p>
                 </CardContent>
               </Card>
+            ) : filteredApproved.length === 0 ? (
+              <Card className="bg-white border-black/10 rounded-3xl">
+                <CardContent className="py-20 text-center">
+                  <Search className="w-16 h-16 text-black/20 mx-auto mb-6" />
+                  <h3 className="text-2xl font-bold text-black uppercase mb-2">No Matching Results</h3>
+                  <p className="text-black/60">No communities match your search. Try a different query.</p>
+                </CardContent>
+              </Card>
             ) : (
               <div className="space-y-6">
                 <div className="flex items-center gap-3 bg-green-500/10 p-4 rounded-2xl border border-green-500/30">
                   <ListChecks className="h-5 w-5 text-green-600" />
                   <span className="font-bold text-black">
-                    {approvedData?.length} approved communit{approvedData?.length !== 1 ? "ies" : "y"} live
+                    {filteredApproved.length} of {approvedData?.length} approved communit{approvedData?.length !== 1 ? "ies" : "y"} {approvedSearch && "(filtered)"}
                   </span>
                 </div>
 
-                {approvedData?.map((community: ApprovedCommunity) => (
+                {filteredApproved.map((community: ApprovedCommunity) => (
                   <Card key={community.id} className="bg-white border-black/10 rounded-3xl overflow-hidden shadow-lg">
                     <CardHeader className="bg-gradient-to-r from-green-800 to-green-900 text-white p-6">
                       <div className="flex items-start justify-between">
@@ -646,10 +729,17 @@ export default function AdminApprovals() {
                             </div>
                           )}
                           <div>
-                            <CardTitle className="text-2xl font-bold uppercase tracking-wide flex items-center gap-3">
-                              {community.name}
-                              {getPlatformBadge(community.platform)}
-                            </CardTitle>
+                            <div className="flex items-center gap-3 flex-wrap">
+                              <CardTitle className="text-2xl font-bold uppercase tracking-wide flex items-center gap-3">
+                                {community.name}
+                                {getPlatformBadge(community.platform)}
+                              </CardTitle>
+                              {community.adminTagId && (
+                                <Badge className="bg-[#FFC400] text-black font-mono text-xs tracking-wider hover:bg-[#FFD700]">
+                                  {community.adminTagId}
+                                </Badge>
+                              )}
+                            </div>
                             <CardDescription className="text-green-200 mt-2">
                               Approved on {new Date(community.approvedAt).toLocaleDateString("en-US", {
                                 year: "numeric",

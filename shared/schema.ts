@@ -28,6 +28,7 @@ export type User = typeof users.$inferSelect;
 
 export const pendingCommunities = pgTable("pending_communities", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  adminTagId: varchar("admin_tag_id", { length: 10 }),
   name: text("name").notNull(),
   platform: text("platform").notNull(),
   memberCount: integer("member_count").notNull().default(0),
@@ -44,6 +45,7 @@ export const pendingCommunities = pgTable("pending_communities", {
 
 export const approvedCommunities = pgTable("approved_communities", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  adminTagId: varchar("admin_tag_id", { length: 10 }),
   name: text("name").notNull(),
   platform: text("platform").notNull(),
   memberCount: integer("member_count").notNull().default(0),
@@ -63,6 +65,7 @@ export const approvedCommunities = pgTable("approved_communities", {
 
 export const rejectedCommunities = pgTable("rejected_communities", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  adminTagId: varchar("admin_tag_id", { length: 10 }),
   name: text("name").notNull(),
   platform: text("platform").notNull(),
   memberCount: integer("member_count").notNull().default(0),
@@ -79,6 +82,7 @@ export const rejectedCommunities = pgTable("rejected_communities", {
 
 export const insertPendingCommunitySchema = createInsertSchema(pendingCommunities).omit({
   id: true,
+  adminTagId: true,
   submittedAt: true,
 });
 

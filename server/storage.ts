@@ -15,7 +15,46 @@ import {
   rejectedCommunities
 } from "@shared/schema";
 import { db } from "./db";
-import { eq, isNull, isNotNull, and } from "drizzle-orm";
+import { eq, isNull, isNotNull, and, sql } from "drizzle-orm";
+
+const categoryPrefixes: Record<string, string> = {
+  "Study Groups": "SG",
+  "Coding & Tech": "CT",
+  "Trading & Finance": "TF",
+  "Entertainment & Memes": "EM",
+  "Sports & Fitness": "SF",
+  "Gaming": "GM",
+  "Hostel Life": "HL",
+  "Career & Internships": "CI",
+  "Events & Fests": "EF",
+  "General": "GN",
+};
+
+async function generateAdminTagId(category: string): Promise<string> {
+  const prefix = categoryPrefixes[category] || "GN";
+  
+  const allPending = await db.select({ adminTagId: pendingCommunities.adminTagId }).from(pendingCommunities);
+  const allApproved = await db.select({ adminTagId: approvedCommunities.adminTagId }).from(approvedCommunities);
+  const allRejected = await db.select({ adminTagId: rejectedCommunities.adminTagId }).from(rejectedCommunities);
+  
+  const existingIds = [
+    ...allPending.map(c => c.adminTagId),
+    ...allApproved.map(c => c.adminTagId),
+    ...allRejected.map(c => c.adminTagId)
+  ].filter(Boolean) as string[];
+  
+  const prefixIds = existingIds.filter(id => id.startsWith(prefix + "CM"));
+  const maxNumber = prefixIds.reduce((max, id) => {
+    const numStr = id.substring(4);
+    const num = parseInt(numStr, 10);
+    return isNaN(num) ? max : Math.max(max, num);
+  }, 0);
+  
+  const nextNumber = maxNumber + 1;
+  const paddedNumber = String(nextNumber).padStart(4, "0");
+  
+  return `${prefix}CM${paddedNumber}`;
+}
 
 export interface IStorage {
   getUser(id: string): Promise<User | undefined>;
@@ -61,8 +100,10 @@ export class DatabaseStorage implements IStorage {
   }
 
   async createPendingCommunity(community: InsertPendingCommunity): Promise<PendingCommunity> {
+    const adminTagId = await generateAdminTagId(community.category);
     const [pendingCommunity] = await db.insert(pendingCommunities).values([{
       ...community,
+      adminTagId,
       tags: community.tags as string[],
     }]).returning();
     return pendingCommunity;

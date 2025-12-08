@@ -14,7 +14,17 @@ Preferred communication style: Simple, everyday language.
 
 ### Completed Features
 
-1. **My Communities Management Section**
+1. **Admin Search System and Unique Tag ID**
+   - Unique Admin Tag IDs generated for every community submission (format: XXCM0001)
+   - Category-based prefixes: SG=Study Groups, CT=Coding & Tech, TF=Trading & Finance, etc.
+   - Search functionality in admin panel for both Pending and Approved tabs
+   - Live filtering by community name, tags, description, and admin tag ID
+   - Tag ID displayed on all admin dashboard cards with monospace font styling
+   - Database: Added adminTagId column to pending_communities, approved_communities, rejected_communities
+   - Tag IDs preserved when moving communities between approval states
+   - Existing communities backfilled with appropriate tag IDs
+
+2. **My Communities Management Section**
    - Users can manage their approved communities from the dashboard
    - Active communities displayed using CommunityCard component (same as homepage)
    - Edit functionality restricted to: name, invite link, logo/icon, tags only
