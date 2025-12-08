@@ -50,11 +50,18 @@ export function CommunityCard({ community, onClick }: CommunityCardProps) {
       {/* Decorative corner */}
       <div className="absolute -top-6 -right-6 w-12 h-12 bg-white/5 rotate-45 group-hover:bg-[#FFC400]/20 transition-colors"></div>
 
-      {/* Pinned Badge */}
+      {/* Pinned Ribbon Badge */}
       {community.isPinned && (
-        <div className="absolute top-9 right-3 z-30 flex items-center gap-1 px-2 py-1 bg-[#FFC400] text-black rounded-md shadow-lg">
-          <Pin className="h-3 w-3 fill-current" />
-          <span className="text-[10px] font-bold uppercase tracking-wider">Pinned</span>
+        <div className="absolute -top-1 -right-1 z-30">
+          <div className="relative">
+            {/* Ribbon flap */}
+            <div className="bg-[#FFC400] text-black px-3 py-1.5 pr-4 rounded-bl-lg shadow-lg flex items-center gap-1.5 transform rotate-0">
+              <Pin className="h-3.5 w-3.5 fill-current" />
+              <span className="text-[11px] font-bold uppercase tracking-wider">Pinned</span>
+            </div>
+            {/* Folded corner effect */}
+            <div className="absolute -bottom-1.5 right-0 w-0 h-0 border-l-[6px] border-l-transparent border-t-[6px] border-t-[#CC9E00]"></div>
+          </div>
         </div>
       )}
 
