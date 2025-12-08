@@ -14,7 +14,16 @@ Preferred communication style: Simple, everyday language.
 
 ### Completed Features
 
-1. **Community Photo Upload Feature**
+1. **Admin Edit Feature for Pending Submissions**
+   - Admins can edit all community fields before approving/rejecting
+   - Editable fields: name, description, platform, invite link, tags, category, visibility
+   - Edit button added to each pending submission card in admin panel
+   - Edit dialog with form fields, dropdowns for platform/category/visibility
+   - Tags entered as comma-separated values, converted to array on save
+   - API endpoint: PUT /api/admin/pending/:id with admin authentication
+   - Changes saved to database and reflected immediately in the pending list
+
+2. **Community Photo Upload Feature**
    - Users can upload photos when listing their community
    - Drag-and-drop or click-to-upload interface with image preview
    - File validation: JPEG, PNG, WebP, GIF formats, max 2MB size
