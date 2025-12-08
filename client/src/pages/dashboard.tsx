@@ -280,28 +280,19 @@ export default function Dashboard() {
                   </div>
 
                   <div className="px-4 lg:px-6 pb-6">
-                    <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 -mt-10 lg:-mt-12">
-                      <div className="flex items-end gap-4">
-                        <div className="w-20 h-20 lg:w-24 lg:h-24 rounded-full bg-gradient-to-br from-[#FFC400] to-[#FF8C00] flex items-center justify-center text-2xl lg:text-3xl font-bold text-black border-[3px] border-black shadow-xl flex-shrink-0 ring-2 ring-[#111]">
-                          {getInitials(user.fullName)}
-                        </div>
-                        <div className="pb-2 pt-12 lg:pt-14">
-                          <h2 className="text-lg lg:text-xl font-bold text-white flex items-center gap-2 flex-wrap">
-                            <span className="break-words">{user.fullName}</span>
-                          </h2>
-                          <div className="flex items-center gap-2 mt-1">
-                            <div className="w-3 h-3 rounded-full bg-green-500 flex-shrink-0"></div>
-                            <span className="text-sm text-gray-400">Online</span>
-                          </div>
+                    <div className="flex items-end gap-4 -mt-10 lg:-mt-12">
+                      <div className="w-20 h-20 lg:w-24 lg:h-24 rounded-full bg-gradient-to-br from-[#FFC400] to-[#FF8C00] flex items-center justify-center text-2xl lg:text-3xl font-bold text-black border-[3px] border-black shadow-xl flex-shrink-0 ring-2 ring-[#111]">
+                        {getInitials(user.fullName)}
+                      </div>
+                      <div className="pb-2 pt-12 lg:pt-14">
+                        <h2 className="text-lg lg:text-xl font-bold text-white flex items-center gap-2 flex-wrap">
+                          <span className="break-words">{user.fullName}</span>
+                        </h2>
+                        <div className="flex items-center gap-2 mt-1">
+                          <div className="w-3 h-3 rounded-full bg-green-500 flex-shrink-0"></div>
+                          <span className="text-sm text-gray-400">Online</span>
                         </div>
                       </div>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="border-[#FFC400] text-[#FFC400] hover:bg-[#FFC400]/10 rounded-lg w-full sm:w-auto"
-                      >
-                        Edit Profile
-                      </Button>
                     </div>
                   </div>
                 </div>
