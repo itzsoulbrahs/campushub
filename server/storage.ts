@@ -79,6 +79,7 @@ export interface IStorage {
   updateUserCommunity(id: string, userId: string, updates: UpdateUserCommunity): Promise<ApprovedCommunity | undefined>;
   softDeleteApprovedCommunity(id: string, userId: string): Promise<ApprovedCommunity | undefined>;
   deleteApprovedCommunity(id: string): Promise<void>;
+  togglePinCommunity(id: string, isPinned: boolean): Promise<ApprovedCommunity | undefined>;
   
   createRejectedCommunity(community: InsertRejectedCommunity): Promise<RejectedCommunity>;
   getRejectedCommunitiesByUserId(userId: string): Promise<RejectedCommunity[]>;
@@ -257,6 +258,15 @@ export class DatabaseStorage implements IStorage {
 
   async deleteApprovedCommunity(id: string): Promise<void> {
     await db.delete(approvedCommunities).where(eq(approvedCommunities.id, id));
+  }
+
+  async togglePinCommunity(id: string, isPinned: boolean): Promise<ApprovedCommunity | undefined> {
+    const [updated] = await db
+      .update(approvedCommunities)
+      .set({ isPinned })
+      .where(eq(approvedCommunities.id, id))
+      .returning();
+    return updated;
   }
 
   async createRejectedCommunity(community: InsertRejectedCommunity): Promise<RejectedCommunity> {

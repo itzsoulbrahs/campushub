@@ -241,6 +241,30 @@ export async function registerRoutes(
     }
   });
 
+  app.patch("/api/admin/approved/:id/pin", adminAuth, async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { isPinned } = req.body;
+      
+      if (typeof isPinned !== "boolean") {
+        return res.status(400).json({ success: false, error: "isPinned must be a boolean" });
+      }
+
+      const community = await storage.getApprovedCommunity(id);
+      
+      if (!community) {
+        return res.status(404).json({ success: false, error: "Community not found" });
+      }
+
+      const updated = await storage.togglePinCommunity(id, isPinned);
+
+      res.json({ success: true, community: updated });
+    } catch (error) {
+      console.error("Error toggling pin status:", error);
+      res.status(500).json({ success: false, error: "Failed to update pin status" });
+    }
+  });
+
   app.get("/api/user/submissions/:userId", async (req, res) => {
     try {
       const { userId } = req.params;
