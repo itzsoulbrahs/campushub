@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { useLocation } from "wouter";
 import { motion } from "framer-motion";
-import { Hexagon, Plus, CheckCircle, Trash2, ArrowLeft, Pencil, Upload, X, Image as ImageIcon, MessageSquare, ArrowUp, Clock } from "lucide-react";
+import { Hexagon, Plus, CheckCircle, Trash2, ArrowLeft, Pencil, Upload, X, Image as ImageIcon, MessageSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { Layout } from "@/components/layout";
@@ -34,13 +34,6 @@ interface UserCommunity {
   bumpedAt?: string | null;
 }
 
-interface BumpStatus {
-  lastBumpAt: string | null;
-  lastBumpCommunityId: string | null;
-  canBump: boolean;
-  nextAvailableAt: string | null;
-  hoursRemaining: number | null;
-}
 
 export default function MyCommunities() {
   const [, setLocation] = useLocation();
@@ -69,8 +62,7 @@ export default function MyCommunities() {
       const data = await response.json();
       return { 
         active: data.active as UserCommunity[], 
-        deleted: data.deleted as UserCommunity[],
-        bumpStatus: data.bumpStatus as BumpStatus
+        deleted: data.deleted as UserCommunity[]
       };
     },
     enabled: !!user?.id,
@@ -126,33 +118,7 @@ export default function MyCommunities() {
     },
   });
 
-  const bumpMutation = useMutation({
-    mutationFn: async (communityId: string) => {
-      const response = await fetch(`/api/user/communities/${communityId}/bump`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId: user?.id }),
-      });
-      const data = await response.json();
-      if (!response.ok) {
-        throw new Error(data.error || "Failed to bump community");
-      }
-      return data;
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["user-communities", user?.id] });
-      queryClient.invalidateQueries({ queryKey: ["approved-communities"] });
-      toast.success("Community bumped to the top!");
-    },
-    onError: (error: Error) => {
-      toast.error(error.message);
-    },
-  });
-
-  const handleBump = (communityId: string) => {
-    bumpMutation.mutate(communityId);
-  };
-
+  
   const handleOpenEdit = (community: UserCommunity) => {
     setEditingCommunity(community);
     setEditForm({
@@ -337,31 +303,7 @@ export default function MyCommunities() {
               </div>
             </div>
 
-            {userCommunities?.bumpStatus && (
-              <div className="bg-gradient-to-r from-[#FFC400]/10 to-[#FF8C00]/5 rounded-lg border border-[#FFC400]/20 p-4 lg:p-5 mb-8">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-[#FFC400]/20 flex items-center justify-center">
-                    <ArrowUp className="w-6 h-6 text-[#FFC400]" />
-                  </div>
-                  <div className="flex-1">
-                    <p className="text-[#FFC400] font-semibold text-sm">Bump Status</p>
-                    {userCommunities.bumpStatus.canBump ? (
-                      <p className="text-white text-sm mt-1">
-                        You can bump one community to push it to the top of the homepage!
-                      </p>
-                    ) : (
-                      <div className="flex items-center gap-2 mt-1">
-                        <Clock className="w-4 h-4 text-gray-400" />
-                        <p className="text-gray-400 text-sm">
-                          Next bump available in <span className="text-white font-semibold">{userCommunities.bumpStatus.hoursRemaining} hours</span>
-                        </p>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-            )}
-
+            
             <div className="mb-8">
               <h2 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
                 <CheckCircle className="w-5 h-5 text-green-400" />
@@ -403,23 +345,6 @@ export default function MyCommunities() {
                         } as Community}
                       />
                       <div className="absolute top-10 right-4 flex gap-2 z-30">
-                        <Button
-                          size="sm"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleBump(community.id);
-                          }}
-                          disabled={!userCommunities?.bumpStatus?.canBump || bumpMutation.isPending}
-                          className={`rounded-lg h-8 px-3 ${
-                            userCommunities?.bumpStatus?.canBump 
-                              ? "bg-green-600 hover:bg-green-700 text-white" 
-                              : "bg-gray-600 text-gray-300 cursor-not-allowed"
-                          }`}
-                          title={!userCommunities?.bumpStatus?.canBump ? `Next bump in ${userCommunities?.bumpStatus?.hoursRemaining}h` : "Bump to top"}
-                        >
-                          <ArrowUp className="w-3.5 h-3.5 mr-1" />
-                          {bumpMutation.isPending ? "..." : "Bump"}
-                        </Button>
                         <Button
                           size="sm"
                           onClick={(e) => {

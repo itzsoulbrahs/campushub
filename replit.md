@@ -81,3 +81,13 @@ The build process uses Vite for the client (to `dist/public`) and esbuild for th
 - Pinned communities stay at the top of the grid regardless of sorting
 - Database: Added isPinned column to approved_communities table (default: false)
 - API endpoint: PATCH /api/admin/approved/:id/pin with { isPinned: boolean } body
+
+### Dedicated Boost Center (Separate Section)
+- Created dedicated "/boost" page for boosting communities (removed from My Communities)
+- Futuristic cyan/blue neon design with glowing effects and modern UI
+- Compact cards showing only: community icon, name, and Tag ID
+- Prominent "Boost Now" button with neon glow effect (cyan gradient)
+- Shows boost status: available or cooldown timer
+- Currently boosted community displays with "BOOSTED" badge
+- Dashboard sidebar includes new "Boost" tab with gradient text
+- Quick access card on dashboard overview with neon styling

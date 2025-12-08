@@ -15,6 +15,7 @@ import AdminApprovals from "@/pages/admin-approvals";
 import Dashboard from "@/pages/dashboard";
 import SubmissionStatus from "@/pages/submission-status";
 import MyCommunities from "@/pages/my-communities";
+import Boost from "@/pages/boost";
 
 function Router() {
   return (
@@ -27,6 +28,7 @@ function Router() {
       <Route path="/dashboard" component={Dashboard} />
       <Route path="/submission-status" component={SubmissionStatus} />
       <Route path="/my-communities" component={MyCommunities} />
+      <Route path="/boost" component={Boost} />
       <Route path="/admin/approvals" component={AdminApprovals} />
       <Route component={NotFound} />
     </Switch>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
-import { User, Mail, Calendar, Users, Plus, LogOut, Hexagon, Clock, CheckCircle, XCircle, FileText, Home, Menu, ChevronRight } from "lucide-react";
+import { User, Mail, Calendar, Users, Plus, LogOut, Hexagon, Clock, CheckCircle, XCircle, FileText, Home, Menu, ChevronRight, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { Layout } from "@/components/layout";
@@ -212,6 +212,18 @@ export default function Dashboard() {
                 {activeCommunitiesCount}
               </span>
             )}
+          </button>
+          <button
+            onClick={() => {
+              setLocation("/boost");
+              setIsMobileSidebarOpen(false);
+            }}
+            className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-gray-400 hover:text-white hover:bg-[#2a2a2a] transition-all group"
+          >
+            <Zap className="w-4 h-4 text-cyan-400 group-hover:text-cyan-300" />
+            <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent font-semibold">
+              Boost
+            </span>
           </button>
         </div>
 
@@ -511,8 +523,29 @@ export default function Dashboard() {
                   <motion.button
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
+                    onClick={() => setLocation("/boost")}
+                    className="bg-gradient-to-r from-cyan-500/10 to-blue-600/5 rounded-lg border border-cyan-500/30 p-6 text-left hover:border-cyan-400 transition-colors group"
+                    style={{ boxShadow: "0 0 20px rgba(34, 211, 238, 0.1)" }}
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-4">
+                        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center">
+                          <Zap className="w-6 h-6 text-black" />
+                        </div>
+                        <div>
+                          <h3 className="font-semibold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">Boost Center</h3>
+                          <p className="text-sm text-gray-400">Boost your community to the top</p>
+                        </div>
+                      </div>
+                      <ChevronRight className="w-5 h-5 text-cyan-400" />
+                    </div>
+                  </motion.button>
+
+                  <motion.button
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
                     onClick={handleListCommunity}
-                    className="bg-gradient-to-r from-[#FFC400]/20 to-[#FF8C00]/20 rounded-lg border border-[#FFC400]/30 p-6 text-left hover:border-[#FFC400] transition-colors group md:col-span-2"
+                    className="bg-gradient-to-r from-[#FFC400]/20 to-[#FF8C00]/20 rounded-lg border border-[#FFC400]/30 p-6 text-left hover:border-[#FFC400] transition-colors group"
                   >
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-4">
