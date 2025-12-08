@@ -35,6 +35,7 @@ export default function Boost() {
   const [, setLocation] = useLocation();
   const { user, isLoading } = useAuth();
   const queryClient = useQueryClient();
+  const [countdown, setCountdown] = useState({ hours: 0, minutes: 0, seconds: 0 });
 
   const { data: userCommunities, isLoading: communitiesLoading } = useQuery({
     queryKey: ["user-communities", user?.id],
@@ -86,26 +87,14 @@ export default function Boost() {
       .slice(0, 2);
   };
 
+  const bumpStatus = userCommunities?.bumpStatus;
+
   useEffect(() => {
     if (!isLoading && !user) {
       toast.error("Please log in to bump your communities");
       setLocation("/login");
     }
   }, [user, isLoading, setLocation]);
-
-  if (isLoading || !user) {
-    return (
-      <div className="min-h-screen bg-black flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#FFC400]"></div>
-      </div>
-    );
-  }
-
-  const activeCommunities = userCommunities?.active || [];
-  const bumpStatus = userCommunities?.bumpStatus;
-  const currentlyBumpedId = bumpStatus?.lastBumpCommunityId;
-
-  const [countdown, setCountdown] = useState({ hours: 0, minutes: 0, seconds: 0 });
 
   useEffect(() => {
     if (!bumpStatus?.nextAvailableAt || bumpStatus.canBump) return;
@@ -129,6 +118,17 @@ export default function Boost() {
   }, [bumpStatus?.nextAvailableAt, bumpStatus?.canBump]);
 
   const formatTime = (num: number) => num.toString().padStart(2, '0');
+
+  if (isLoading || !user) {
+    return (
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#FFC400]"></div>
+      </div>
+    );
+  }
+
+  const activeCommunities = userCommunities?.active || [];
+  const currentlyBumpedId = bumpStatus?.lastBumpCommunityId;
 
   return (
     <Layout hideFooter>
