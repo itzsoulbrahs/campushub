@@ -164,7 +164,7 @@ export default function Boost() {
                 <Rocket className="w-12 h-12 text-[#FFC400]" />
               </motion.div>
               <h1 className="text-4xl lg:text-5xl font-bold mb-3">
-                <span className="text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]">
+                <span className="text-white">
                   Bump Center
                 </span>
               </h1>
