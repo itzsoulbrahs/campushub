@@ -54,6 +54,7 @@ export const approvedCommunities = pgTable("approved_communities", {
   rating: integer("rating").notNull().default(0),
   reviewCount: integer("review_count").notNull().default(0),
   isActive: boolean("is_active").notNull().default(true),
+  isPinned: boolean("is_pinned").notNull().default(false),
   category: text("category").notNull(),
   inviteLink: text("invite_link").notNull(),
   visibility: text("visibility").notNull().default("public"),
