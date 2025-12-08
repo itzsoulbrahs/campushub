@@ -153,6 +153,7 @@ export default function Login() {
         toast.error(data.error || "Invalid email or password");
       }
     } catch (error) {
+      console.error("Login error:", error);
       toast.error("Login failed. Please try again.");
     } finally {
       setIsLoading(false);
@@ -195,6 +196,7 @@ export default function Login() {
         toast.error(data.error || "Signup failed");
       }
     } catch (error) {
+      console.error("Signup error:", error);
       toast.error("Signup failed. Please try again.");
     } finally {
       setIsSigningUp(false);
