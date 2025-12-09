@@ -126,7 +126,7 @@ export function CommunityCard({ community, onClick, disableHoverScale = false }:
           </div>
         </div>
 
-        <p className="text-sm text-gray-400 line-clamp-2 leading-relaxed font-medium h-[40px]">
+        <p className="text-sm text-gray-400 line-clamp-2 leading-relaxed font-medium h-[40px] whitespace-pre-line">
           {community.description}
         </p>
 

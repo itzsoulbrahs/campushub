@@ -136,7 +136,7 @@ export function AdminCommunityCard({
           <span className="text-gray-600 truncate font-medium">{community.category}</span>
         </div>
 
-        <p className="text-sm text-gray-700 line-clamp-3 leading-relaxed mb-3">
+        <p className="text-sm text-gray-700 line-clamp-3 leading-relaxed mb-3 whitespace-pre-line">
           {community.description}
         </p>
 

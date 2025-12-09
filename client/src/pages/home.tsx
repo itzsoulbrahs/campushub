@@ -454,7 +454,7 @@ export default function Home() {
                   )}
                 </div>
 
-                <p className="text-gray-300 leading-relaxed mb-8 text-lg">
+                <p className="text-gray-300 leading-relaxed mb-8 text-lg whitespace-pre-line">
                   {selectedCommunity.description}
                 </p>
 
