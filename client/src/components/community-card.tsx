@@ -132,12 +132,12 @@ export function CommunityCard({ community, onClick, disableHoverScale = false }:
 
         <div className="flex flex-wrap gap-2 mt-auto pt-4">
           {community.tags.slice(0, 3).map((tag) => (
-            <span key={tag} className="text-[10px] px-2 py-1 bg-[#151515] text-gray-400 border border-[#333] group-hover:border-[#FFC400]/40 transition-colors uppercase font-bold tracking-wider">
+            <span key={tag} className="text-[10px] px-2 py-1 bg-[#151515] text-gray-400 border border-[#333] group-hover:border-[#FFC400]/40 transition-colors uppercase font-bold tracking-wider rounded-lg">
               #{tag}
             </span>
           ))}
           {community.tags.length > 3 && (
-            <span className="text-[10px] px-2 py-1 bg-[#151515] text-gray-500 border border-[#333]">
+            <span className="text-[10px] px-2 py-1 bg-[#151515] text-gray-500 border border-[#333] rounded-lg">
               +{community.tags.length - 3}
             </span>
           )}
