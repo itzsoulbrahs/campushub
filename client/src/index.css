@@ -155,28 +155,33 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.4), 0 0 50px rgba(0, 0, 0, 0.2);
 }
 
-/* Community cards grid - responsive based on item count */
+/* Community cards grid - fully responsive */
 .community-grid {
   display: grid;
   gap: 1.5rem;
+  grid-template-columns: 1fr;
 }
 
-.community-grid.grid-cols-2 {
-  grid-template-columns: repeat(2, 1fr);
-}
-
-.community-grid.grid-cols-3 {
-  grid-template-columns: repeat(3, 1fr);
-}
-
-@media (max-width: 768px) {
+/* Tablet: 2 columns */
+@media (min-width: 640px) {
   .community-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
   }
-  
-  .community-grid.grid-cols-2,
-  .community-grid.grid-cols-3 {
-    grid-template-columns: 1fr;
+}
+
+/* Desktop: 3 columns */
+@media (min-width: 1024px) {
+  .community-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Override for when only 1-2 items on desktop - center them */
+@media (min-width: 1024px) {
+  .community-grid.grid-cols-2 {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 800px;
+    margin: 0 auto;
   }
 }
 
