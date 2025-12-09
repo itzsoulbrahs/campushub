@@ -456,8 +456,6 @@ export default function Home() {
 
                 <p className="text-gray-300 leading-relaxed mb-8 text-lg">
                   {selectedCommunity.description}
-                  <br/><br/>
-                  Join our community to connect with like-minded students, participate in events, and grow your network at SRM.
                 </p>
 
                 <div className="flex flex-wrap gap-2 mb-8">
