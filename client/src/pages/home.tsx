@@ -286,10 +286,10 @@ export default function Home() {
 
       {/* Main Content Grid */}
       <div className="container px-4 md:px-6 py-16" ref={communityGridRef}>
-        <div className="flex flex-col md:flex-row gap-10">
+        <div className="flex flex-col lg:flex-row gap-10">
           
-          {/* Sidebar - Desktop */}
-          <aside className="hidden md:block w-72 flex-shrink-0">
+          {/* Sidebar - Desktop only (1024px+) */}
+          <aside className="hidden lg:block w-72 flex-shrink-0">
             <div className="sticky top-28 max-h-[calc(100vh-8rem)] flex flex-col">
               <div className="flex items-center justify-between mb-6 border-b border-black/20 pb-4 flex-shrink-0">
                 <h2 className="font-heading text-lg font-bold uppercase tracking-wider text-black flex items-center gap-2">
@@ -314,8 +314,8 @@ export default function Home() {
             </div>
           </aside>
 
-          {/* Mobile Filter Toggle */}
-          <div className="md:hidden flex items-center justify-between mb-8">
+          {/* Mobile/Tablet Filter Toggle */}
+          <div className="lg:hidden flex items-center justify-between mb-8">
             <h2 className="font-heading text-2xl font-bold uppercase text-black">Communities</h2>
             <Sheet>
               <SheetTrigger asChild>
