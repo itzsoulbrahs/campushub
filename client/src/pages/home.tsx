@@ -46,6 +46,7 @@ export default function Home() {
   const [selectedCommunity, setSelectedCommunity] = useState<Community | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [filters, setFilters] = useState<FilterState>(initialFilters);
+  const [visibleCount, setVisibleCount] = useState(9);
   const communityGridRef = useRef<HTMLDivElement>(null);
 
   const { data: approvedCommunities, isLoading } = useQuery({
@@ -86,6 +87,7 @@ export default function Home() {
     const tagWithoutHash = tag.replace("#", "");
     setSearchQuery(tagWithoutHash);
     setActiveSearch(tagWithoutHash);
+    setVisibleCount(9);
     scrollToResults();
   };
 
@@ -100,6 +102,7 @@ export default function Home() {
 
   const handleSearch = useCallback(() => {
     setActiveSearch(searchQuery);
+    setVisibleCount(9);
     if (searchQuery.trim()) {
       scrollToResults();
     }
@@ -113,10 +116,12 @@ export default function Home() {
 
   const handleFilterChange = useCallback((newFilters: FilterState) => {
     setFilters(newFilters);
+    setVisibleCount(9);
   }, []);
 
   const handleResetFilters = useCallback(() => {
     setFilters(initialFilters);
+    setVisibleCount(9);
   }, []);
 
   const filteredCommunities = useMemo(() => {
@@ -335,7 +340,7 @@ export default function Home() {
             <div className="flex items-center justify-between mb-8 bg-gradient-to-r from-yellow-50 to-yellow-100 p-4 border-l-4 border-black rounded-2xl">
               <div className="flex items-center gap-3">
                 <p className="text-sm text-black/70 font-medium uppercase tracking-wide">
-                  Showing <span className="text-black font-bold">{filteredCommunities.length}</span> Results
+                  Showing <span className="text-black font-bold">{Math.min(visibleCount, filteredCommunities.length)}</span> of <span className="text-black font-bold">{filteredCommunities.length}</span> Results
                 </p>
                 {activeSearch && (
                   <div className="flex items-center gap-2 bg-black/10 px-3 py-1 rounded-full">
@@ -361,10 +366,10 @@ export default function Home() {
             
             {filteredCommunities.length > 0 ? (
               <div className={cn("community-grid", {
-                "grid-cols-2": filteredCommunities.length <= 2,
-                "grid-cols-3": filteredCommunities.length >= 3,
+                "grid-cols-2": Math.min(filteredCommunities.length, visibleCount) <= 2,
+                "grid-cols-3": Math.min(filteredCommunities.length, visibleCount) >= 3,
               })}>
-                {filteredCommunities.map((community) => (
+                {filteredCommunities.slice(0, visibleCount).map((community) => (
                   <CommunityCard 
                     key={community.id}
                     community={community} 
@@ -391,9 +396,13 @@ export default function Home() {
             )}
 
             {/* Load More */}
-            {filteredCommunities.length > 0 && (
+            {filteredCommunities.length > visibleCount && (
               <div className="mt-16 flex justify-center">
-                <Button variant="outline" className="border-black/30 px-10 py-7 text-sm hover:bg-black hover:text-white hover:border-black text-black font-bold uppercase tracking-widest rounded-2xl transition-all group relative overflow-hidden shadow-lg hover:shadow-[0_0_25px_rgba(0,0,0,0.2)]">
+                <Button 
+                  variant="outline" 
+                  className="border-black/30 px-10 py-7 text-sm hover:bg-black hover:text-white hover:border-black text-black font-bold uppercase tracking-widest rounded-2xl transition-all group relative overflow-hidden shadow-lg hover:shadow-[0_0_25px_rgba(0,0,0,0.2)]"
+                  onClick={() => setVisibleCount(prev => prev + 12)}
+                >
                   <span className="relative z-10">Load More Communities</span>
                   <div className="absolute inset-0 bg-black/10 transform -skew-x-12 -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></div>
                 </Button>
