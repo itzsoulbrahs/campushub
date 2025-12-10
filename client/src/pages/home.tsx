@@ -289,8 +289,8 @@ export default function Home() {
         <div className="flex flex-col md:flex-row gap-10">
           
           {/* Sidebar - Desktop */}
-          <aside className="hidden md:block w-72 flex-shrink-0">
-            <div className="sticky top-28 max-h-[calc(100vh-8rem)] flex flex-col">
+          <aside className="hidden md:block w-72 flex-shrink-0 self-start">
+            <div className="sticky top-28 max-h-[calc(100vh-8rem)] flex flex-col filter-sidebar">
               <div className="flex items-center justify-between mb-6 border-b border-black/20 pb-4 flex-shrink-0">
                 <h2 className="font-heading text-lg font-bold uppercase tracking-wider text-black flex items-center gap-2">
                   <Hexagon className="h-4 w-4 text-black" /> Filters
@@ -336,7 +336,7 @@ export default function Home() {
           </div>
 
           {/* Grid */}
-          <div className="flex-1">
+          <div className="flex-1 transition-all duration-300 ease-out">
             <div className="flex items-center justify-between mb-8 bg-gradient-to-r from-yellow-50 to-yellow-100 p-4 border-l-4 border-black rounded-2xl">
               <div className="flex items-center gap-3">
                 <p className="text-sm text-black/70 font-medium uppercase tracking-wide">
