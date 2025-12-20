@@ -20,7 +20,7 @@ const faqs = [
 export default function FAQ() {
   return (
     <Layout>
-      <div className="container px-4 md:px-6 py-16 max-w-3xl mx-auto">
+      <div className="w-full px-4 md:px-6 py-16 max-w-3xl mx-auto">
         <div className="mb-12 text-center">
           <div className="inline-flex items-center justify-center w-12 h-12 mb-6 bg-[#FFC400]/20 rounded-full">
             <HelpCircle className="w-6 h-6 text-[#FFC400]" />

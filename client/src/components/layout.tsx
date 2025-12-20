@@ -22,7 +22,7 @@ export function Layout({ children, hideFooter = false }: LayoutProps) {
       {/* Navigation */}
       <header className="sticky top-0 z-50 w-full border-b border-black/20 bg-white/10 backdrop-blur-xl">
         {/* Desktop Layout: 3-column grid - only on large screens */}
-        <div className="container hidden lg:grid lg:grid-cols-[1fr_auto_1fr] h-16 items-center px-4 lg:px-6">
+        <div className="w-full hidden lg:grid lg:grid-cols-[1fr_auto_1fr] h-16 items-center px-4 lg:px-6 max-w-7xl mx-auto">
           {/* Left: Logo */}
           <a href="/" className="flex items-center gap-2 justify-self-start transition-opacity hover:opacity-90 group cursor-pointer no-underline">
             <div className="relative flex h-9 w-9 items-center justify-center">
@@ -68,7 +68,7 @@ export function Layout({ children, hideFooter = false }: LayoutProps) {
         </div>
 
         {/* Mobile/Tablet Layout - shows on small and medium screens */}
-        <div className="container flex lg:hidden h-16 items-center justify-between px-4">
+        <div className="w-full flex lg:hidden h-16 items-center justify-between px-4 max-w-7xl mx-auto">
           {/* Mobile Logo */}
           <a href="/" className="flex items-center gap-2 transition-opacity hover:opacity-90 group cursor-pointer no-underline">
             <div className="relative flex h-9 w-9 items-center justify-center">
@@ -128,7 +128,7 @@ export function Layout({ children, hideFooter = false }: LayoutProps) {
 
       {!hideFooter && (
       <footer className="border-t border-white/10 bg-black py-12">
-        <div className="container px-4 md:px-6">
+        <div className="w-full px-4 md:px-6 max-w-7xl mx-auto">
           <div className="grid gap-8 md:grid-cols-4">
             <div className="space-y-4">
               <h4 className="text-lg font-bold font-heading uppercase tracking-wider text-white flex items-center gap-2">

@@ -290,7 +290,7 @@ export default function Home() {
           
           {/* Sidebar - Desktop only (1024px+) */}
           <aside className="hidden lg:block w-72 flex-shrink-0">
-            <div className="sticky top-32 max-h-[calc(100vh-10rem)] flex flex-col">
+            <div className="flex flex-col">
               <div className="flex items-center justify-between mb-6 border-b border-black/20 pb-4 flex-shrink-0">
                 <h2 className="font-heading text-lg font-bold uppercase tracking-wider text-black flex items-center gap-2">
                   <Hexagon className="h-4 w-4 text-black" /> Filters

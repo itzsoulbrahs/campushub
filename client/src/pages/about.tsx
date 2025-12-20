@@ -32,7 +32,7 @@ export default function About() {
           <div className="absolute inset-0 bg-gradient-to-b from-[#FFC400]/50 via-transparent to-[#FFC400]/50" />
         </div>
 
-        <div className="container relative z-10 px-4 md:px-6 text-center max-w-4xl mx-auto">
+        <div className="w-full relative z-10 px-4 md:px-6 text-center max-w-4xl mx-auto">
           <div className="inline-flex items-center justify-center w-16 h-16 mb-8 bg-black text-[#FFC400] relative rounded-xl shadow-lg">
             <Hexagon className="h-8 w-8 fill-[#FFC400] text-[#FFC400] absolute" />
           </div>
@@ -48,7 +48,7 @@ export default function About() {
         </div>
       </div>
 
-      <div className="container px-4 md:px-6 pb-32 -mt-16 relative z-20">
+      <div className="w-full px-4 md:px-6 pb-32 -mt-16 relative z-20 max-w-7xl mx-auto">
         <div className="grid md:grid-cols-3 gap-8">
           <Card className="bg-white border-black/10 rounded-3xl relative overflow-hidden group shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
             <div className="absolute top-0 left-0 w-1 h-full bg-transparent group-hover:bg-gradient-to-b group-hover:from-[#FFC400] group-hover:to-[#FF8C00] transition-all duration-300"></div>

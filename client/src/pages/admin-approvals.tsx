@@ -434,7 +434,7 @@ export default function AdminApprovals() {
   if (!isAuthenticated) {
     return (
       <Layout>
-        <div className="container px-4 md:px-6 py-16 max-w-md mx-auto">
+        <div className="w-full px-4 md:px-6 py-16 max-w-md mx-auto">
           <Card className="bg-white border-black/10 rounded-3xl shadow-2xl">
             <CardHeader className="text-center pb-2">
               <div className="w-16 h-16 bg-[#FFC400]/20 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -472,7 +472,7 @@ export default function AdminApprovals() {
 
   return (
     <Layout>
-      <div className="container px-4 md:px-6 py-16 max-w-6xl mx-auto">
+      <div className="w-full px-4 md:px-6 py-16 max-w-6xl mx-auto">
         <div className="mb-12 flex items-center justify-between">
           <div>
             <div className="flex items-center gap-3 mb-4">
