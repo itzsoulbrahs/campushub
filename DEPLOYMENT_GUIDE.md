@@ -38,6 +38,9 @@ The server listens on `process.env.PORT` (defaults to port 5000).
 
 #### Admin Authentication
 - `ADMIN_PASSWORD` - Password for admin endpoints (required if using admin features)
+  - Create a strong, unique password (e.g., a random string)
+  - Used to access `/admin/approvals` page for community moderation
+  - On Render: Set this in Environment variables during deployment
 
 ## Deployment on Render
 
@@ -55,6 +58,9 @@ The server listens on `process.env.PORT` (defaults to port 5000).
 In Render Dashboard → Your Service → Environment:
 - `NODE_ENV=production` (optional, build script sets this)
 - `DATABASE_URL` (only if using database)
+- `ADMIN_PASSWORD` (required if you need admin access to approve/reject communities)
+  - Example: `AdminPassword#2024Secure123`
+  - Use this password when logging into the `/admin/approvals` page
 
 ### Step 4: Deploy
 Click "Create Web Service" and Render will handle the rest.
