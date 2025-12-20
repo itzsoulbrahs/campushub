@@ -285,12 +285,12 @@ export default function Home() {
       </div>
 
       {/* Main Content Grid */}
-      <div className="container px-4 md:px-6 py-16" ref={communityGridRef}>
-        <div className="flex flex-col lg:flex-row gap-10">
+      <div className="w-full px-4 md:px-6 py-16" ref={communityGridRef}>
+        <div className="flex flex-col lg:flex-row gap-10 max-w-7xl mx-auto">
           
           {/* Sidebar - Desktop only (1024px+) */}
           <aside className="hidden lg:block w-72 flex-shrink-0">
-            <div className="sticky top-28 max-h-[calc(100vh-8rem)] flex flex-col">
+            <div className="sticky top-32 max-h-[calc(100vh-10rem)] flex flex-col">
               <div className="flex items-center justify-between mb-6 border-b border-black/20 pb-4 flex-shrink-0">
                 <h2 className="font-heading text-lg font-bold uppercase tracking-wider text-black flex items-center gap-2">
                   <Hexagon className="h-4 w-4 text-black" /> Filters
@@ -336,9 +336,9 @@ export default function Home() {
           </div>
 
           {/* Grid */}
-          <div className="flex-1">
-            <div className="flex flex-wrap items-center justify-between gap-3 mb-8 bg-gradient-to-r from-yellow-50 to-yellow-100 p-4 border-l-4 border-black rounded-2xl overflow-hidden">
-              <div className="flex flex-wrap items-center gap-3 min-w-0 flex-1">
+          <div className="flex-1 w-full">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8 bg-gradient-to-r from-yellow-50 to-yellow-100 p-4 border-l-4 border-black rounded-2xl overflow-hidden">
+              <div className="flex flex-col sm:flex-row flex-wrap items-start sm:items-center gap-3 min-w-0 flex-1">
                 <p className="text-sm text-black/70 font-medium uppercase tracking-wide flex-shrink-0">
                   Showing <span className="text-black font-bold">{Math.min(visibleCount, filteredCommunities.length)}</span> of <span className="text-black font-bold">{filteredCommunities.length}</span> Results
                 </p>
@@ -354,9 +354,9 @@ export default function Home() {
                   </div>
                 )}
               </div>
-              <div className="flex items-center gap-3 flex-shrink-0">
+              <div className="flex items-center gap-3 flex-shrink-0 w-full sm:w-auto">
                  <span className="text-sm text-black/60 font-bold uppercase tracking-wider hidden sm:inline">Sort by:</span>
-                 <select className="bg-white border border-black/20 rounded-xl text-xs px-3 py-2 focus:outline-none focus:border-black text-black font-bold uppercase tracking-wide cursor-pointer hover:border-black transition-colors">
+                 <select className="flex-1 sm:flex-none bg-white border border-black/20 rounded-xl text-xs px-3 py-2 focus:outline-none focus:border-black text-black font-bold uppercase tracking-wide cursor-pointer hover:border-black transition-colors">
                     <option value="popular">Most Popular</option>
                     <option value="newest">Newest</option>
                     <option value="rating">Top Rated</option>
@@ -365,10 +365,7 @@ export default function Home() {
             </div>
             
             {filteredCommunities.length > 0 ? (
-              <div className={cn("community-grid", {
-                "grid-cols-2": Math.min(filteredCommunities.length, visibleCount) <= 2,
-                "grid-cols-3": Math.min(filteredCommunities.length, visibleCount) >= 3,
-              })}>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
                 {filteredCommunities.slice(0, visibleCount).map((community) => (
                   <CommunityCard 
                     key={community.id}
@@ -415,13 +412,13 @@ export default function Home() {
       {/* Community Details Dialog with Center Pop-in Animation */}
       <Dialog open={isModalOpen} onOpenChange={(open) => !open && handleCloseModal()}>
         <DialogContent 
-          className="bg-[#0A0A0A] border-[#333] text-white max-w-2xl p-0 overflow-hidden rounded-3xl"
+          className="bg-[#0A0A0A] border-[#333] text-white max-w-2xl p-0 overflow-hidden rounded-3xl max-h-[90vh] overflow-y-auto"
         >
           {selectedCommunity && (
             <>
-              <div className="relative h-32 bg-gradient-to-r from-[#FFC400] to-[#FF8C00] flex items-end p-6">
-                <div className="absolute -bottom-10 left-6 flex items-end gap-4">
-                  <div className="h-24 w-24 rounded-2xl bg-[#151515] border-4 border-[#0A0A0A] flex items-center justify-center shadow-xl overflow-hidden">
+              <div className="relative h-28 sm:h-32 bg-gradient-to-r from-[#FFC400] to-[#FF8C00] flex items-end p-4 sm:p-6">
+                <div className="absolute -bottom-8 sm:-bottom-10 left-4 sm:left-6 flex items-end gap-3 sm:gap-4">
+                  <div className="h-16 w-16 sm:h-24 sm:w-24 rounded-2xl bg-[#151515] border-4 border-[#0A0A0A] flex items-center justify-center shadow-xl overflow-hidden">
                     {selectedCommunity.imageUrl ? (
                       <img 
                         src={selectedCommunity.imageUrl} 
@@ -435,7 +432,7 @@ export default function Home() {
                 </div>
               </div>
               
-              <div className="pt-2 px-6 pb-8">
+              <div className="pt-10 sm:pt-12 px-4 sm:px-6 pb-6 sm:pb-8">
                 {selectedCommunity.adminTagId && (
                   <div className="flex justify-end">
                     <span className="text-[11px] font-mono text-gray-400 tracking-wider">

@@ -545,12 +545,12 @@ export default function Dashboard() {
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={handleListCommunity}
-                    className="bg-gradient-to-r from-[#FFC400]/20 to-[#FF8C00]/20 rounded-lg border border-[#FFC400]/30 p-6 text-left hover:border-[#FFC400] transition-colors group"
+                    className="bg-[#111] rounded-lg border border-[#2a2a2a] p-6 text-left hover:border-[#FFC400]/50 transition-colors group"
                   >
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 rounded-xl bg-[#FFC400] flex items-center justify-center">
-                          <Plus className="w-6 h-6 text-black" />
+                        <div className="w-12 h-12 rounded-xl bg-yellow-500/20 flex items-center justify-center">
+                          <Plus className="w-6 h-6 text-yellow-400" />
                         </div>
                         <div>
                           <h3 className="font-semibold text-white group-hover:text-[#FFC400] transition-colors">List a New Community</h3>
