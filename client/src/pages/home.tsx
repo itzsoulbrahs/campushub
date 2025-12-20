@@ -229,7 +229,7 @@ export default function Home() {
           <div className="absolute inset-0 bg-black/5" />
         </div>
 
-        <div className="container relative z-10 px-4 md:px-6 py-20 md:py-32 flex flex-col items-center text-center">
+        <div className="w-full px-4 md:px-6 py-20 md:py-32 flex flex-col items-center text-center relative z-10 max-w-7xl mx-auto">
           <div className="inline-flex items-center border border-black/40 bg-black/10 px-4 py-1.5 text-xs font-bold text-black mb-8 backdrop-blur-md uppercase tracking-widest">
             <Zap className="mr-2 h-3 w-3 fill-black" />
             <span>The #1 Community Directory for SRM</span>
