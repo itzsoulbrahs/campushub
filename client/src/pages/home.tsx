@@ -250,7 +250,7 @@ export default function Home() {
                  <Search className="h-6 w-6 text-black/60 group-focus-within:text-black transition-colors" />
               </div>
               <Input 
-                placeholder="SEARCH COMMUNITIES... (e.g. trading, dance, hostel)" 
+                placeholder="SEARCH COMMUNITIES..." 
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onKeyDown={handleKeyDown}

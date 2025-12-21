@@ -182,12 +182,9 @@ export default function Boost() {
                 transition={{ delay: 0.2 }}
                 className={`rounded-2xl p-6 mb-10 border ${
                   bumpStatus.canBump
-                    ? "bg-gradient-to-r from-[#FFC400]/10 to-[#FF8C00]/5 border-[#FFC400]/30"
-                    : "bg-gradient-to-r from-gray-800/50 to-gray-900/50 border-gray-700"
+                    ? "bg-[#111] border-[#2a2a2a]"
+                    : "bg-[#111] border-[#2a2a2a]"
                 }`}
-                style={bumpStatus.canBump ? {
-                  boxShadow: "0 0 40px rgba(255, 196, 0, 0.1)"
-                } : {}}
               >
                 <div className="flex items-center gap-5">
                   <div className={`w-14 h-14 rounded-xl flex items-center justify-center ${

@@ -374,34 +374,20 @@ export default function Dashboard() {
                     </div>
 
                     <div className="flex items-center justify-between py-4 border-b border-[#2a2a2a]">
-                      <div className="flex-1 min-w-0 mr-4">
+                      <div className="flex-1 min-w-0">
                         <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1">
                           Email
                         </p>
-                        <p className="text-white font-medium truncate">
-                          {isEmailRevealed ? (
-                            <>
-                              {user.email}{" "}
-                              <button 
-                                onClick={() => setIsEmailRevealed(false)}
-                                className="text-[#FFC400] text-sm hover:underline"
-                              >
-                                Hide
-                              </button>
-                            </>
-                          ) : (
-                            <>
-                              {maskEmail(user.email)}{" "}
-                              <button 
-                                onClick={() => setIsEmailRevealed(true)}
-                                className="text-[#FFC400] text-sm hover:underline"
-                              >
-                                Reveal
-                              </button>
-                            </>
-                          )}
+                        <p className="text-white font-medium">
+                          {isEmailRevealed ? user.email : maskEmail(user.email)}
                         </p>
                       </div>
+                      <button 
+                        onClick={() => setIsEmailRevealed(!isEmailRevealed)}
+                        className="text-[#FFC400] text-sm hover:underline font-medium flex-shrink-0 ml-4"
+                      >
+                        {isEmailRevealed ? "Hide" : "Reveal"}
+                      </button>
                     </div>
 
                     <div className="flex items-center justify-between py-4">
