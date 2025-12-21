@@ -44,7 +44,7 @@ export function Layout({ children, hideFooter = false }: LayoutProps) {
           {/* Right: CTA Buttons */}
           <div className="flex items-center gap-3 justify-self-end">
             <Link href="/list-community">
-              <Button variant="outline" className="border-2 border-black bg-[#FFB700] text-black hover:bg-black/5 font-bold uppercase tracking-wider rounded-full transition-all duration-300 text-xs px-4">
+              <Button variant="outline" className="border border-black bg-[#FFB700] text-black hover:bg-black/5 font-bold uppercase tracking-wider rounded-full transition-all duration-300 text-xs px-4">
                 <PlusCircle className="mr-2 h-4 w-4" />
                 List Community
               </Button>
@@ -58,7 +58,7 @@ export function Layout({ children, hideFooter = false }: LayoutProps) {
               </Link>
             ) : (
               <Link href="/login">
-                <Button variant="outline" className="border-2 border-black bg-[#FFB700] text-black hover:bg-black/5 font-bold uppercase tracking-wider rounded-full text-xs px-4">
+                <Button variant="outline" className="border border-black bg-[#FFB700] text-black hover:bg-black/5 font-bold uppercase tracking-wider rounded-full text-xs px-4">
                   <LogIn className="mr-2 h-4 w-4" />
                   Log In
                 </Button>
