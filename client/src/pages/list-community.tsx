@@ -24,8 +24,22 @@ const formSchema = z.object({
   platform: z.string(),
   inviteLink: z.string().url("Please enter a valid URL."),
   category: z.string(),
-  description: z.string().min(100, "Description must be at least 100 characters."),
-  tags: z.string(),
+  description: z.string()
+    .min(100, "Description must be at least 100 characters.")
+    .max(1000, "Description cannot exceed 1000 characters."),
+  tags: z.string().refine(
+    (val) => {
+      const tagsArray = val.split(",").map(tag => tag.trim()).filter(tag => tag.length > 0);
+      return tagsArray.length >= 1;
+    },
+    "Please add at least 1 tag."
+  ).refine(
+    (val) => {
+      const tagsArray = val.split(",").map(tag => tag.trim()).filter(tag => tag.length > 0);
+      return tagsArray.length <= 8;
+    },
+    "You can add a maximum of 8 tags."
+  ),
   visibility: z.enum(["public", "boys-only", "girls-only"]),
   isAdmin: z.boolean().refine(val => val === true, "You must be an admin to list a community."),
 });
@@ -405,15 +419,38 @@ export default function ListCommunity() {
                 <FormField
                   control={form.control}
                   name="tags"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="uppercase font-bold text-xs tracking-widest text-black/70">Tags (comma separated)</FormLabel>
-                      <FormControl>
-                        <Input placeholder="coding, tech, beginners" {...field} className="bg-gray-50 border-black/20 h-12 text-black placeholder:text-black/40 focus:border-[#FFC400] rounded-2xl focus:shadow-[0_0_15px_rgba(255,196,0,0.2)]" />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
+                  render={({ field }) => {
+                    const tagsArray = field.value
+                      .split(",")
+                      .map(tag => tag.trim())
+                      .filter(tag => tag.length > 0);
+                    const tagCount = tagsArray.length;
+                    const isValidTagCount = tagCount >= 1 && tagCount <= 8;
+                    return (
+                      <FormItem>
+                        <div className="flex justify-between items-center mb-2">
+                          <FormLabel className="uppercase font-bold text-xs tracking-widest text-black/70">Tags (1-8, comma separated)</FormLabel>
+                          <span className={`text-xs font-bold tracking-wider ${isValidTagCount ? "text-green-600" : tagCount > 0 ? "text-orange-600" : "text-black/40"}`}>
+                            {tagCount}/8
+                          </span>
+                        </div>
+                        <FormControl>
+                          <Input placeholder="coding, tech, beginners" {...field} className="bg-gray-50 border-black/20 h-12 text-black placeholder:text-black/40 focus:border-[#FFC400] rounded-2xl focus:shadow-[0_0_15px_rgba(255,196,0,0.2)]" />
+                        </FormControl>
+                        {tagCount === 0 && field.value.length > 0 && (
+                          <p className="text-xs text-orange-600 font-medium mt-2">
+                            Please enter at least 1 tag.
+                          </p>
+                        )}
+                        {tagCount > 8 && (
+                          <p className="text-xs text-red-600 font-medium mt-2">
+                            You can add a maximum of 8 tags. Currently have {tagCount}.
+                          </p>
+                        )}
+                        <FormMessage />
+                      </FormItem>
+                    );
+                  }}
                 />
 
                 <FormField
@@ -421,21 +458,26 @@ export default function ListCommunity() {
                   name="description"
                   render={({ field }) => {
                     const charCount = field.value?.length || 0;
-                    const isValid = charCount >= 100;
+                    const isValid = charCount >= 100 && charCount <= 1000;
                     return (
                       <FormItem>
                         <div className="flex justify-between items-center mb-2">
-                          <FormLabel className="uppercase font-bold text-xs tracking-widest text-black/70">Description (Minimum 100 characters)</FormLabel>
+                          <FormLabel className="uppercase font-bold text-xs tracking-widest text-black/70">Description (100-1000 characters)</FormLabel>
                           <span className={`text-xs font-bold tracking-wider ${isValid ? "text-green-600" : charCount > 0 ? "text-orange-600" : "text-black/40"}`}>
-                            {charCount}/100
+                            {charCount}/1000
                           </span>
                         </div>
                         <FormControl>
-                          <Textarea placeholder="Tell us what your community is about..." className="resize-none bg-gray-50 border-black/20 min-h-[120px] text-black placeholder:text-black/40 focus:border-[#FFC400] rounded-2xl focus:shadow-[0_0_15px_rgba(255,196,0,0.2)]" {...field} />
+                          <Textarea placeholder="Tell us what your community is about..." maxLength={1000} className="resize-none bg-gray-50 border-black/20 min-h-[120px] text-black placeholder:text-black/40 focus:border-[#FFC400] rounded-2xl focus:shadow-[0_0_15px_rgba(255,196,0,0.2)]" {...field} />
                         </FormControl>
                         {charCount < 100 && charCount > 0 && (
                           <p className="text-xs text-orange-600 font-medium mt-2">
                             You need {100 - charCount} more character{100 - charCount !== 1 ? "s" : ""} to submit.
+                          </p>
+                        )}
+                        {charCount > 1000 && (
+                          <p className="text-xs text-red-600 font-medium mt-2">
+                            Description cannot exceed 1000 characters. Currently at {charCount}.
                           </p>
                         )}
                         <FormMessage />
@@ -469,7 +511,11 @@ export default function ListCommunity() {
                   )}
                 />
 
-                <Button type="submit" className="w-full bg-black hover:bg-gray-800 text-white font-black text-lg h-14 uppercase tracking-wider rounded-2xl shadow-lg hover:shadow-xl transition-all mt-4">
+                <Button 
+                  type="submit" 
+                  disabled={!form.formState.isValid}
+                  className="w-full bg-black hover:bg-gray-800 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-black text-lg h-14 uppercase tracking-wider rounded-2xl shadow-lg hover:shadow-xl transition-all mt-4"
+                >
                   Submit Community
                 </Button>
               </form>
