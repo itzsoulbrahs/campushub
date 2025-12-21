@@ -24,7 +24,7 @@ const formSchema = z.object({
   platform: z.string(),
   inviteLink: z.string().url("Please enter a valid URL."),
   category: z.string(),
-  description: z.string().min(10, "Description must be at least 10 characters."),
+  description: z.string().min(100, "Description must be at least 100 characters."),
   tags: z.string(),
   visibility: z.enum(["public", "boys-only", "girls-only"]),
   isAdmin: z.boolean().refine(val => val === true, "You must be an admin to list a community."),
@@ -419,15 +419,29 @@ export default function ListCommunity() {
                 <FormField
                   control={form.control}
                   name="description"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="uppercase font-bold text-xs tracking-widest text-black/70">Description</FormLabel>
-                      <FormControl>
-                        <Textarea placeholder="Tell us what your community is about..." className="resize-none bg-gray-50 border-black/20 min-h-[120px] text-black placeholder:text-black/40 focus:border-[#FFC400] rounded-2xl focus:shadow-[0_0_15px_rgba(255,196,0,0.2)]" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
+                  render={({ field }) => {
+                    const charCount = field.value?.length || 0;
+                    const isValid = charCount >= 100;
+                    return (
+                      <FormItem>
+                        <div className="flex justify-between items-center mb-2">
+                          <FormLabel className="uppercase font-bold text-xs tracking-widest text-black/70">Description (Minimum 100 characters)</FormLabel>
+                          <span className={`text-xs font-bold tracking-wider ${isValid ? "text-green-600" : charCount > 0 ? "text-orange-600" : "text-black/40"}`}>
+                            {charCount}/100
+                          </span>
+                        </div>
+                        <FormControl>
+                          <Textarea placeholder="Tell us what your community is about..." className="resize-none bg-gray-50 border-black/20 min-h-[120px] text-black placeholder:text-black/40 focus:border-[#FFC400] rounded-2xl focus:shadow-[0_0_15px_rgba(255,196,0,0.2)]" {...field} />
+                        </FormControl>
+                        {charCount < 100 && charCount > 0 && (
+                          <p className="text-xs text-orange-600 font-medium mt-2">
+                            You need {100 - charCount} more character{100 - charCount !== 1 ? "s" : ""} to submit.
+                          </p>
+                        )}
+                        <FormMessage />
+                      </FormItem>
+                    );
+                  }}
                 />
 
                 <FormField
