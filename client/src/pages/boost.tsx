@@ -211,15 +211,17 @@ export default function Boost() {
                       </>
                     )}
                   </div>
-                  <div className="flex items-center gap-1 bg-gray-900/80 px-4 py-3 rounded-xl border border-gray-700">
-                    <div className="flex items-center gap-1 font-mono text-2xl font-bold">
-                      <span className="text-[#FFC400] bg-gray-800 px-2 py-1 rounded">{formatTime(bumpStatus.canBump ? 0 : countdown.hours)}</span>
-                      <span className="text-gray-500">:</span>
-                      <span className="text-[#FFC400] bg-gray-800 px-2 py-1 rounded">{formatTime(bumpStatus.canBump ? 0 : countdown.minutes)}</span>
-                      <span className="text-gray-500">:</span>
-                      <span className="text-[#FFC400] bg-gray-800 px-2 py-1 rounded">{formatTime(bumpStatus.canBump ? 0 : countdown.seconds)}</span>
+                  {bumpStatus && (
+                    <div className="flex items-center gap-1 bg-gray-900/80 px-4 py-3 rounded-xl border border-gray-700">
+                      <div className="flex items-center gap-1 font-mono text-2xl font-bold">
+                        <span className="text-[#FFC400] bg-gray-800 px-2 py-1 rounded">{formatTime(bumpStatus.canBump ? 0 : countdown.hours)}</span>
+                        <span className="text-gray-500">:</span>
+                        <span className="text-[#FFC400] bg-gray-800 px-2 py-1 rounded">{formatTime(bumpStatus.canBump ? 0 : countdown.minutes)}</span>
+                        <span className="text-gray-500">:</span>
+                        <span className="text-[#FFC400] bg-gray-800 px-2 py-1 rounded">{formatTime(bumpStatus.canBump ? 0 : countdown.seconds)}</span>
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               </motion.div>
             )}
