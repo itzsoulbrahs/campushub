@@ -244,9 +244,9 @@ export default function Home() {
           </p>
 
           <div className="w-full max-w-2xl relative group">
-            <div className="absolute -inset-1 bg-gradient-to-r from-black via-black to-gray-600 rounded-full opacity-30 group-hover:opacity-50 blur-2xl transition duration-500"></div>
-            <div className="relative flex items-center bg-gradient-to-r from-white to-gray-100 rounded-full border border-black/40 shadow-2xl h-16 px-2">
-              <div className="h-full w-14 flex items-center justify-center">
+            <div className="absolute -inset-1 bg-gradient-to-r from-black via-black to-gray-600 rounded-full opacity-30 group-hover:opacity-50 blur-2xl transition duration-500 hidden md:block"></div>
+            <div className="relative flex items-center bg-gradient-to-r from-white to-gray-100 rounded-2xl md:rounded-full border border-black/40 shadow-2xl h-16 px-2 md:px-2">
+              <div className="h-full w-14 flex items-center justify-center flex-shrink-0">
                  <Search className="h-6 w-6 text-black/60 group-focus-within:text-black transition-colors" />
               </div>
               <Input 
@@ -254,9 +254,9 @@ export default function Home() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onKeyDown={handleKeyDown}
-                className="h-full pl-6 pr-4 bg-transparent border-none text-lg focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-black/50 placeholder:uppercase placeholder:font-bold text-black font-medium rounded-none uppercase tracking-wide"
+                className="h-full flex-1 bg-transparent border-none text-base md:text-lg focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-black/50 placeholder:uppercase placeholder:font-bold text-black font-medium rounded-none uppercase tracking-wide px-2 md:px-4 py-2 md:py-0 overflow-x-auto"
               />
-              <div className="p-2">
+              <div className="p-2 hidden md:block">
                 <Button 
                   onClick={handleSearch}
                   className="h-full bg-black hover:bg-gray-800 text-white font-bold px-8 rounded-full uppercase tracking-wider transition-all shadow-[0_0_20px_rgba(0,0,0,0.3)] hover:shadow-[0_0_40px_rgba(0,0,0,0.5)]"
