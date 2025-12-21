@@ -408,7 +408,5 @@ export class DatabaseStorage implements IStorage {
   }
 }
 
-// Use DatabaseStorage if DATABASE_URL is set, otherwise use MemoryStorage
-export const storage = process.env.DATABASE_URL 
-  ? new DatabaseStorage() 
-  : new MemoryStorage();
+// Export the persistent database storage
+export const storage = new DatabaseStorage();
