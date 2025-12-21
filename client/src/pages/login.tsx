@@ -373,9 +373,11 @@ export default function Login() {
           </Link>
 
           <motion.div
-            className="relative w-full"
+            className="w-full"
             style={{ 
               transformStyle: "preserve-3d",
+              position: "relative",
+              minHeight: "600px",
             }}
             animate={{ rotateY: isFlipped ? 180 : 0 }}
             transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
