@@ -154,7 +154,7 @@ export class DatabaseStorage implements IStorage {
     }
 
     const now = new Date();
-    const cooldownMs = 24 * 60 * 60 * 1000;
+    const cooldownMs = 12 * 60 * 60 * 1000;
     const timeSinceBump = now.getTime() - lastBumpAt.getTime();
     const canBump = timeSinceBump >= cooldownMs;
     
@@ -391,7 +391,7 @@ export class DatabaseStorage implements IStorage {
     return { 
       success: true, 
       community: updatedCommunity,
-      nextAvailableAt: new Date(now.getTime() + 24 * 60 * 60 * 1000)
+      nextAvailableAt: new Date(now.getTime() + 12 * 60 * 60 * 1000)
     };
   }
 

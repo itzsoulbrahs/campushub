@@ -171,7 +171,7 @@ export default function Boost() {
                 </span>
               </h1>
               <p className="text-gray-400 text-lg max-w-lg mx-auto">
-                Bump your community to the top of the homepage for 24 hours
+                Bump your community to the top of the homepage for 12 hours
               </p>
             </div>
 
@@ -211,17 +211,15 @@ export default function Boost() {
                       </>
                     )}
                   </div>
-                  {!bumpStatus.canBump && (
-                    <div className="flex items-center gap-1 bg-gray-900/80 px-4 py-3 rounded-xl border border-gray-700">
-                      <div className="flex items-center gap-1 font-mono text-2xl font-bold">
-                        <span className="text-[#FFC400] bg-gray-800 px-2 py-1 rounded">{formatTime(countdown.hours)}</span>
-                        <span className="text-gray-500">:</span>
-                        <span className="text-[#FFC400] bg-gray-800 px-2 py-1 rounded">{formatTime(countdown.minutes)}</span>
-                        <span className="text-gray-500">:</span>
-                        <span className="text-[#FFC400] bg-gray-800 px-2 py-1 rounded">{formatTime(countdown.seconds)}</span>
-                      </div>
+                  <div className="flex items-center gap-1 bg-gray-900/80 px-4 py-3 rounded-xl border border-gray-700">
+                    <div className="flex items-center gap-1 font-mono text-2xl font-bold">
+                      <span className="text-[#FFC400] bg-gray-800 px-2 py-1 rounded">{formatTime(bumpStatus.canBump ? 0 : countdown.hours)}</span>
+                      <span className="text-gray-500">:</span>
+                      <span className="text-[#FFC400] bg-gray-800 px-2 py-1 rounded">{formatTime(bumpStatus.canBump ? 0 : countdown.minutes)}</span>
+                      <span className="text-gray-500">:</span>
+                      <span className="text-[#FFC400] bg-gray-800 px-2 py-1 rounded">{formatTime(bumpStatus.canBump ? 0 : countdown.seconds)}</span>
                     </div>
-                  )}
+                  </div>
                 </div>
               </motion.div>
             )}
@@ -346,7 +344,7 @@ export default function Boost() {
               </h3>
               <ul className="text-sm text-gray-500 space-y-2">
                 <li>You can bump one community at a time</li>
-                <li>24-hour cooldown between bumps</li>
+                <li>12-hour cooldown between bumps</li>
                 <li>Bumping a new community replaces the previous bump</li>
               </ul>
             </motion.div>
