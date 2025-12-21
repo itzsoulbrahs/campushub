@@ -433,74 +433,86 @@ export default function Home() {
                 </div>
               </div>
               
-              <div className="pt-8 md:pt-12 px-3 md:px-6 pb-4 md:pb-8 flex-1 overflow-y-auto">
+              <div className="pt-6 md:pt-12 px-3 md:px-6 pb-4 md:pb-8 flex-1 overflow-y-auto flex flex-col">
                 {selectedCommunity.adminTagId && (
-                  <div className="flex justify-end mb-2">
-                    <span className="text-[9px] md:text-[11px] font-mono text-gray-400 tracking-wider">
-                      Tag ID: {selectedCommunity.adminTagId}
+                  <div className="flex justify-end mb-3 md:mb-4">
+                    <span className="text-[8px] md:text-[10px] font-mono text-gray-500 tracking-wider">
+                      ID: {selectedCommunity.adminTagId}
                     </span>
                   </div>
                 )}
-                <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-2 md:gap-0 mb-4 md:mb-6 mt-1 md:mt-10">
-                  <div className="flex-1 min-w-0">
-                    <h2 className="text-sm md:text-2xl font-bold font-heading uppercase tracking-wide text-white flex flex-col md:flex-row md:items-center gap-1 md:gap-3 mb-1 md:mb-0">
-                      <span className="break-words">{selectedCommunity.name}</span>
-                      <Badge variant="outline" className="text-[9px] md:text-xs px-2 py-0.5 h-5 border-[#FFC400] text-[#FFC400] bg-[#FFC400]/10 w-fit flex-shrink-0">
-                        {selectedCommunity.platform}
-                      </Badge>
+                
+                {/* Title Section */}
+                <div className="mb-4 md:mb-6">
+                  <div className="flex items-start justify-between gap-2 mb-2">
+                    <h2 className="text-base md:text-2xl font-bold font-heading uppercase tracking-wide text-white leading-tight flex-1">
+                      {selectedCommunity.name}
                     </h2>
-                    <div className="flex flex-col md:flex-row md:items-center gap-1 md:gap-4 mt-1 md:mt-2 text-xs md:text-sm text-gray-400">
-                      <span className="flex items-center gap-1">
-                        <Users className="h-3 md:h-4 w-3 md:w-4 flex-shrink-0" /> <span className="truncate">{selectedCommunity.memberCount.toLocaleString()} Members</span>
-                      </span>
-                      <span className="flex items-center gap-1 text-[#FFC400]">
-                        <Star className="h-3 md:h-4 w-3 md:w-4 fill-[#FFC400] flex-shrink-0" /> <span className="truncate">{selectedCommunity.rating} ({selectedCommunity.reviewCount})</span>
-                      </span>
-                    </div>
+                  </div>
+                  <Badge variant="outline" className="text-[8px] md:text-xs px-2 py-0.5 border-[#FFC400] text-[#FFC400] bg-[#FFC400]/10 w-fit">
+                    {selectedCommunity.platform}
+                  </Badge>
+                </div>
+
+                {/* Meta Information Row */}
+                <div className="flex flex-wrap items-center gap-3 md:gap-4 mb-4 md:mb-5 pb-4 md:pb-5 border-b border-[#222]">
+                  <div className="flex items-center gap-1.5">
+                    <Users className="h-3 md:h-4 w-3 md:w-4 text-gray-500 flex-shrink-0" />
+                    <span className="text-[10px] md:text-xs text-gray-400 font-medium">{selectedCommunity.memberCount.toLocaleString()}</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <Star className="h-3 md:h-4 w-3 md:w-4 fill-[#FFC400] text-[#FFC400] flex-shrink-0" />
+                    <span className="text-[10px] md:text-xs text-gray-300 font-medium">{selectedCommunity.rating}</span>
+                    <span className="text-[9px] md:text-xs text-gray-500">({selectedCommunity.reviewCount})</span>
                   </div>
                   {selectedCommunity.isActive && (
-                    <span className="flex items-center gap-1 text-[9px] md:text-xs text-[#FFC400] font-bold uppercase tracking-wider bg-[#FFC400]/10 px-2 md:px-3 py-0.5 md:py-1 rounded-full border border-[#FFC400]/20 flex-shrink-0 h-fit">
-                      <span className="relative flex h-1.5 w-1.5 md:h-2 md:w-2">
+                    <div className="flex items-center gap-1.5 ml-auto">
+                      <span className="relative flex h-1 w-1 md:h-1.5 md:w-1.5">
                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#FFC400] opacity-75"></span>
                         <span className="relative inline-flex rounded-full h-full w-full bg-[#FFC400]"></span>
                       </span>
-                      <span>Active</span>
-                    </span>
+                      <span className="text-[8px] md:text-xs text-[#FFC400] font-bold uppercase tracking-wider">Active</span>
+                    </div>
                   )}
                 </div>
 
-                <p className="text-gray-300 leading-relaxed mb-4 md:mb-8 text-xs md:text-lg whitespace-pre-line break-words">
+                {/* Description */}
+                <p className="text-gray-300 leading-relaxed mb-5 md:mb-6 text-[11px] md:text-base whitespace-pre-line break-words">
                   {selectedCommunity.description}
                 </p>
 
-                <div className="flex flex-wrap gap-1.5 md:gap-2 mb-4 md:mb-8">
-                  {selectedCommunity.tags.slice(0, 4).map((tag) => (
-                    <span key={tag} className="text-[8px] md:text-xs px-2 md:px-3 py-1 md:py-1.5 bg-[#151515] text-gray-300 border border-[#333] rounded-md md:rounded-lg uppercase font-bold tracking-wide flex-shrink-0">
-                      #{tag}
-                    </span>
-                  ))}
-                  {selectedCommunity.tags.length > 4 && (
-                    <span className="text-[8px] md:text-xs px-2 md:px-3 py-1 md:py-1.5 bg-[#151515] text-gray-400 border border-[#333] rounded-md md:rounded-lg uppercase font-bold">
-                      +{selectedCommunity.tags.length - 4}
-                    </span>
-                  )}
+                {/* Tags Section */}
+                <div className="mb-6 md:mb-8">
+                  <div className="flex flex-wrap gap-2">
+                    {selectedCommunity.tags.slice(0, 4).map((tag) => (
+                      <span key={tag} className="text-[9px] md:text-xs px-2.5 md:px-3 py-1 md:py-1.5 bg-[#151515] text-gray-300 border border-[#333] rounded-md md:rounded-lg uppercase font-bold tracking-wide">
+                        #{tag}
+                      </span>
+                    ))}
+                    {selectedCommunity.tags.length > 4 && (
+                      <span className="text-[9px] md:text-xs px-2.5 md:px-3 py-1 md:py-1.5 bg-[#151515] text-gray-400 border border-[#333] rounded-md md:rounded-lg uppercase font-bold">
+                        +{selectedCommunity.tags.length - 4}
+                      </span>
+                    )}
+                  </div>
                 </div>
 
-                <div className="flex gap-2 md:gap-4">
+                {/* CTA Buttons */}
+                <div className="mt-auto pt-2 flex flex-col gap-2 md:gap-3">
                   <Button 
-                    className="flex-1 h-8 md:h-12 bg-[#FFC400] hover:bg-[#FFD84D] text-black font-bold uppercase tracking-wider rounded-lg md:rounded-xl text-[10px] md:text-base shadow-lg hover:shadow-[#FFC400]/20 transition-all flex items-center justify-center"
+                    className="w-full h-9 md:h-12 bg-[#FFC400] hover:bg-[#FFD84D] text-black font-bold uppercase tracking-wider rounded-lg md:rounded-xl text-[11px] md:text-base shadow-lg hover:shadow-[#FFC400]/30 transition-all"
                     onClick={() => {
                       if (selectedCommunity?.inviteLink) {
                         window.open(selectedCommunity.inviteLink, '_blank', 'noopener,noreferrer');
                       }
                     }}
                   >
-                    Join
-                    <ExternalLink className="ml-1 md:ml-2 h-3 md:h-4 w-3 md:w-4" />
+                    Join Group Now
+                    <ExternalLink className="ml-1.5 md:ml-2 h-3.5 md:h-4 w-3.5 md:w-4" />
                   </Button>
                   <Button 
                     variant="outline" 
-                    className="h-8 md:h-12 px-3 md:px-6 border-[#333] hover:bg-[#1A1A1A] hover:text-white hover:border-[#FFC400] rounded-lg md:rounded-xl"
+                    className="w-full h-8 md:h-10 border-[#333] text-gray-300 hover:bg-[#1A1A1A] hover:text-white hover:border-[#FFC400] rounded-lg md:rounded-xl text-[10px] md:text-sm font-medium"
                     onClick={() => {
                       if (selectedCommunity) {
                         if (navigator.share) {
@@ -516,7 +528,7 @@ export default function Home() {
                       }
                     }}
                   >
-                    <span className="text-[10px] md:text-base">Share</span>
+                    Share
                   </Button>
                 </div>
               </div>
