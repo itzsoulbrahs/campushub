@@ -229,7 +229,7 @@ export default function Home() {
           <div className="absolute inset-0 bg-black/5" />
         </div>
 
-        <div className="w-full px-4 md:px-6 py-20 md:py-32 flex flex-col items-center text-center relative z-10 max-w-7xl mx-auto">
+        <div className="w-full px-4 md:px-6 py-20 md:py-32 flex flex-col items-center text-center relative z-10">
           <div className="inline-flex items-center border border-black/40 bg-black/10 px-4 py-1.5 text-xs font-bold text-black mb-8 backdrop-blur-md uppercase tracking-widest">
             <Zap className="mr-2 h-3 w-3 fill-black" />
             <span>The #1 Community Directory for SRM</span>
@@ -285,11 +285,11 @@ export default function Home() {
       </div>
 
       {/* Main Content Grid */}
-      <div className="w-full px-4 md:px-6 py-16" ref={communityGridRef}>
-        <div className="flex flex-col lg:flex-row gap-10 max-w-7xl mx-auto">
+      <div className="w-full px-6 lg:px-8 py-16" ref={communityGridRef}>
+        <div className="flex flex-col lg:flex-row gap-6 w-full">
           
           {/* Sidebar - Desktop only (1024px+) */}
-          <aside className="hidden lg:block w-72 flex-shrink-0">
+          <aside className="hidden lg:block w-80 flex-shrink-0">
             <div className="flex items-center justify-between gap-2 mb-6 border-b border-black/20 pb-4">
               <h2 className="font-heading text-lg font-bold uppercase tracking-wider text-black flex items-center gap-2">
                 <Hexagon className="h-4 w-4 text-black" /> Filters
