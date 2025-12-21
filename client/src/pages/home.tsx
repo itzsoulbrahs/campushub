@@ -480,16 +480,11 @@ export default function Home() {
                 {/* Tags Section */}
                 <div className="mb-2 md:mb-8">
                   <div className="flex flex-wrap gap-2">
-                    {selectedCommunity.tags.slice(0, 4).map((tag) => (
+                    {selectedCommunity.tags.map((tag) => (
                       <span key={tag} className="text-[9px] md:text-xs px-2.5 md:px-3 py-1 md:py-1.5 bg-[#151515] text-gray-300 border border-[#333] rounded-md md:rounded-lg uppercase font-bold tracking-wide">
                         #{tag}
                       </span>
                     ))}
-                    {selectedCommunity.tags.length > 4 && (
-                      <span className="text-[9px] md:text-xs px-2.5 md:px-3 py-1 md:py-1.5 bg-[#151515] text-gray-400 border border-[#333] rounded-md md:rounded-lg uppercase font-bold">
-                        +{selectedCommunity.tags.length - 4}
-                      </span>
-                    )}
                   </div>
                 </div>
 
