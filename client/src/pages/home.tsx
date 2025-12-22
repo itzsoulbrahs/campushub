@@ -413,9 +413,9 @@ export default function Home() {
         >
           {selectedCommunity && (
             <>
-              <div className="relative h-20 md:h-32 bg-gradient-to-r from-[#FFC400] to-[#FF8C00] flex items-end p-3 md:p-6 flex-shrink-0">
-                <div className="absolute -bottom-6 md:-bottom-10 left-3 md:left-6 flex items-end gap-2 md:gap-4">
-                  <div className="h-12 w-12 md:h-24 md:w-24 rounded-lg md:rounded-2xl bg-[#151515] border-2 md:border-4 border-[#0A0A0A] flex items-center justify-center shadow-xl overflow-hidden flex-shrink-0">
+              <div className="relative h-24 md:h-32 bg-gradient-to-r from-[#FFC400] to-[#FF8C00] flex items-end p-4 md:p-6 flex-shrink-0">
+                <div className="absolute -bottom-8 md:-bottom-10 left-4 md:left-6 flex items-end gap-3 md:gap-4">
+                  <div className="h-16 w-16 md:h-24 md:w-24 rounded-xl md:rounded-2xl bg-[#151515] border-2 md:border-4 border-[#0A0A0A] flex items-center justify-center shadow-xl overflow-hidden flex-shrink-0">
                     {selectedCommunity.imageUrl ? (
                       <img 
                         src={selectedCommunity.imageUrl} 
@@ -423,61 +423,61 @@ export default function Home() {
                         className="w-full h-full object-cover"
                       />
                     ) : (
-                      <span className="text-lg md:text-3xl font-bold text-white font-heading">{selectedCommunity.name.substring(0, 2).toUpperCase()}</span>
+                      <span className="text-xl md:text-3xl font-bold text-white font-heading">{selectedCommunity.name.substring(0, 2).toUpperCase()}</span>
                     )}
                   </div>
                 </div>
               </div>
               
-              <div className="pt-6 md:pt-12 px-3 md:px-6 pb-4 md:pb-8 flex-1 overflow-y-auto flex flex-col scrollbar-hide md:scrollbar-default">
+              <div className="pt-10 md:pt-12 px-4 md:px-6 pb-6 md:pb-8 flex-1 overflow-y-auto flex flex-col scrollbar-hide md:scrollbar-default">
                 {selectedCommunity.adminTagId && (
-                  <div className="flex justify-end mb-3 md:mb-4">
-                    <span className="text-[8px] md:text-[10px] font-mono text-gray-500 tracking-wider">
+                  <div className="flex justify-end mb-4 md:mb-4">
+                    <span className="text-[10px] md:text-[10px] font-mono text-gray-500 tracking-wider">
                       ID: {selectedCommunity.adminTagId}
                     </span>
                   </div>
                 )}
                 
                 {/* Title Section */}
-                <div className="mb-4 md:mb-6">
+                <div className="mb-6 md:mb-6">
                   <div className="flex items-start justify-between gap-2 mb-2">
-                    <h2 className="text-lg md:text-2xl font-bold font-heading uppercase tracking-wide text-white leading-tight flex-1">
+                    <h2 className="text-xl md:text-2xl font-bold font-heading uppercase tracking-wide text-white leading-tight flex-1">
                       {selectedCommunity.name}
                     </h2>
                   </div>
-                  <Badge variant="outline" className="text-[8px] md:text-xs px-2 py-0.5 border-[#FFC400] text-[#FFC400] bg-[#FFC400]/10 w-fit">
+                  <Badge variant="outline" className="text-[10px] md:text-xs px-2 py-0.5 border-[#FFC400] text-[#FFC400] bg-[#FFC400]/10 w-fit">
                     {selectedCommunity.platform}
                   </Badge>
                 </div>
 
                 {/* Meta Information Row */}
-                <div className="flex flex-wrap items-center gap-3 md:gap-4 mb-4 md:mb-5 pb-4 md:pb-5 border-b border-[#222]">
+                <div className="flex flex-wrap items-center gap-4 md:gap-4 mb-5 md:mb-5 pb-5 md:pb-5 border-b border-[#222]">
                   <div className="flex items-center gap-1.5">
-                    <Star className="h-3 md:h-4 w-3 md:w-4 fill-[#FFC400] text-[#FFC400] flex-shrink-0" />
-                    <span className="text-[10px] md:text-xs text-gray-300 font-medium">{selectedCommunity.rating}</span>
-                    <span className="text-[9px] md:text-xs text-gray-500">({selectedCommunity.reviewCount})</span>
+                    <Star className="h-4 md:h-4 w-4 md:w-4 fill-[#FFC400] text-[#FFC400] flex-shrink-0" />
+                    <span className="text-xs md:text-xs text-gray-300 font-medium">{selectedCommunity.rating}</span>
+                    <span className="text-xs md:text-xs text-gray-500">({selectedCommunity.reviewCount})</span>
                   </div>
                   {selectedCommunity.isActive && (
                     <div className="flex items-center gap-1.5 ml-auto">
-                      <span className="relative flex h-1 w-1 md:h-1.5 md:w-1.5">
+                      <span className="relative flex h-1.5 md:h-1.5 w-1.5 md:w-1.5">
                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#FFC400] opacity-75"></span>
                         <span className="relative inline-flex rounded-full h-full w-full bg-[#FFC400]"></span>
                       </span>
-                      <span className="text-[8px] md:text-xs text-[#FFC400] font-bold uppercase tracking-wider">Active</span>
+                      <span className="text-xs md:text-xs text-[#FFC400] font-bold uppercase tracking-wider">Active</span>
                     </div>
                   )}
                 </div>
 
                 {/* Description */}
-                <p className="text-gray-300 leading-relaxed mb-3 md:mb-6 text-[12px] md:text-base whitespace-pre-line break-words">
+                <p className="text-gray-300 leading-relaxed mb-6 md:mb-6 text-sm md:text-base whitespace-pre-line break-words">
                   {selectedCommunity.description}
                 </p>
 
                 {/* Tags Section */}
-                <div className="mb-2 md:mb-8">
+                <div className="mb-4 md:mb-8">
                   <div className="flex flex-wrap gap-2">
                     {selectedCommunity.tags.map((tag) => (
-                      <span key={tag} className="text-[9px] md:text-xs px-2.5 md:px-3 py-1 md:py-1.5 bg-[#151515] text-gray-300 border border-[#333] rounded-md md:rounded-lg uppercase font-bold tracking-wide">
+                      <span key={tag} className="text-xs md:text-xs px-3 md:px-3 py-1.5 md:py-1.5 bg-[#151515] text-gray-300 border border-[#333] rounded-lg md:rounded-lg uppercase font-bold tracking-wide">
                         #{tag}
                       </span>
                     ))}
@@ -485,9 +485,9 @@ export default function Home() {
                 </div>
 
                 {/* CTA Buttons */}
-                <div className="mt-auto pt-2 flex flex-col gap-2 md:gap-3">
+                <div className="mt-auto pt-4 flex flex-col gap-3 md:gap-3">
                   <Button 
-                    className="w-full h-9 md:h-12 bg-[#FFC400] hover:bg-[#FFD84D] text-black font-bold uppercase tracking-wider rounded-lg md:rounded-xl text-[11px] md:text-base shadow-lg hover:shadow-[#FFC400]/30 transition-all"
+                    className="w-full h-11 md:h-12 bg-[#FFC400] hover:bg-[#FFD84D] text-black font-bold uppercase tracking-wider rounded-xl md:rounded-xl text-sm md:text-base shadow-lg hover:shadow-[#FFC400]/30 transition-all"
                     onClick={() => {
                       if (selectedCommunity?.inviteLink) {
                         window.open(selectedCommunity.inviteLink, '_blank', 'noopener,noreferrer');
