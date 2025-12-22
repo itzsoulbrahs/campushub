@@ -2,7 +2,7 @@ import { Community, getPlatformColor, getPlatformIcon, CommunityVisibility } fro
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
-import { Star, Users, ExternalLink, MoreHorizontal, Hexagon, Globe, User, Pin } from "lucide-react";
+import { Star, ExternalLink, MoreHorizontal, Hexagon, Globe, User, Pin } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const getVisibilityInfo = (visibility: CommunityVisibility) => {
@@ -115,11 +115,7 @@ export function CommunityCard({ community, onClick, disableHoverScale = false }:
       </CardHeader>
 
       <CardContent className="px-6 py-3 flex-1 flex flex-col relative z-10 min-h-0">
-        <div className="flex items-center gap-4 mb-4 text-xs text-gray-500 border-b border-[#222] pb-3 border-dashed">
-          <div className="flex items-center gap-1.5">
-            <Users className="h-3.5 w-3.5 text-gray-600" />
-            <span className="font-mono">{community.memberCount.toLocaleString()}</span>
-          </div>
+        <div className="flex items-center gap-4 mb-4 text-xs text-gray-500">
           <div className="flex items-center gap-1.5">
             <Star className="h-3.5 w-3.5 text-[#FFC400] fill-[#FFC400]" />
             <span className="font-mono text-white">{community.rating} <span className="text-gray-600">({community.reviewCount})</span></span>

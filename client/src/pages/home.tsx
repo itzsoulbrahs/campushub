@@ -4,7 +4,7 @@ import { Filters, FilterState } from "@/components/filters";
 import { MOCK_COMMUNITIES, Community, getPlatformIcon } from "@/lib/mock-data";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Search, SlidersHorizontal, Zap, Filter, Hexagon, X, ExternalLink, Users, Star } from "lucide-react";
+import { Search, SlidersHorizontal, Zap, Filter, Hexagon, X, ExternalLink, Star } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import generatedHero from "@assets/generated_images/abstract_dark_neon_network_background.png";
 import { useState, useRef, useMemo, useCallback } from "react";
@@ -452,10 +452,6 @@ export default function Home() {
 
                 {/* Meta Information Row */}
                 <div className="flex flex-wrap items-center gap-3 md:gap-4 mb-4 md:mb-5 pb-4 md:pb-5 border-b border-[#222]">
-                  <div className="flex items-center gap-1.5">
-                    <Users className="h-3 md:h-4 w-3 md:w-4 text-gray-500 flex-shrink-0" />
-                    <span className="text-[10px] md:text-xs text-gray-400 font-medium">{selectedCommunity.memberCount.toLocaleString()}</span>
-                  </div>
                   <div className="flex items-center gap-1.5">
                     <Star className="h-3 md:h-4 w-3 md:w-4 fill-[#FFC400] text-[#FFC400] flex-shrink-0" />
                     <span className="text-[10px] md:text-xs text-gray-300 font-medium">{selectedCommunity.rating}</span>

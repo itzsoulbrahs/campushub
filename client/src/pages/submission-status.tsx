@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "wouter";
 import { motion } from "framer-motion";
-import { Clock, CheckCircle, XCircle, FileText, ExternalLink, Tag, Globe, Users, Link2, MessageSquare, ArrowLeft, ChevronRight } from "lucide-react";
+import { Clock, CheckCircle, XCircle, FileText, ExternalLink, Tag, Globe, Link2, MessageSquare, ArrowLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { Layout } from "@/components/layout";
@@ -410,20 +410,13 @@ export default function SubmissionStatus() {
                     </p>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 gap-4">
                     <div className="p-3 rounded-xl bg-black/30 border border-[#333]">
                       <div className="flex items-center gap-2 text-gray-400 mb-1">
                         <Globe className="w-4 h-4" />
                         <span className="text-xs uppercase tracking-wider">Visibility</span>
                       </div>
                       <p className="text-white font-medium capitalize">{selectedSubmission.visibility}</p>
-                    </div>
-                    <div className="p-3 rounded-xl bg-black/30 border border-[#333]">
-                      <div className="flex items-center gap-2 text-gray-400 mb-1">
-                        <Users className="w-4 h-4" />
-                        <span className="text-xs uppercase tracking-wider">Members</span>
-                      </div>
-                      <p className="text-white font-medium">{selectedSubmission.memberCount || "Not specified"}</p>
                     </div>
                   </div>
 

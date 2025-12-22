@@ -1,7 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
-import { CheckCircle, XCircle, Users, ExternalLink, Pencil, Pin, PinOff, Trash2, Globe, User, MessageCircle, Hash } from "lucide-react";
+import { CheckCircle, XCircle, ExternalLink, Pencil, Pin, PinOff, Trash2, Globe, User, MessageCircle, Hash } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 type CommunityVisibility = "public" | "boys-only" | "girls-only";
@@ -128,11 +128,6 @@ export function AdminCommunityCard({
 
       <CardContent className="px-5 py-3 flex-1 flex flex-col relative z-10 min-h-0">
         <div className="flex items-center gap-4 text-sm text-gray-600 mb-3">
-          <div className="flex items-center gap-1.5">
-            <Users className="h-4 w-4 text-gray-500" />
-            <span className="font-semibold">{community.memberCount.toLocaleString()}</span>
-          </div>
-          <span className="text-gray-400">|</span>
           <span className="text-gray-600 truncate font-medium">{community.category}</span>
         </div>
 
