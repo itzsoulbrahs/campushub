@@ -469,7 +469,7 @@ export default function Home() {
                 </div>
 
                 {/* Description */}
-                <p className="text-gray-300 leading-relaxed mb-6 md:mb-6 text-sm md:text-base whitespace-pre-line break-words">
+                <p className="text-gray-300 leading-relaxed mb-6 md:mb-6 text-sm md:text-base whitespace-pre-line break-words overflow-hidden">
                   {selectedCommunity.description}
                 </p>
 
