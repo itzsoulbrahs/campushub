@@ -95,6 +95,19 @@ export default function Dashboard() {
   });
 
   useEffect(() => {
+    // Prevent body scroll when mobile sidebar is open
+    if (isMobileSidebarOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isMobileSidebarOpen]);
+
+  useEffect(() => {
     // Try to fetch current user from session (for Google OAuth redirect)
     // This handles the race condition where session cookie isn't available immediately
     if (!user && !isLoading && !hasCheckedSession) {
@@ -331,7 +344,7 @@ export default function Dashboard() {
                   animate={{ x: 0 }}
                   exit={{ x: -280 }}
                   transition={{ type: "spring", damping: 25, stiffness: 300 }}
-                  className="lg:hidden fixed left-0 top-16 bottom-0 w-64 bg-[#111] border-r border-[#2a2a2a] flex flex-col z-50"
+                  className="lg:hidden fixed left-0 top-16 bottom-0 w-64 bg-[#111] border-r border-[#2a2a2a] flex flex-col z-50 overflow-y-auto"
                 >
                   <SidebarContent />
                 </motion.aside>
