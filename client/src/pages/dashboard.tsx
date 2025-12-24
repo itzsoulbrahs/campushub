@@ -96,18 +96,34 @@ export default function Dashboard() {
   useEffect(() => {
     // Try to fetch current user from session (for Google OAuth redirect)
     if (!user && !isLoading) {
-      fetch("/api/auth/me")
-        .then(res => res.json())
-        .then(data => {
+      const attemptFetch = async (retryCount = 0) => {
+        try {
+          const response = await fetch("/api/auth/me");
+          const data = await response.json();
+          
           if (data.success && data.user) {
             updateUser(data.user);
+            return true;
           }
-        })
-        .catch(() => {
-          // User not authenticated, redirect to login
+          
+          // If 401 and first attempt, retry after delay
+          if (response.status === 401 && retryCount === 0) {
+            await new Promise(resolve => setTimeout(resolve, 500));
+            return attemptFetch(1);
+          }
+          
+          return false;
+        } catch (error) {
+          return false;
+        }
+      };
+      
+      attemptFetch().then(success => {
+        if (!success) {
           toast.error("Please log in to access your dashboard");
           setLocation("/login");
-        });
+        }
+      });
     }
   }, [user, isLoading, setLocation, updateUser]);
 
