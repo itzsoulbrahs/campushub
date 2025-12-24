@@ -95,14 +95,17 @@ export default function Dashboard() {
   });
 
   useEffect(() => {
-    // Prevent body scroll when mobile sidebar is open
+    // Prevent body and html scroll when mobile sidebar is open
     if (isMobileSidebarOpen) {
+      document.documentElement.style.overflow = 'hidden';
       document.body.style.overflow = 'hidden';
     } else {
+      document.documentElement.style.overflow = 'unset';
       document.body.style.overflow = 'unset';
     }
     
     return () => {
+      document.documentElement.style.overflow = 'unset';
       document.body.style.overflow = 'unset';
     };
   }, [isMobileSidebarOpen]);
