@@ -306,3 +306,15 @@ h1, h2, h3, h4, h5, h6 {
     scrollbar-width: auto;
   }
 }
+
+/* Hide scrollbar on mobile for login/signup pages */
+@media (max-width: 767px) {
+  .mobile-scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+  
+  .mobile-scrollbar-hide::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
+  }
+}
