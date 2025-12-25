@@ -476,15 +476,17 @@ export default function Home() {
                 </div>
 
                 {/* Description */}
-                <p className="text-gray-300 leading-relaxed mb-6 md:mb-6 text-sm md:text-base whitespace-pre-line break-words overflow-hidden">
-                  {selectedCommunity.description}
-                </p>
+                <div className="mb-6 md:mb-6">
+                  <p className="text-gray-300 leading-relaxed text-sm md:text-base whitespace-pre-line break-words overflow-hidden">
+                    {selectedCommunity.description}
+                  </p>
+                </div>
 
                 {/* Tags Section */}
-                <div className="mb-4 md:mb-8">
-                  <div className="flex flex-wrap gap-2">
+                <div className="mb-6 md:mb-8">
+                  <div className="flex flex-wrap gap-2 overflow-x-hidden">
                     {selectedCommunity.tags.map((tag) => (
-                      <span key={tag} className="text-xs md:text-xs px-3 md:px-3 py-1.5 md:py-1.5 bg-[#151515] text-gray-300 border border-[#333] rounded-lg md:rounded-lg uppercase font-bold tracking-wide">
+                      <span key={tag} className="text-[10px] md:text-xs px-2.5 md:px-3 py-1 md:py-1.5 bg-[#151515] text-gray-300 border border-[#333] rounded-lg uppercase font-bold tracking-wide whitespace-nowrap">
                         #{tag}
                       </span>
                     ))}
@@ -492,21 +494,22 @@ export default function Home() {
                 </div>
 
                 {/* CTA Buttons */}
-                <div className="mt-auto pt-4 flex flex-col gap-3 md:gap-3">
+                <div className="mt-auto pt-4 flex flex-col gap-3 md:gap-3 w-full">
                   <Button 
-                    className="w-full h-11 md:h-12 bg-[#FFC400] hover:bg-[#FFD84D] text-black font-bold uppercase tracking-wider rounded-xl md:rounded-xl text-sm md:text-base shadow-lg hover:shadow-[#FFC400]/30 transition-all"
+                    className="w-full h-11 md:h-12 bg-[#FFC400] hover:bg-[#FFD84D] text-black font-bold uppercase tracking-wider rounded-xl md:rounded-xl text-sm md:text-base shadow-lg hover:shadow-[#FFC400]/30 transition-all flex items-center justify-center gap-2 px-4"
                     onClick={() => {
                       if (selectedCommunity?.inviteLink) {
                         window.open(selectedCommunity.inviteLink, '_blank', 'noopener,noreferrer');
                       }
                     }}
                   >
-                    Join Group Now
-                    <ExternalLink className="ml-1.5 md:ml-2 h-3.5 md:h-4 w-3.5 md:w-4" />
+                    <span className="truncate uppercase">Join Group Now</span>
+                    <ExternalLink className="h-4 w-4 md:h-5 md:w-5 flex-shrink-0" />
                   </Button>
+                  
                   <Button 
                     variant="outline" 
-                    className="w-full h-8 md:h-10 border-[#333] text-gray-300 hover:bg-[#1A1A1A] hover:text-white hover:border-[#FFC400] rounded-lg md:rounded-xl text-[10px] md:text-sm font-medium"
+                    className="w-full h-11 md:h-12 border-[#333] text-gray-300 hover:bg-[#1A1A1A] hover:text-white hover:border-[#FFC400] rounded-xl md:rounded-xl text-xs md:text-sm font-bold uppercase tracking-wider transition-all px-4"
                     onClick={() => {
                       if (selectedCommunity) {
                         if (navigator.share) {
@@ -522,7 +525,7 @@ export default function Home() {
                       }
                     }}
                   >
-                    Share
+                    <span className="truncate">Share</span>
                   </Button>
                 </div>
               </div>
