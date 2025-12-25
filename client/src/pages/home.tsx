@@ -477,7 +477,7 @@ export default function Home() {
                 <div className="mb-6 md:mb-10">
                   <div className="flex flex-wrap gap-2 md:gap-3">
                     {selectedCommunity.tags.map((tag) => (
-                      <span key={tag} className="text-xs md:text-sm px-3 py-2 md:px-5 md:py-3 bg-transparent text-gray-300 border border-[#333] rounded-md md:rounded-lg uppercase font-bold tracking-wide">
+                      <span key={tag} className="text-[10px] md:text-sm px-2 py-1.5 md:px-5 md:py-3 bg-transparent text-gray-300 border border-[#333] rounded-md md:rounded-lg uppercase font-bold tracking-wide">
                         #{tag}
                       </span>
                     ))}
