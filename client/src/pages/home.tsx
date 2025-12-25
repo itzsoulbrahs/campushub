@@ -415,7 +415,7 @@ export default function Home() {
 
       <Dialog open={isModalOpen} onOpenChange={(open) => !open && handleCloseModal()}>
         <DialogContent 
-          className="bg-[#0A0A0A] border-none text-white p-0 rounded-3xl md:max-w-2xl h-[75vh] md:h-auto md:max-h-[90vh] w-[calc(100%-24px)] overflow-y-auto scrollbar-hide shadow-none outline-none"
+          className="bg-[#0A0A0A] border-none text-white p-0 rounded-3xl md:max-w-2xl min-h-[60vh] max-h-[75vh] md:min-h-0 md:max-h-[90vh] md:h-auto w-[calc(100%-24px)] overflow-y-auto scrollbar-hide shadow-none outline-none"
         >
           {selectedCommunity && (
             <div className="flex flex-col w-full">
