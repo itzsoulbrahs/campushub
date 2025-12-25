@@ -101,9 +101,11 @@ export default function About() {
                List your WhatsApp group, Discord server, or Telegram channel today and reach thousands of students.
              </p>
              <Link href="/list-community">
-               <Button size="lg" className="bg-black hover:bg-gray-800 text-[#FFC400] font-black text-lg px-10 py-8 uppercase tracking-wider rounded-full shadow-[0_0_30px_rgba(0,0,0,0.3)] hover:shadow-[0_0_40px_rgba(0,0,0,0.5)] transition-all cursor-pointer">
-                 List Your Community
-               </Button>
+               <div className="flex justify-center">
+                 <Button size="lg" className="bg-black hover:bg-gray-800 text-[#FFC400] font-black text-sm md:text-lg px-6 md:px-10 py-6 md:py-8 h-auto uppercase tracking-wider rounded-full shadow-[0_0_30px_rgba(0,0,0,0.3)] hover:shadow-[0_0_40px_rgba(0,0,0,0.5)] transition-all cursor-pointer w-auto">
+                   List Your Community
+                 </Button>
+               </div>
              </Link>
            </div>
         </div>
