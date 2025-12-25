@@ -11,6 +11,8 @@ import About from "@/pages/about";
 import ListCommunity from "@/pages/list-community";
 import FAQ from "@/pages/faq";
 import Login from "@/pages/login";
+import ForgotPassword from "@/pages/forgot-password";
+import ResetPassword from "@/pages/reset-password";
 import AdminApprovals from "@/pages/admin-approvals";
 import Dashboard from "@/pages/dashboard";
 import SubmissionStatus from "@/pages/submission-status";
@@ -25,6 +27,8 @@ function Router() {
       <Route path="/list-community" component={ListCommunity} />
       <Route path="/faq" component={FAQ} />
       <Route path="/login" component={Login} />
+      <Route path="/forgot-password" component={ForgotPassword} />
+      <Route path="/reset-password" component={ResetPassword} />
       <Route path="/dashboard" component={Dashboard} />
       <Route path="/submission-status" component={SubmissionStatus} />
       <Route path="/my-communities" component={MyCommunities} />

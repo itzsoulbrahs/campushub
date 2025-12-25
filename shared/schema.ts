@@ -8,6 +8,8 @@ export const users = pgTable("users", {
   fullName: text("full_name").notNull(),
   email: text("email").notNull().unique(),
   password: text("password"),
+  resetToken: text("reset_token"),
+  resetTokenExpiry: timestamp("reset_token_expiry"),
   createdAt: timestamp("created_at").notNull().defaultNow(),
   lastBumpAt: timestamp("last_bump_at"),
   lastBumpCommunityId: varchar("last_bump_community_id"),
