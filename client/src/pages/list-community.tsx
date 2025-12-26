@@ -18,6 +18,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useState, useEffect, useRef } from "react";
 import { useAuth } from "@/context/auth";
 import { useLocation } from "wouter";
+import { motion } from "framer-motion";
 
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters."),
@@ -237,20 +238,49 @@ export default function ListCommunity() {
   return (
     <Layout>
       <div className="w-full px-4 md:px-6 py-16 max-w-3xl mx-auto">
-        <div className="mb-12 text-center">
-          <div className="inline-flex items-center justify-center w-12 h-12 mb-6 bg-[#FFC400]/20 rounded-full">
+        <motion.div 
+          className="mb-12 text-center"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
+          <motion.div 
+            className="inline-flex items-center justify-center w-12 h-12 mb-6 bg-[#FFC400]/20 rounded-full"
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.1, duration: 0.5 }}
+          >
              <Hexagon className="w-6 h-6 text-[#FFC400]" />
-          </div>
-          <h1 className="text-4xl font-black font-heading mb-4 uppercase tracking-tight text-black">List Your Community</h1>
-          <p className="text-lg text-black/70">Share your group with thousands of students.</p>
-        </div>
+          </motion.div>
+          <motion.h1 
+            className="text-4xl font-black font-heading mb-4 uppercase tracking-tight text-black"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.15, duration: 0.5 }}
+          >
+            List Your Community
+          </motion.h1>
+          <motion.p 
+            className="text-lg text-black/70"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.5 }}
+          >
+            Share your group with thousands of students.
+          </motion.p>
+        </motion.div>
 
-        <Card className="border-black/20 bg-white rounded-3xl relative overflow-hidden shadow-2xl">
-          <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-[#FFC400] to-[#FF8C00]"></div>
-          <CardHeader className="p-8 border-b border-black/10">
-            <CardTitle className="text-xl font-bold uppercase tracking-wider text-black">Community Details</CardTitle>
-            <CardDescription className="text-black/60">Please provide accurate information about your community.</CardDescription>
-          </CardHeader>
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.25, duration: 0.6, ease: "easeOut" }}
+        >
+          <Card className="border-black/20 bg-white rounded-3xl relative overflow-hidden shadow-2xl">
+            <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-[#FFC400] to-[#FF8C00]"></div>
+            <CardHeader className="p-8 border-b border-black/10">
+              <CardTitle className="text-xl font-bold uppercase tracking-wider text-black">Community Details</CardTitle>
+              <CardDescription className="text-black/60">Please provide accurate information about your community.</CardDescription>
+            </CardHeader>
           <CardContent className="p-8">
             <Form {...form}>
               <form onSubmit={form.handleSubmit(handleSubmitClick)} className="space-y-8">
@@ -521,7 +551,8 @@ export default function ListCommunity() {
               </form>
             </Form>
           </CardContent>
-        </Card>
+          </Card>
+        </motion.div>
 
         {/* Confirmation Dialog */}
         <Dialog open={confirmOpen} onOpenChange={handleCloseDialog}>
