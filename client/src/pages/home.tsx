@@ -371,11 +371,12 @@ export default function Home() {
             {filteredCommunities.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
                 {filteredCommunities.slice(0, visibleCount).map((community) => (
-                  <CommunityCard 
-                    key={community.id}
-                    community={community} 
-                    onClick={() => handleOpenModal(community)}
-                  />
+                  <div key={community.id} className="stagger-item">
+                    <CommunityCard 
+                      community={community} 
+                      onClick={() => handleOpenModal(community)}
+                    />
+                  </div>
                 ))}
               </div>
             ) : (
@@ -415,7 +416,7 @@ export default function Home() {
 
       <Dialog open={isModalOpen} onOpenChange={(open) => !open && handleCloseModal()}>
         <DialogContent 
-          className="bg-[#0A0A0A] border-[#333] border-[1px] md:border-none text-white p-0 rounded-3xl md:max-w-2xl min-h-[60vh] max-h-[75vh] md:min-h-0 md:max-h-[90vh] md:h-auto w-[calc(100%-32px)] overflow-y-auto scrollbar-hide shadow-none outline-none ring-1 ring-[#333] md:ring-0"
+          className="bg-[#0A0A0A] border-[#333] border-[1px] md:border-none text-white p-0 rounded-3xl md:max-w-2xl min-h-[60vh] max-h-[75vh] md:min-h-0 md:max-h-[90vh] md:h-auto w-[calc(100%-32px)] overflow-y-auto scrollbar-hide shadow-none outline-none ring-1 ring-[#333] md:ring-0 modal-content"
         >
           {selectedCommunity && (
             <div className="flex flex-col w-full max-w-full overflow-x-hidden">
