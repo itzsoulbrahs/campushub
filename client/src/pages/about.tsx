@@ -74,9 +74,9 @@ export default function About() {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            whileHover={{ scale: 1.05 }}
+            whileHover={{ scale: 1.02 }}
             viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.6, type: "spring", stiffness: 200, damping: 15 }}
+            transition={{ duration: 0.6, scale: { duration: 0.5, ease: "easeOut" } }}
           >
             <Card className="bg-white border-black/10 rounded-3xl relative overflow-hidden group shadow-xl hover:shadow-2xl transition-all duration-700 button-hover">
               <div className="absolute top-0 left-0 w-1 h-full bg-transparent group-hover:bg-gradient-to-b group-hover:from-[#FFC400] group-hover:to-[#FF8C00] transition-all duration-300"></div>
@@ -95,9 +95,9 @@ export default function About() {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            whileHover={{ scale: 1.05 }}
+            whileHover={{ scale: 1.02 }}
             viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.6, delay: 0.1, type: "spring", stiffness: 200, damping: 15 }}
+            transition={{ duration: 0.6, delay: 0.1, scale: { duration: 0.5, ease: "easeOut" } }}
           >
             <Card className="bg-white border-black/10 rounded-3xl relative overflow-hidden group shadow-xl hover:shadow-2xl transition-all duration-700 button-hover">
               <div className="absolute top-0 left-0 w-1 h-full bg-transparent group-hover:bg-gradient-to-b group-hover:from-[#FFC400] group-hover:to-[#FF8C00] transition-all duration-300"></div>
@@ -116,9 +116,9 @@ export default function About() {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            whileHover={{ scale: 1.05 }}
+            whileHover={{ scale: 1.02 }}
             viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.6, delay: 0.2, type: "spring", stiffness: 200, damping: 15 }}
+            transition={{ duration: 0.6, delay: 0.2, scale: { duration: 0.5, ease: "easeOut" } }}
           >
             <Card className="bg-white border-black/10 rounded-3xl relative overflow-hidden group shadow-xl hover:shadow-2xl transition-all duration-700 button-hover">
               <div className="absolute top-0 left-0 w-1 h-full bg-transparent group-hover:bg-gradient-to-b group-hover:from-[#FFC400] group-hover:to-[#FF8C00] transition-all duration-300"></div>
