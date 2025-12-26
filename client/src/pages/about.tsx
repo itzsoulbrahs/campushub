@@ -77,7 +77,7 @@ export default function About() {
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.6 }}
           >
-            <Card className="bg-white border-black/10 rounded-3xl relative overflow-hidden group shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 button-hover">
+            <Card className="bg-white border-black/10 rounded-3xl relative overflow-hidden group shadow-xl hover:shadow-2xl transition-all duration-700 button-hover">
               <div className="absolute top-0 left-0 w-1 h-full bg-transparent group-hover:bg-gradient-to-b group-hover:from-[#FFC400] group-hover:to-[#FF8C00] transition-all duration-300"></div>
               <CardContent className="pt-10 text-center px-8 pb-10">
                 <div className="mx-auto mb-6 h-16 w-16 bg-[#FFC400] border border-black/10 flex items-center justify-center text-black shadow-lg group-hover:shadow-[0_0_20px_rgba(255,196,0,0.5)] transition-all rounded-2xl">
@@ -97,7 +97,7 @@ export default function About() {
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.6, delay: 0.1 }}
           >
-            <Card className="bg-white border-black/10 rounded-3xl relative overflow-hidden group shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 button-hover">
+            <Card className="bg-white border-black/10 rounded-3xl relative overflow-hidden group shadow-xl hover:shadow-2xl transition-all duration-700 button-hover">
               <div className="absolute top-0 left-0 w-1 h-full bg-transparent group-hover:bg-gradient-to-b group-hover:from-[#FFC400] group-hover:to-[#FF8C00] transition-all duration-300"></div>
               <CardContent className="pt-10 text-center px-8 pb-10">
                 <div className="mx-auto mb-6 h-16 w-16 bg-[#FFC400] border border-black/10 flex items-center justify-center text-black shadow-lg group-hover:shadow-[0_0_20px_rgba(255,196,0,0.5)] transition-all rounded-2xl">
@@ -117,7 +117,7 @@ export default function About() {
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <Card className="bg-white border-black/10 rounded-3xl relative overflow-hidden group shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 button-hover">
+            <Card className="bg-white border-black/10 rounded-3xl relative overflow-hidden group shadow-xl hover:shadow-2xl transition-all duration-700 button-hover">
               <div className="absolute top-0 left-0 w-1 h-full bg-transparent group-hover:bg-gradient-to-b group-hover:from-[#FFC400] group-hover:to-[#FF8C00] transition-all duration-300"></div>
               <CardContent className="pt-10 text-center px-8 pb-10">
                 <div className="mx-auto mb-6 h-16 w-16 bg-[#FFC400] border border-black/10 flex items-center justify-center text-black shadow-lg group-hover:shadow-[0_0_20px_rgba(255,196,0,0.5)] transition-all rounded-2xl">

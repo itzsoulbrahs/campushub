@@ -12,6 +12,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, Di
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
+import { motion } from "framer-motion";
 
 interface ApprovedCommunity {
   id: string;
@@ -206,7 +207,12 @@ export default function Home() {
   return (
     <Layout>
       {/* Hero Section */}
-      <div className="relative w-full overflow-hidden border-b border-black/20">
+      <motion.div 
+        className="relative w-full overflow-hidden border-b border-black/20"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+      >
         {/* Animated Wave Background */}
         <div className="absolute inset-0 overflow-hidden">
           <svg className="absolute top-0 right-0 w-full h-full opacity-20" viewBox="0 0 1200 120" preserveAspectRatio="none">
@@ -230,18 +236,33 @@ export default function Home() {
         </div>
 
         <div className="w-full px-4 md:px-6 py-20 md:py-32 flex flex-col items-center text-center relative z-10">
-          <div className="inline-flex items-center border border-black/40 bg-black/10 px-4 py-1.5 text-xs font-bold text-black mb-8 backdrop-blur-md uppercase tracking-widest">
+          <motion.div 
+            className="inline-flex items-center border border-black/40 bg-black/10 px-4 py-1.5 text-xs font-bold text-black mb-8 backdrop-blur-md uppercase tracking-widest"
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.1, duration: 0.6 }}
+          >
             <Zap className="mr-2 h-3 w-3 fill-black" />
             <span>The #1 Community Directory for SRM</span>
-          </div>
+          </motion.div>
           
-          <h1 className="text-5xl md:text-7xl font-black font-heading tracking-tighter text-black mb-8 max-w-5xl uppercase leading-none drop-shadow-lg">
+          <motion.h1 
+            className="text-5xl md:text-7xl font-black font-heading tracking-tighter text-black mb-8 max-w-5xl uppercase leading-none drop-shadow-lg"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.6 }}
+          >
             Find your <span className="text-black inline-block relative">tribe<svg className="absolute w-full h-3 -bottom-1 left-0 text-black opacity-60" viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0 5 Q 50 10 100 5" stroke="currentColor" strokeWidth="3" fill="none" /></svg></span> on campus.
-          </h1>
+          </motion.h1>
           
-          <p className="text-lg md:text-xl text-black/70 max-w-2xl mb-12 font-medium leading-relaxed">
+          <motion.p 
+            className="text-lg md:text-xl text-black/70 max-w-2xl mb-12 font-medium leading-relaxed"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3, duration: 0.6 }}
+          >
             Discover and join thousands of WhatsApp, Telegram, and Discord communities.
-          </p>
+          </motion.p>
 
           <div className="w-full max-w-2xl relative group">
             <div className="absolute -inset-1 bg-gradient-to-r from-black via-black to-gray-600 rounded-full opacity-30 group-hover:opacity-50 blur-2xl transition duration-500 hidden md:block"></div>
@@ -267,21 +288,32 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-3 max-w-3xl">
-            {popularTags.map(tag => (
-              <Button 
-                key={tag} 
-                variant="secondary" 
-                size="sm" 
-                onClick={() => handleTagClick(tag)}
-                className="h-8 text-xs bg-white hover:bg-black hover:text-white text-black border border-black/30 hover:border-black rounded-full font-bold uppercase tracking-wide transition-all cursor-pointer shadow-md hover:shadow-[0_0_15px_rgba(0,0,0,0.3)]"
+          <motion.div 
+            className="mt-10 flex flex-wrap items-center justify-center gap-3 max-w-3xl"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4, duration: 0.6 }}
+          >
+            {popularTags.map((tag, index) => (
+              <motion.div
+                key={tag}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4 + index * 0.05, duration: 0.5 }}
               >
-                {tag}
-              </Button>
+                <Button 
+                  variant="secondary" 
+                  size="sm" 
+                  onClick={() => handleTagClick(tag)}
+                  className="h-8 text-xs bg-white hover:bg-black hover:text-white text-black border border-black/30 hover:border-black rounded-full font-bold uppercase tracking-wide transition-all cursor-pointer shadow-md hover:shadow-[0_0_15px_rgba(0,0,0,0.3)] button-hover"
+                >
+                  {tag}
+                </Button>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Main Content Grid */}
       <div className="w-full px-6 lg:px-8 py-16" ref={communityGridRef}>
@@ -370,12 +402,19 @@ export default function Home() {
             
             {filteredCommunities.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
-                {filteredCommunities.slice(0, visibleCount).map((community) => (
-                  <CommunityCard 
+                {filteredCommunities.slice(0, visibleCount).map((community, index) => (
+                  <motion.div
                     key={community.id}
-                    community={community} 
-                    onClick={() => handleOpenModal(community)}
-                  />
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.3 }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                  >
+                    <CommunityCard 
+                      community={community} 
+                      onClick={() => handleOpenModal(community)}
+                    />
+                  </motion.div>
                 ))}
               </div>
             ) : (
@@ -398,16 +437,22 @@ export default function Home() {
 
             {/* Load More */}
             {filteredCommunities.length > visibleCount && (
-              <div className="mt-16 flex justify-center">
+              <motion.div 
+                className="mt-16 flex justify-center"
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true, amount: 0.5 }}
+                transition={{ duration: 0.6 }}
+              >
                 <Button 
                   variant="outline" 
-                  className="border-black/30 px-10 py-7 text-sm hover:bg-black hover:text-white hover:border-black text-black font-bold uppercase tracking-widest rounded-2xl transition-all group relative overflow-hidden shadow-lg hover:shadow-[0_0_25px_rgba(0,0,0,0.2)]"
+                  className="border-black/30 px-10 py-7 text-sm hover:bg-black hover:text-white hover:border-black text-black font-bold uppercase tracking-widest rounded-2xl transition-all group relative overflow-hidden shadow-lg hover:shadow-[0_0_25px_rgba(0,0,0,0.2)] button-hover"
                   onClick={() => setVisibleCount(prev => prev + 12)}
                 >
                   <span className="relative z-10">Load More Communities</span>
                   <div className="absolute inset-0 bg-black/10 transform -skew-x-12 -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></div>
                 </Button>
-              </div>
+              </motion.div>
             )}
           </div>
         </div>
