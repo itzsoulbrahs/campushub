@@ -31,7 +31,7 @@ export function CommunityCard({ community, onClick, disableHoverScale = false }:
   return (
     <Card 
       className={cn(
-        "h-[380px] bg-[#0A0A0A] overflow-hidden flex flex-col group relative rounded-3xl border border-[#222] shadow-xl cursor-pointer card-hover",
+        "h-[380px] bg-[#0A0A0A] overflow-hidden flex flex-col group relative rounded-3xl border border-[#222] shadow-xl cursor-pointer transition-transform duration-300",
         !disableHoverScale && "hover:scale-[1.02]"
       )}
       onClick={onClick}

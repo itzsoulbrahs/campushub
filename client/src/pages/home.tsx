@@ -230,20 +230,20 @@ export default function Home() {
         </div>
 
         <div className="w-full px-4 md:px-6 py-20 md:py-32 flex flex-col items-center text-center relative z-10">
-          <div className="inline-flex items-center border border-black/40 bg-black/10 px-4 py-1.5 text-xs font-bold text-black mb-8 backdrop-blur-md uppercase tracking-widest animate-fade-in" style={{ animationDelay: '0s' }}>
+          <div className="inline-flex items-center border border-black/40 bg-black/10 px-4 py-1.5 text-xs font-bold text-black mb-8 backdrop-blur-md uppercase tracking-widest">
             <Zap className="mr-2 h-3 w-3 fill-black" />
             <span>The #1 Community Directory for SRM</span>
           </div>
           
-          <h1 className="text-5xl md:text-7xl font-black font-heading tracking-tighter text-black mb-8 max-w-5xl uppercase leading-none drop-shadow-lg animate-fade-in" style={{ animationDelay: '0.1s' }}>
+          <h1 className="text-5xl md:text-7xl font-black font-heading tracking-tighter text-black mb-8 max-w-5xl uppercase leading-none drop-shadow-lg">
             Find your <span className="text-black inline-block relative">tribe<svg className="absolute w-full h-3 -bottom-1 left-0 text-black opacity-60" viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0 5 Q 50 10 100 5" stroke="currentColor" strokeWidth="3" fill="none" /></svg></span> on campus.
           </h1>
           
-          <p className="text-lg md:text-xl text-black/70 max-w-2xl mb-12 font-medium leading-relaxed animate-fade-in" style={{ animationDelay: '0.2s' }}>
+          <p className="text-lg md:text-xl text-black/70 max-w-2xl mb-12 font-medium leading-relaxed">
             Discover and join thousands of WhatsApp, Telegram, and Discord communities.
           </p>
 
-          <div className="w-full max-w-2xl relative group animate-fade-in" style={{ animationDelay: '0.3s' }}>
+          <div className="w-full max-w-2xl relative group">
             <div className="absolute -inset-1 bg-gradient-to-r from-black via-black to-gray-600 rounded-full opacity-30 group-hover:opacity-50 blur-2xl transition duration-500 hidden md:block"></div>
             <div className="relative flex items-center bg-gradient-to-r from-white to-gray-100 rounded-2xl md:rounded-full border border-black/40 shadow-2xl h-16 px-2 md:px-2">
               <div className="h-full w-14 flex items-center justify-center flex-shrink-0">
@@ -268,14 +268,13 @@ export default function Home() {
           </div>
 
           <div className="mt-10 flex flex-wrap items-center justify-center gap-3 max-w-3xl">
-            {popularTags.map((tag, index) => (
+            {popularTags.map(tag => (
               <Button 
                 key={tag} 
                 variant="secondary" 
                 size="sm" 
                 onClick={() => handleTagClick(tag)}
-                className="h-8 text-xs bg-white hover:bg-black hover:text-white text-black border border-black/30 hover:border-black rounded-full font-bold uppercase tracking-wide transition-all cursor-pointer shadow-md hover:shadow-[0_0_15px_rgba(0,0,0,0.3)] animate-fade-in"
-                style={{ animationDelay: `${0.4 + index * 0.05}s` }}
+                className="h-8 text-xs bg-white hover:bg-black hover:text-white text-black border border-black/30 hover:border-black rounded-full font-bold uppercase tracking-wide transition-all cursor-pointer shadow-md hover:shadow-[0_0_15px_rgba(0,0,0,0.3)]"
               >
                 {tag}
               </Button>
@@ -372,12 +371,11 @@ export default function Home() {
             {filteredCommunities.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
                 {filteredCommunities.slice(0, visibleCount).map((community) => (
-                  <div key={community.id} className="stagger-item">
-                    <CommunityCard 
-                      community={community} 
-                      onClick={() => handleOpenModal(community)}
-                    />
-                  </div>
+                  <CommunityCard 
+                    key={community.id}
+                    community={community} 
+                    onClick={() => handleOpenModal(community)}
+                  />
                 ))}
               </div>
             ) : (
@@ -417,7 +415,7 @@ export default function Home() {
 
       <Dialog open={isModalOpen} onOpenChange={(open) => !open && handleCloseModal()}>
         <DialogContent 
-          className="bg-[#0A0A0A] border-[#333] border-[1px] md:border-none text-white p-0 rounded-3xl md:max-w-2xl min-h-[60vh] max-h-[75vh] md:min-h-0 md:max-h-[90vh] md:h-auto w-[calc(100%-32px)] overflow-y-auto scrollbar-hide shadow-none outline-none ring-1 ring-[#333] md:ring-0 modal-content"
+          className="bg-[#0A0A0A] border-[#333] border-[1px] md:border-none text-white p-0 rounded-3xl md:max-w-2xl min-h-[60vh] max-h-[75vh] md:min-h-0 md:max-h-[90vh] md:h-auto w-[calc(100%-32px)] overflow-y-auto scrollbar-hide shadow-none outline-none ring-1 ring-[#333] md:ring-0"
         >
           {selectedCommunity && (
             <div className="flex flex-col w-full max-w-full overflow-x-hidden">
