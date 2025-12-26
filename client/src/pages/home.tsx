@@ -266,16 +266,13 @@ export default function Home() {
 
           <motion.div 
             className="w-full max-w-2xl relative group"
-            initial={{ opacity: 0, scaleX: 0, transformOrigin: "left" }}
-            animate={{ opacity: 1, scaleX: 1, transformOrigin: "left" }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
           >
             <div className="absolute -inset-1 bg-gradient-to-r from-black via-black to-gray-600 rounded-full opacity-30 group-hover:opacity-50 blur-2xl transition duration-500 hidden md:block"></div>
-            <motion.div 
+            <div 
               className="relative flex items-center bg-gradient-to-r from-white to-gray-100 rounded-2xl md:rounded-full border border-black/40 shadow-2xl h-16 px-2 md:px-2"
-              initial={{ x: -50, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
             >
               <div className="h-full w-14 flex items-center justify-center flex-shrink-0">
                  <Search className="h-6 w-6 text-black/60 group-focus-within:text-black transition-colors" />
@@ -295,7 +292,7 @@ export default function Home() {
                   Search
                 </Button>
               </div>
-            </motion.div>
+            </div>
           </motion.div>
 
           <motion.div 
