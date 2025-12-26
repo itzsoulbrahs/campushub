@@ -10,8 +10,6 @@ import path from "path";
 import fs from "fs";
 import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
-import crypto from "crypto";
-import { Resend } from "resend";
 
 const uploadDir = path.join(process.cwd(), "uploads", "communities");
 if (!fs.existsSync(uploadDir)) {
@@ -553,124 +551,6 @@ export async function registerRoutes(
     } catch (error) {
       console.error("Error deleting user community:", error);
       res.status(500).json({ success: false, error: "Failed to delete community" });
-    }
-  });
-
-  app.post("/api/auth/forgot-password", async (req, res) => {
-    try {
-      const { email } = req.body;
-
-      if (!email) {
-        return res.status(400).json({ success: false, error: "Email is required" });
-      }
-
-      const user = await storage.getUserByEmail(email);
-
-      if (!user) {
-        return res.json({ success: true, message: "If email exists, reset link will be sent" });
-      }
-
-      const resetToken = crypto.randomBytes(32).toString("hex");
-      await storage.setPasswordResetToken(user.id, resetToken, 15);
-
-      const resetLink = `${process.env.FRONTEND_URL || "http://localhost:5000"}/reset-password?token=${resetToken}`;
-
-      if (process.env.RESEND_API_KEY) {
-        const resend = new Resend(process.env.RESEND_API_KEY);
-        
-        try {
-          await resend.emails.send({
-            from: "CampusHub <noreply@campushub.replit.dev>",
-            to: email,
-            subject: "Reset Your CampusHub Password",
-            html: `
-              <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-                <h2>Password Reset Request</h2>
-                <p>Hi ${user.fullName},</p>
-                <p>We received a request to reset your password. Click the button below to create a new password.</p>
-                <p style="margin: 30px 0;">
-                  <a href="${resetLink}" style="background-color: #FFC400; color: #000; padding: 12px 24px; text-decoration: none; border-radius: 4px; display: inline-block; font-weight: bold;">
-                    Reset Password
-                  </a>
-                </p>
-                <p>Or copy and paste this link: ${resetLink}</p>
-                <p style="color: #666; font-size: 12px;">This link will expire in 15 minutes.</p>
-                <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;">
-                <p style="color: #666; font-size: 12px;">If you didn't request a password reset, you can safely ignore this email.</p>
-              </div>
-            `,
-          });
-          
-          console.log("Password reset email sent to:", email);
-        } catch (emailError) {
-          console.error("Resend email error:", emailError);
-          console.log("Fallback - Reset link:", resetLink);
-        }
-      } else {
-        console.log("RESEND_API_KEY not configured. Reset link:", resetLink);
-      }
-
-      return res.json({ 
-        success: true, 
-        message: "Password reset email sent"
-      });
-    } catch (error) {
-      console.error("Forgot password error:", error);
-      res.status(500).json({ success: false, error: "Failed to process password reset request" });
-    }
-  });
-
-  app.post("/api/auth/validate-reset-token", async (req, res) => {
-    try {
-      const { token } = req.body;
-
-      if (!token) {
-        return res.status(400).json({ success: false, error: "Token is required" });
-      }
-
-      const user = await storage.getUserByResetToken(token);
-
-      if (!user) {
-        return res.status(400).json({ success: false, error: "Invalid or expired reset token" });
-      }
-
-      res.json({ success: true, message: "Token is valid" });
-    } catch (error) {
-      console.error("Token validation error:", error);
-      res.status(500).json({ success: false, error: "Failed to validate token" });
-    }
-  });
-
-  app.post("/api/auth/reset-password", async (req, res) => {
-    try {
-      const { token, password } = req.body;
-
-      if (!token || !password) {
-        return res.status(400).json({ success: false, error: "Token and password are required" });
-      }
-
-      if (password.length < 6) {
-        return res.status(400).json({ success: false, error: "Password must be at least 6 characters" });
-      }
-
-      const user = await storage.getUserByResetToken(token);
-
-      if (!user) {
-        return res.status(400).json({ success: false, error: "Invalid or expired reset token" });
-      }
-
-      const hashedPassword = await bcrypt.hash(password, 10);
-      const updatedUser = await storage.updatePassword(user.id, hashedPassword);
-
-      if (!updatedUser) {
-        return res.status(500).json({ success: false, error: "Failed to update password" });
-      }
-
-      const { password: _, ...userWithoutPassword } = updatedUser;
-      res.json({ success: true, message: "Password reset successfully", user: userWithoutPassword });
-    } catch (error) {
-      console.error("Reset password error:", error);
-      res.status(500).json({ success: false, error: "Failed to reset password" });
     }
   });
 

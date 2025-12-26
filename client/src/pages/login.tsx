@@ -209,7 +209,9 @@ export default function Login() {
 
   const handleForgotPassword = (e: React.MouseEvent) => {
     e.preventDefault();
-    setLocation("/forgot-password");
+    toast.info("Password reset coming soon!", {
+      description: "This feature will be available shortly."
+    });
   };
 
   const flipToSignup = (e: React.MouseEvent) => {

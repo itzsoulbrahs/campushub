@@ -78,9 +78,6 @@ export interface IStorage {
   createUser(user: InsertUser): Promise<User>;
   updateUserProfile(userId: string, updates: { fullName: string }): Promise<User | undefined>;
   getUserBumpStatus(userId: string): Promise<UserBumpStatus>;
-  setPasswordResetToken(userId: string, token: string, expiryMinutes: number): Promise<User | undefined>;
-  getUserByResetToken(token: string): Promise<User | undefined>;
-  updatePassword(userId: string, hashedPassword: string): Promise<User | undefined>;
   
   createPendingCommunity(community: InsertPendingCommunity): Promise<PendingCommunity>;
   getAllPendingCommunities(): Promise<PendingCommunity[]>;
@@ -408,44 +405,6 @@ export class DatabaseStorage implements IStorage {
 
   async getRejectedCommunitiesByUserId(userId: string): Promise<RejectedCommunity[]> {
     return db.select().from(rejectedCommunities).where(eq(rejectedCommunities.userId, userId));
-  }
-
-  async setPasswordResetToken(userId: string, token: string, expiryMinutes: number): Promise<User | undefined> {
-    const expiryTime = new Date(Date.now() + expiryMinutes * 60 * 1000);
-    const [updated] = await db
-      .update(users)
-      .set({ resetToken: token, resetTokenExpiry: expiryTime })
-      .where(eq(users.id, userId))
-      .returning();
-    return updated;
-  }
-
-  async getUserByResetToken(token: string): Promise<User | undefined> {
-    const now = new Date();
-    const [user] = await db
-      .select()
-      .from(users)
-      .where(
-        and(
-          eq(users.resetToken, token),
-          isNotNull(users.resetTokenExpiry),
-          sql`${users.resetTokenExpiry} > ${now}`
-        )
-      );
-    return user;
-  }
-
-  async updatePassword(userId: string, hashedPassword: string): Promise<User | undefined> {
-    const [updated] = await db
-      .update(users)
-      .set({ 
-        password: hashedPassword,
-        resetToken: null,
-        resetTokenExpiry: null
-      })
-      .where(eq(users.id, userId))
-      .returning();
-    return updated;
   }
 }
 
