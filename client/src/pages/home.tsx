@@ -42,7 +42,7 @@ const initialFilters: FilterState = {
 };
 
 export default function Home() {
-  const popularTags = ["#entertainment", "#trading", "#dance", "#food", "#coding", "#memes", "#hostel", "#events"];
+  const popularTags = ["#general", "#notes", "#finance", "#events", "#internship", "#coding", "#flats", "#projects"];
   const [searchQuery, setSearchQuery] = useState("");
   const [activeSearch, setActiveSearch] = useState("");
   const [selectedCommunity, setSelectedCommunity] = useState<Community | null>(null);
