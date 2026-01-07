@@ -344,7 +344,7 @@ export default function Home() {
                   Reset All
                 </Button>
               </div>
-              <div className="p-6 rounded-3xl border border-[#333] bg-[#0A0A0A] shadow-lg overflow-y-auto flex-1">
+              <div className="p-6 rounded-3xl border border-[#333] bg-[#0A0A0A] shadow-lg overflow-y-auto scrollbar-hide flex-1">
                 <Filters 
                   filters={filters}
                   onFilterChange={handleFilterChange}
