@@ -123,9 +123,9 @@ export function Filters({ filters, onFilterChange, onReset }: FiltersProps) {
 
       <Accordion type="single" collapsible defaultValue="categories" className="w-full">
         <AccordionItem value="categories" className="border-0">
-          <AccordionTrigger className="text-xs font-bold uppercase tracking-widest text-[#FFC400] py-2 hover:no-underline hover:text-white flex items-center before:w-2 before:h-2 before:bg-[#FFC400] before:mr-2">
-            Categories
-          </AccordionTrigger>
+        <AccordionTrigger className="text-xs font-bold uppercase tracking-widest text-[#FFC400] py-2 hover:no-underline hover:text-white flex items-center justify-start before:w-2 before:h-2 before:bg-[#FFC400] before:mr-2">
+  Categories
+</AccordionTrigger>
           <AccordionContent>
             <div className="space-y-3 pt-4 pl-2">
               {CATEGORIES.map((category) => {
