@@ -404,10 +404,9 @@ export default function Home() {
               <div className="flex items-center gap-3 flex-shrink-0 w-full sm:w-auto">
                  <span className="text-sm text-black/60 font-bold uppercase tracking-wider hidden sm:inline">Sort by:</span>
                  <select className="flex-1 sm:flex-none bg-white border border-black/20 rounded-xl text-xs px-3 py-2 focus:outline-none focus:border-black text-black font-bold uppercase tracking-wide cursor-pointer hover:border-black transition-colors">
-                    <option value="popular">Most Popular</option>
-                    <option value="newest">Newest</option>
-                    <option value="rating">Top Rated</option>
-                 </select>
+   <option value="bumped">Recently Bumped</option>
+   <option value="newest">Newest</option>
+</select>
               </div>
             </div>
             
